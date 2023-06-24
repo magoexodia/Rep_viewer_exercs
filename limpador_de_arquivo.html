@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<textarea id="input" rows="4" cols="50">
+</textarea>
+<br>
+<button onclick="filterLines()">Filtrar linhas</button>
+<br>
+<textarea id="output" rows="4" cols="50" readonly>
+</textarea>
+
+<script>
+function filterLines() {
+    var input = document.getElementById("input").value;
+    var lines = input.split("\n");
+    var output = "";
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i].includes("http") && lines[i].includes(".gif") ) {
+            output += lines[i] + "\n";
+        }
+    }
+    document.getElementById("output").value = output;
+}
+</script>
+</body>
+
+</html>
