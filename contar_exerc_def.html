@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exemplo de Código</title>
+    <style>
+      /* Adicione seu CSS aqui para estilizar os elementos */
+      body {
+        font-family: Monospace, sans-serif;
+        font-size: calc(4vh + 4vw);
+        text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+        background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+      }
+
+      .screen {
+        display: none;
+        margin: 20px;
+      }
+
+      .screen.active {
+        display: block;
+      }
+
+      input[type="number"],
+      input[type="text"] {
+        font-size: 1em;
+        padding: 5px;
+        margin: 5px;
+        text-align: center;
+        width: 30vw;
+      }
+
+      button {
+        padding: 10px;
+        margin: 5px;
+      }
+
+      #counter {
+        font-weight: bold;
+        margin: 10px;
+      }
+      #ok { position:fixed;bottom:0;left:50%;} 
+      .butao { font-size: 1.5em; background:rgb(0,0,0,0);}
+      /* Show tela3 element on entire screen */
+      #screen3 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* Center image within tela3 element */
+      #screen3 img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        max-width: 100vh;
+        height: 100vw;
+      }
+      .centra {display: flex; flex-direction: row;width:vw;align-items: center; justify-content: center;}
+    </style>
+  </head>
+  <body>
+    <!-- Tela 1 -->
+    <div class="screen active" id="screen1">
+      <label for="repetitions">Contar até:</label>
+      <input type="number" id="repetitions" value="2" min="0">
+      <br>
+      <label for="imageLink">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📷</label>
+      <input type="text" id="imageLink" value="https://64.media.tumblr.com/6a1426cc435aa4a9457832d31cdc7086/tumblr_n4ecc8ZgjC1rlukc4o1_400.gifv">
+      <br>
+      <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
+    </div>
+
+    <!-- Tela 2 -->
+    <div class="screen" id="screen2">
+      <div class="centra">
+        <div id="counter" style="font-size:6em;">0</div><div style="display: flex; flex-direction: column;width:fit-content;">
+          <button onclick="increment()" class="butao">🔼</button>
+          <button onclick="decrement()" class="butao">🔽</button>
+        </div>
+      </div>
+        <div  class="centra">
+          <button onclick="reset()" class="butao">🔁</button>
+          <button onclick="goToScreen1()" class="butao">❌</button>
+        </div>
+    </div>
+
+    <!-- Tela 3 -->
+    <div class="screen" id="screen3">
+      <img id="image" src="">
+    </div>
+
+    <script>
+      let repetitions = document.getElementById("repetitions");
+      let imageLink = document.getElementById("imageLink");
+      let counter = document.getElementById("counter");
+      let image = document.getElementById("image");
+
+      function goToScreen1() {
+        hideAllScreens();
+        document.getElementById("screen1").classList.add("active");
+      }
+
+      function goToScreen2() {
+        hideAllScreens();
+        document.getElementById("screen2").classList.add("active");
+        reset();
+      }
+
+      function goToScreen3() {
+        hideAllScreens();
+        document.getElementById("screen3").classList.add("active");
+        image.src = imageLink.value;
+        setTimeout(goToScreen1, 3000);
+      }
+
+      function hideAllScreens() {
+        let screens = document.getElementsByClassName("screen");
+        for (let i = 0; i < screens.length; i++) {
+          screens[i].classList.remove("active");
+        }
+      }
+
+      function increment() {
+        let value = parseInt(counter.textContent);
+        value++;
+        counter.textContent = value;
+        if (value >= parseInt(repetitions.value)) {
+          goToScreen3();
+        }
+      }
+
+      function decrement() {
+        let value = parseInt(counter.textContent);
+        value--;
+        if (value < 0) {
+          value = 0;
+        }
+        counter.textContent = value;
+      }
+
+      function reset() {
+        counter.textContent = "0";
+      }
+    </script>
+  </body>
+</html>
