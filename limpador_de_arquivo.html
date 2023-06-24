@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<!-- A função deste arquivo é pegar um arquivo plural, sujo, cheio de links e retornar somente os links.-->
 <body>
 <textarea id="input" rows="4" cols="50">
 </textarea>
@@ -16,7 +16,7 @@ function filterLines() {
     var lines = input.split("\n");
     var output = "";
     for (var i = 0; i < lines.length; i++) {
-        if (lines[i].includes("http") && lines[i].includes(".gif") ) {
+        if (lines[i].includes("http") /*&& lines[i].includes(".gif")*/ ) { //descomentar para ter apenas links de gifs.
             output += lines[i] + "\n";
         }
     }
