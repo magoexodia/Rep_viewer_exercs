@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Imagens</title>
+</head>
+<style> 
+img { height: 33vh; width: auto;}
+.enlarged { max-width: 95vw; height: 99vh; object-fit: contain; position: fixed; top:0; bottom:0; left:0; right:0;}
+.lista { width: 99vw; height: 99vw; display:flexrow;}
+</style>
+<body>
+    <label for="links">Insira os links separados por vírgulas:</label><br>
+    <input type="text" id="links"><br>
+    <button onclick="adicionarLinks()">Adicionar links</button><br>
+
+    <button id="anterior">&lt;</button>
+    <button id="proximo">&gt;</button>
+    <div class="lista"></div>
+
+    <script>
+        let indice = 0;
+        let tamanho = 20; //<= a quantidade a ser exibida
+
+        function exibirImagens(imagens, indice, tamanho) {
+            let lista = document.querySelector(".lista");
+            lista.innerHTML = "";
+            for (let i = indice; i < indice + tamanho; i++) {
+                if (i < imagens.length) {
+                    let img = document.createElement("img");
+                    img.src = imagens[i];
+                    img.addEventListener("click", function() { img.classList.toggle('enlarged'); });
+                    lista.appendChild(img);
+                }
+            }
+        }
+
+        let imagens = [];
+        exibirImagens(imagens, indice, tamanho);
+
+        let anterior = document.getElementById("anterior");
+        anterior.addEventListener("click", function() {
+            indice -= tamanho;
+            if (indice < 0) {
+                indice = 0;
+            }
+            exibirImagens(imagens, indice, tamanho);
+        });
+
+        let proximo = document.getElementById("proximo");
+        proximo.addEventListener("click", function() {
+            indice += tamanho;
+            if (indice >= imagens.length) {
+                indice -= tamanho;
+            }
+            exibirImagens(imagens, indice, tamanho);
+        });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowLeft") {
+                // exibir imagens anteriores
+                indice -= tamanho;
+                if (indice < 0) {
+                    indice = imagens.length - tamanho;
+                }
+                exibirImagens(imagens, indice, tamanho);
+            } else if (event.key === "ArrowRight") {
+                // exibir próximas imagens
+                indice += tamanho;
+                if (indice >= imagens.length) {
+                    indice = 0;
+                }
+                exibirImagens(imagens, indice, tamanho);
+            }
+        });
+
+        function adicionarLinks() {
+            let links = document.getElementById("links").value;
+            links = links.split(",");
+            for (let i = 0; i < links.length; i++) {
+                let link = links[i].trim();
+                link = link.replace(/^['"]/, "").replace(/['"]$/, "");
+                imagens.push(link);
+            }
+            exibirImagens(imagens, indice, tamanho);
+        }
+    </script>
+</body>
+</html>
