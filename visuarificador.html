@@ -10,6 +10,7 @@ img { height: 20vh; width: auto; }
 .lista { width: 99vw; height: 99vw; display:flexrow;}
 </style>
 <body>
+    <div style="height: fit-content; width: fit-content;">
     <label for="links">Insira os links separados por vírgulas:</label><br>
     <input type="text" id="links"><br>
     <button onclick="adicionarLinks()">Adicionar links</button><br>
@@ -17,7 +18,7 @@ img { height: 20vh; width: auto; }
     <button id="anterior">&lt;</button>
     <button id="proximo">&gt;</button>
     <div class="lista"></div>
-
+    </div>
     <script>
         let indice = 0;
         let tamanho = 20; //<= a quantidade a ser exibida
