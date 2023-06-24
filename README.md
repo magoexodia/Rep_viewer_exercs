@@ -11,4 +11,4 @@ Imagem, valor tempo e valor d erepetições customizáveis.
 Espero que gostem, eu gostei resultado... que ainda não é final.
 
 Outra página que pode facilitar seu passeio
-https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visualizador_no_patience.html
+https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html
