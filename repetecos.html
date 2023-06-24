@@ -6,9 +6,10 @@
     <style>
         @media screen and (orientation: portrait)  {
           #tela3 {
-            transform: rotate(-90deg) scale(2);
+            transform: rotate(-90deg);
             transform-origin: center;
           }
+          #tela3 img {width: 100%; height:100%;}
           body {
             --tam: calc(3vh + 10px);
           }
@@ -129,7 +130,7 @@
  <label for="tempo">Descanso:</label>
  <input id="tempo" type="number" value="15"><br><br>
  <label for="entreSeries">&#128247; desc:</label>
- <input id="entreSeries" type="text" value="https://i.pinimg.com/originals/94/1e/0b/941e0b6e6e98f7b8248f4bf73aa868c2.gif, https://64.media.tumblr.com/d1fb1171b80035e171374b72befffba1/tumblr_o5myfsrQ3n1s5rcozo1_500.gif, "><br><br>
+ <input id="entreSeries" type="text" value="https://i.pinimg.com/originals/94/1e/0b/941e0b6e6e98f7b8248f4bf73aa868c2.gif"><br><br>
  <input type="submit" value="OK">
  </form>
  </div>
@@ -159,7 +160,7 @@
  let entreSeries = document.getElementById("entreSeries");
  let tempo = document.getElementById("tempo");
 
- entreSeries.value = //"https://64.media.tumblr.com/d1fb1171b80035e171374b72befffba1/tumblr_o5myfsrQ3n1s5rcozo1_500.gif";
+ entreSeries.value = "https://i.pinimg.com/originals/94/1e/0b/941e0b6e6e98f7b8248f4bf73aa868c2.gif";//"https://64.media.tumblr.com/d1fb1171b80035e171374b72befffba1/tumblr_o5myfsrQ3n1s5rcozo1_500.gif";
  
  let checkedCount = 0;
 
