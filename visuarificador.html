@@ -5,19 +5,19 @@
     <title>Lista de Imagens</title>
 </head>
 <style> 
-img { height: 20vh; width: auto; }
-.enlarged { max-width: 95vw; height: 99vh; object-fit: contain; position: fixed; top:0; bottom:0; left:0; right:0;}
-.lista { width: 99vw; height: 99vw; display:flexrow;}
+img { height: 20vh; width: auto;}
+.enlarged { max-width: 100%; height: 99vh; object-fit: contain; position: fixed; top:0; bottom:0; left:50%; right:50%; transform: translate(-50%,0);}
+.lista { width: 99vw; height: 99vw; display:flex-row;}
 </style>
 <body>
-    <div style="height: fit-content; width: fit-content;">
-    <label for="links">Insira os links separados por vírgulas:</label><br>
-    <input type="text" id="links"><br>
-    <button onclick="adicionarLinks()">Adicionar links</button><br>
+    <div >
+    <label for="links">Insira os links separados por vírgulas:</label>
+    <input type="text" id="links">
+    <button onclick="adicionarLinks()">Adicionar</button>
 
     <button id="anterior">&lt;</button>
     <button id="proximo">&gt;</button>
-    <div class="lista"></div>
+    <div class="lista" style="height: fit-content; width: fit-content;"></div>
     </div>
     <script>
         let indice = 0;
