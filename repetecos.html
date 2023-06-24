@@ -65,12 +65,10 @@
         input[type="checkbox"] + label {
             transition-duration: 2s;
             color: white;
-            background-color: transparent;
         }
         input[type="checkbox"]:checked + label {
             transition-duration: 2s;
-            color: green;
-            background-color: magenta;
+            color: rgb(0, 253, 21);
         }
         #checkboxes {
             display: flexbox;
@@ -224,6 +222,8 @@ function showTela3() {
 
  div.appendChild(checkbox);
  div.appendChild(label);
+ div.style.backgroundImage = "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
+ div.style.backgroundSize = "cover";
  checkboxes.appendChild(div);
  }
  tela1.style.display = "none";
