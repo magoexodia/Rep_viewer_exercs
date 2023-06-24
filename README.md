@@ -11,7 +11,7 @@
 
 
 
-<h2> uma coisa pra facilitar sua vida ao selecionar links, não links, imagens, videos de uma vez só
+<h2> Uma coisa pra facilitar sua vida ao selecionar links, não links, imagens, videos de uma vez só em um arquivo de texto.
 </h2><li> To clean a textfile too big with so many links and etc. 
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html">limpador_de_arquivo.html</a>
 
@@ -33,7 +33,7 @@
 
 
 <h2> Algo para contar repetições e dar um descanso entre elas. Bom para contar séries de exercício. Ou ações a contagem é rapida demais mas em série.
-</h2><li> A reps counter. Good for quicly actios between series that needs some rest.
+</h2><li> A reps counter. Good for quicly actions between series that needs some rest.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html">repetecos.html</a>
 
 
