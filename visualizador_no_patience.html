@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preview de Links do GitHub</title>
+</head>
+<body>
+    <label for="links">Insira os links do GitHub separados por vírgulas:</label>
+    <input type="text" id="links" value="https://64.media.tumblr.com/f1332a4e807d9c7aaa77281f8a9acf9b/tumblr_inline_oy4svt4PcS1shrb8p_500.gifv">
+    <button onclick="adicionarLinks()">Adicionar links</button><br>
+
+    <div id="botoes"></div><br>
+
+    <iframe id="preview" style="width: calc(100% - 2em); height: calc(90vh - 3em);"></iframe>
+
+    <script>
+        let links = ["https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visuarificador.html","https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html","https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html","https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md","https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visualizador_no_patience.html"];
+        let indice = 0;
+
+        function adicionarLinks() {
+            let inputLinks = document.getElementById("links").value;
+            inputLinks = inputLinks.split(",");
+            for (let i = 0; i < inputLinks.length; i++) {
+                let link = inputLinks[i].trim();
+                link = link.replace(/^['"]/, "").replace(/['"]$/, "");
+                links.push(link);
+            }
+            exibirPreview();
+            criarBotoes();
+        }
+
+        function exibirPreview() {
+            if (links.length > 0) {
+                document.getElementById("preview").src = links[indice];
+            }
+        }
+
+        function criarBotoes() {
+            let divBotoes = document.getElementById("botoes");
+            divBotoes.innerHTML = "";
+            for (let i = 0; i < links.length; i++) {
+                let botao = document.createElement("button");
+                botao.textContent = links[i].substring(links[i].lastIndexOf("/") + 1);
+                botao.addEventListener("click", function() {
+                    indice = i;
+                    exibirPreview();
+                });
+                divBotoes.appendChild(botao);
+            }
+        }
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowLeft") {
+                // exibir preview anterior
+                indice--;
+                if (indice < 0) {
+                    indice = links.length - 1;
+                }
+                exibirPreview();
+            } else if (event.key === "ArrowRight") {
+                // exibir próximo preview
+                indice++;
+                if (indice >= links.length) {
+                    indice = 0;
+                }
+                exibirPreview();
+            }
+        });
+    </script>
+</body>
+</html>
