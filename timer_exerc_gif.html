@@ -20,7 +20,15 @@
       body {
         font-size: calc(4vw + 4vh);
       }
-      button { font-size: 0.5em;} 
+      button { font-size: 0.5em;}
+      #ok { font-size: 0.5em; position:fixed;bottom:0;left:50%;}  
+       input[type="number"], input[type="text"] {
+            width: 4em;
+            margin-left: 5px;
+            background: rgb(255, 255, 255, 0.25);
+            font-size: 1em;
+            text-align: center;
+        }
 
       /* Show tela3 element on entire screen */
       #screen3 {
@@ -56,7 +64,7 @@
           height: 100vw;
           object-fit: contain;
         }
-         .paisagem {display:block; position:fixed;bottom:0;left:50%;font-size:0.2em;}
+         .paisagem {display:block; font-size:0.5em;}
          .retrato {display:none;}
       }
     </style>
@@ -66,30 +74,30 @@
 <div id="principal">
     <!-- Screen 1: Form -->
     <div id="screen1">
-      <div><p class="retrato">&nbsp;</p><p class="paisagem">=</p></div>
+      <div><p class="retrato">&nbsp;</p><p class="paisagem">&nbsp;</p></div>
       <form>
-        <label for="hours">Horas:</label>
+        <label for="hours">Houras:&nbsp;&nbsp;</label>
         <input type="number" id="hours" min="0" max="23" value="0" required>
         <br>
-        <label for="minutes">Minutos:</label>
+        <label for="minutes">Mins:&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="number" id="minutes" min="0" max="59" value="0" required>
         <br>
-        <label for="seconds">Segundos:</label>
+        <label for="seconds">Segs:&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="number" id="seconds" min="0" max="59" value="1" required>
         <br>
         <label for="rest">Descanso:</label>
         <input type="number" id="rest" min="0" max="3600" value="3" required>
         <br>
-        <label for="image">Imagem:</label>
+        <label for="image">Imagem:&nbsp;&nbsp;</label>
         <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
         <br>
-        <button type="submit">OK</button>
+        <button type="submit" id="ok">✅</button>
       </form>
     </div>
 
     <!-- Screen 2: Timer -->
     <div id="screen2" style="display:none;font-size: 1.5em;">
-      <div><p class="retrato">&nbsp;</p><p class="paisagem">=</p></div>
+      <div><p class="retrato">&nbsp;</p><p class="paisagem">&nbsp;</p></div>
       <div id="timer"></div>
       <div style="display:flex-column;">
         <button id="repeat">🔁</button>
