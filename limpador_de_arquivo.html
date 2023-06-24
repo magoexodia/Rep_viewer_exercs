@@ -8,21 +8,101 @@
 </textarea>
 <br>
 <button onclick="filterLines()">Filtrar linhas</button>
+<br><p>imagens</p>
+<textarea id="0" rows="4" cols="50" readonly>
+</textarea>
+<br><p>http</p>
+<textarea id="1" rows="4" cols="50" readonly>
+</textarea>
+<br><p>gif</p>
+<textarea id="2" rows="4" cols="50" readonly>
+</textarea>
+<br><p>notgif</p>
+<textarea id="3" rows="4" cols="50" readonly>
+</textarea>
 <br>
-<textarea id="output" rows="4" cols="50" readonly>
+<p>texto</p>
+<textarea id="4" rows="4" cols="50" readonly>
+</textarea>
+<br>
+<p>video</p>
+<textarea id="5" rows="4" cols="50" readonly>
 </textarea>
 
 <script>
 function filterLines() {
+    http();
+    notgif();
+    image();
+    gif();
+    texto();
+    video();
+}
+function image() {
     var input = document.getElementById("input").value;
     var lines = input.split("\n");
     var output = "";
     for (var i = 0; i < lines.length; i++) {
-        if (lines[i].includes("http") /*&& lines[i].includes(".gif")*/ ) { //descomentar para ter apenas links de gifs.
+        if (lines[i].includes("http") && !lines[i].includes(".mp4") ) { 
             output += lines[i] + "\n";
         }
     }
-    document.getElementById("output").value = output;
+    document.getElementById("0").value = output;
+}
+function http() {
+    var input = document.getElementById("input").value;
+    var lines = input.split("\n");
+    var output = "";
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i].includes("http") ) {
+            output += lines[i] + "\n";
+        }
+    }
+    document.getElementById("1").value = output;
+}
+function gif() {
+    var input = document.getElementById("input").value;
+    var lines = input.split("\n");
+    var output = "";
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i].includes("gif")) { 
+            output += lines[i] + "\n";
+        }
+    }
+    document.getElementById("2").value = output;
+}
+function notgif() {
+    var input = document.getElementById("input").value;
+    var lines = input.split("\n");
+    var output = "";
+    for (var i = 0; i < lines.length; i++) {
+        if (! lines[i].includes("gif") ) { 
+            output += lines[i] + "\n";
+        }
+    }
+    document.getElementById("3").value = output;
+}
+function texto() {
+    var input = document.getElementById("input").value;
+    var lines = input.split("\n");
+    var output = "";
+    for (var i = 0; i < lines.length; i++) {
+        if (! lines[i].includes("http") ) { 
+            output += lines[i] + "\n";
+        }
+    }
+    document.getElementById("4").value = output;
+}
+function video() {
+    var input = document.getElementById("input").value;
+    var lines = input.split("\n");
+    var output = "";
+    for (var i = 0; i < lines.length; i++) {
+        if ( lines[i].includes("http") && lines[i].includes(".mp4")) { 
+            output += lines[i] + "\n";
+        }
+    }
+    document.getElementById("5").value = output;
 }
 </script>
 </body>
