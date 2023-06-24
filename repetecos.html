@@ -6,13 +6,13 @@
     <style>
         @media screen and (orientation: portrait)  {
           #tela3 {
-            transform: rotate(-90deg) scale(1.3);
+            transform: rotate(-90deg) scale(2);
             transform-origin: center;
           }
           body {
             --tam: calc(3vh + 10px);
           }
-          #tela1 {transform: translate(0, 20%);}
+          #tela1 {transform: translate(0, 20%); transform-origin: center;}
           #checkboxes div {
             height: var(--tam);
             min-width: 30px;
@@ -159,7 +159,7 @@
  let entreSeries = document.getElementById("entreSeries");
  let tempo = document.getElementById("tempo");
 
- entreSeries.value = "https://64.media.tumblr.com/d1fb1171b80035e171374b72befffba1/tumblr_o5myfsrQ3n1s5rcozo1_500.gif";
+ entreSeries.value = //"https://64.media.tumblr.com/d1fb1171b80035e171374b72befffba1/tumblr_o5myfsrQ3n1s5rcozo1_500.gif";
  
  let checkedCount = 0;
 
@@ -190,9 +190,9 @@ function handleCheckboxChange(checkbox) {
 
 function displayRandomImage() {
   let images = entreSeries.value.split(", ");
-  let randomImage = images[Math.floor(Math.random() * images.length)];
+  //let randomImage = images[Math.floor(Math.random() * images.length)];
   const img = document.createElement('img');
-  img.src = randomImage;
+  img.src = entreSeries.value; //randomImage;
   document.getElementById("tela3").appendChild(img);
   document.getElementById("tela2").style.display = "none";
   showTela3();
