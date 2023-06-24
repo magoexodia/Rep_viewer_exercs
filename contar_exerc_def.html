@@ -65,22 +65,27 @@
   <body>
     <!-- Tela 1 -->
     <div class="screen active" id="screen1">
-      <label for="repetitions">Contar até:</label>
-      <input type="number" id="repetitions" value="2" min="0">
-      <br>
-      <label for="imageLink">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📷</label>
-      <input type="text" id="imageLink" value="https://64.media.tumblr.com/6a1426cc435aa4a9457832d31cdc7086/tumblr_n4ecc8ZgjC1rlukc4o1_400.gifv">
-      <br>
-      <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
+        <div style="display: flex; flex-direction: column;width:100vw;justify-content: center;align-items: center;">
+            <div class="centra">
+                <label for="repetitions">Contar até:</label>
+                <input type="number" id="repetitions" value="2" min="0">
+            </div>
+            <div class="centra">
+                <label for="imageLink">📷imagem:</label>
+                <input type="text" id="imageLink" value="https://64.media.tumblr.com/6a1426cc435aa4a9457832d31cdc7086/tumblr_n4ecc8ZgjC1rlukc4o1_400.gifv">
+            </div>
+            <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
+        </div>
     </div>
 
     <!-- Tela 2 -->
     <div class="screen" id="screen2">
       <div class="centra">
-        <div id="counter" style="font-size:6em;">0</div><div style="display: flex; flex-direction: column;width:fit-content;">
-          <button onclick="increment()" class="butao">🔼</button>
-          <button onclick="decrement()" class="butao">🔽</button>
-        </div>
+            <div id="counter" style="font-size:6em;">0</div>
+            <div style="display: flex; flex-direction: column;width:fit-content;">
+            <button onclick="increment()" class="butao">🔼</button>
+            <button onclick="decrement()" class="butao">🔽</button>
+            </div>
       </div>
         <div  class="centra">
           <button onclick="reset()" class="butao">🔁</button>
