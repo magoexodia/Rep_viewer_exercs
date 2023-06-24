@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Imagens</title>
+    <title>Lista de Vídeos</title>
+    <style>
+        body {background: red; font-size: 25px;} input[type=text], button {font-size: 1em;}
+        video {
+            height: calc(15vh + 10vw);
+            max-width: 100vw;
+            margin:2px;
+        }
+        .full-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index:120;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="videoLinksInput" placeholder="Insira os links de vídeo separados por vírgula">
+    <button onclick="createVideoList()">Criar lista de vídeos</button>
+    <div id="videoList"></div>
+
+    <script>
+        function createVideoList() {
+            // Selecionar o campo de entrada e obter o valor
+            var videoLinksInput = document.getElementById("videoLinksInput");
+            var videoLinks = videoLinksInput.value;
+
+            // Dividir a lista de links em um array
+            var videos = videoLinks.split(",");
+
+            // Selecionar a lista não ordenada
+            var videoList = document.getElementById("videoList");
+
+            // Limpar a lista não ordenada
+            videoList.innerHTML = "";
+
+            // Loop através dos vídeos e criar um elemento de lista para cada um
+            for (var i = 0; i < videos.length; i++) {
+                var video = document.createElement("video");
+                video.src = videos[i].trim().replace(/^['"]/, "").replace(/['"]$/, "");
+                if (video.src == "") continue;
+                video.controls = true;
+                video.onclick = function() {
+                    this.classList.toggle("full-screen");
+                }
+                videoList.appendChild(video);
+            }
+        }
+    </script>
+</body>
+</html>
