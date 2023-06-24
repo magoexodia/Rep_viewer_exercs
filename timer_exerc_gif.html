@@ -18,10 +18,10 @@
 
       /* Set font size based on viewport size */
       body {
-        font-size: calc(4vw + 4vh);
+        font-size: calc(3vw + 3vh);
       }
-      button { font-size: 0.5em;}
-      #ok { font-size: 0.5em; position:fixed;bottom:0;left:50%;}  
+      button { font-size: 0.5em;background:rgb(0,0,0,0.1);}
+      #ok { font-size: 1em; position:fixed;bottom:0;left:50%;}  
        input[type="number"], input[type="text"] {
             width: 4em;
             margin-left: 5px;
@@ -73,26 +73,27 @@
     
 <div id="principal">
     <!-- Screen 1: Form -->
-    <div id="screen1">
-      <div><p class="retrato">&nbsp;</p><p class="paisagem">&nbsp;</p></div>
-      <form>
-        <label for="hours">⏱️Houras:&nbsp;&nbsp;</label>
-        <input type="number" id="hours" min="0" max="23" value="0" required>
-        <br>
-        <label for="minutes">⏱️Mins:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input type="number" id="minutes" min="0" max="59" value="0" required>
-        <br>
-        <label for="seconds">⏱️Segs:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input type="number" id="seconds" min="0" max="59" value="1" required>
-        <br>
-        <label for="rest">⏱️Descanso:</label>
-        <input type="number" id="rest" min="0" max="3600" value="3" required>
-        <br>
-        <label for="image">📷Imagem:&nbsp;&nbsp;</label>
-        <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
-        <br>
-        <button type="submit" id="ok">✅</button>
-      </form>
+    <div id="screen1"><div style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
+      <div><p class="retrato">&nbsp;</p></div>
+        <form>
+          <label for="hours">⏱️Houras:&nbsp;&nbsp;</label>
+          <input type="number" id="hours" min="0" max="23" value="0" required>
+          <br>
+          <label for="minutes">⏱️Mins:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="number" id="minutes" min="0" max="59" value="0" required>
+          <br>
+          <label for="seconds">⏱️Segs:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="number" id="seconds" min="0" max="59" value="1" required>
+          <br>
+          <label for="rest">⏱️Descanso:</label>
+          <input type="number" id="rest" min="0" max="3600" value="3" required>
+          <br>
+          <label for="image">📷Imagem:&nbsp;&nbsp;</label>
+          <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
+          <br><br>
+          <button type="submit" id="ok">✅</button>
+        </form>
+      </div>
     </div>
 
     <!-- Screen 2: Timer -->
