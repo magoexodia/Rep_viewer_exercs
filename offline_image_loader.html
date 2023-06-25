@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Imagens offline</title>
+    <style> 
+body {background: rgba(255, 129, 247, 0.836);font-size: 20px;} button, input[type=text]{font-size: 1em;}
+img { height: 20vh; width: auto;}
+.enlarged { max-width: 100%; height: 99vh; object-fit: contain; position: fixed; top:0; bottom:0; left:50%; right:50%; transform: translate(-50%,0);}
+.lista { width: 99vw; height: 99vw; display:flex-row;}
+</style>
+</head>
+<body>
+    <input type="file" id="image-input" multiple onchange="loadImages(event)">
+    <div id="image-container"></div>
+
+    <script>
+      function loadImages(event) {
+        const input = event.target;
+        const imageContainer = document.getElementById('image-container');
+        imageContainer.innerHTML = '';
+        if (input.files && input.files.length > 0) {
+          for (let i = 0; i < input.files.length; i++) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              imageContainer.innerHTML += '<img src="' + e.target.result + '">'; //imagen selecionadas -> tag img
+              addImageClickListeners();
+            }
+            reader.readAsDataURL(input.files[i]);
+          }
+        }
+      }
+
+      function addImageClickListeners() {
+        const images = document.querySelectorAll('#image-container img');
+        images.forEach(function(image) {
+          image.addEventListener('click', function() {
+            image.classList.toggle('enlarged');
+          });
+        });
+      }
+    </script>
+</body>
+</html>
