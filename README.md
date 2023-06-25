@@ -1,9 +1,9 @@
 # Rep_viewer_exercs
 
 
-<h2>O que é</h2>
-  <li>Só pra mostrar pra um amigo que sei que está curioso. <br> Espero que gostem, eu gostei resultado... que ainda não é final.
-<li>To show for a friend as curious as me. <br> <li> I wish you like this job. I've put to much effort into this just to get those files viewable in web. 
+<h2>O que é?<br> What it is?</h2>
+  <li>Só pra mostrar pra um amigo que sei que está curioso. <ul> Espero que gostem, eu gostei resultado... que ainda não é final.</ul><ul>É um conjunto de páginas aleatórias para servir de base para projetos particulares que faço. E pra mostrar como está.</ul></li>
+<li>To show for a friend as curious as me. <ul> I wish you like this job. I've put to much effort into this just to get those files viewable in web. </ul><ul>It's a group of random jobs for consultation. And to show how it's going.</ul></li>
 
 <div>
 <h2><a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html">links_viewer.html</a></h2>
