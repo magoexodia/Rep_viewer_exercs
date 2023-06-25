@@ -26,8 +26,10 @@
 <li> To view all you images in a list of links. 
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visuarificador.html">visuarificador.html</a>
 
-
-
+<h2><a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html">offline_image_loader.html</a></h2>
+<li>Um simples visualizador que carrega arquivos offline de imagens pra visualizar no navegador</li>
+<li>A simple image viewer that loads from hd to show in the page.</li>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html">offline_image_loader.html</a>
 
 <h2><a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/video_viewer.html">video_viewer.html</a></h2> 
 <li> Mostrar uma lista de videos mp4. (somente links web)
