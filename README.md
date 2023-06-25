@@ -49,7 +49,7 @@
 <h2><a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html">timer_exerc_gif.html</a></h2> 
 <li> Algo para contar o tempo pra você e depois mostrar um gif pra relaxar.
 <li> To count time than show you a gif to relax (or not)
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html">timer_exerc_gif.html</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a  href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html">timer_exerc_gif.html</a>
 
 
 
