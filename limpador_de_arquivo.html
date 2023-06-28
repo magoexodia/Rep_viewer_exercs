@@ -65,7 +65,7 @@ function gif() {
     var lines = input.split("\n");
     var output = "";
     for (var i = 0; i < lines.length; i++) {
-        if (lines[i].includes("gif")) { 
+        if (lines[i].includes(".gif")) { 
             output += lines[i] + "\n";
         }
     }
@@ -76,7 +76,7 @@ function notgif() {
     var lines = input.split("\n");
     var output = "";
     for (var i = 0; i < lines.length; i++) {
-        if (! lines[i].includes("gif") ) { 
+        if (! lines[i].includes(".gif") ) { 
             output += lines[i] + "\n";
         }
     }
