@@ -106,20 +106,25 @@
 
       function goToScreen1() {
         hideAllScreens();
-        document.getElementById("screen1").classList.add("active");
+        changeScreen(1);
       }
 
       function goToScreen2() {
         hideAllScreens();
-        document.getElementById("screen2").classList.add("active");
+        changeScreen(2);
         reset();
       }
 
       function goToScreen3() {
+        if (imageLink.value == "") { goToScreen1(); return;}
         hideAllScreens();
-        document.getElementById("screen3").classList.add("active");
+        changeScreen(3);
         image.src = imageLink.value;
         setTimeout(goToScreen1, 3000);
+      }
+
+      function changeScreen(screen) {
+        document.getElementById("screen" + screen).classList.add("active");
       }
 
       function hideAllScreens() {
