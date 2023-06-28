@@ -110,25 +110,29 @@
 
       function goToScreen1() {
         hideAllScreens();
-        changeScreen(1);
+        document.getElementById("screen1").classList.add("active");
       }
 
       function goToScreen2() {
         hideAllScreens();
-        changeScreen(2);
+        document.getElementById("screen2").classList.add("active");
         reset();
       }
 
       function goToScreen3() {
-        if (imageLink.value == "") { goToScreen1(); return;}
         hideAllScreens();
-        changeScreen(3);
-        image.src = imageLink.value;
+        document.getElementById("screen3").classList.add("active");
+        let imageFile = document.getElementById("imageFile").files[0];
+        if (imageFile) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            image.src = e.target.result;
+          };
+          reader.readAsDataURL(imageFile);
+        } else {
+          image.src = imageLink.value;
+        }
         setTimeout(goToScreen1, 3000);
-      }
-
-      function changeScreen(screen) {
-        document.getElementById("screen" + screen).classList.add("active");
       }
 
       function hideAllScreens() {
