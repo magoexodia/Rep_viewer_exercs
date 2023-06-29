@@ -72,7 +72,7 @@
 
   
 <h2>Doações<br>Donations</h2>
-<li>Doações paypal: Marinaldo-barbosa@hotmail.com</li>
+<li>PayPal: Marinaldo-barbosa@hotmail.com</li>
 <li>pix <a href="https://nubank.com.br/pagar/tq1wa/9hDxPeWoNB">doar pix</a></li>
 
 <img src="https://github.com/magoexodia/Rep_viewer_exercs/blob/main/pix_pix_pix.png"></div>
