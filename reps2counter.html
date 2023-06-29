@@ -163,31 +163,34 @@
           checkbox.id = "checkbox" + i;
           function handleCheckboxChange(checkbox) {
             if (checkbox.checked) {
-              checkedCount++;
-              let timeLeft = tempo.value;
-              tela2.style.display = "none";
-              tela3.style.display = "block";
-              let countdown = setInterval(function () {
-                if (timeLeft <= 0) {
-                  clearInterval(countdown);
-                  tela3.textContent = "";
-                  tela2.style.display = "block";
-                  tela3.style.display = "none";
-                } else {
-                  // Display the countdown timer in tela3
-                  tela3.textContent = timeLeft;
-                  timeLeft--;
-                }
-              }, 1000);
+                checkedCount++;
+                let timeLeft = tempo.value;
+                tela2.style.display = "none";
+                tela3.style.display = "block";
+                // Display the countdown timer in tela3
+                tela3.textContent = timeLeft;
+                timeLeft--;
+                let countdown = setInterval(function () {
+                    if (timeLeft <= 0) {
+                        clearInterval(countdown);
+                        tela3.textContent = "";
+                        tela2.style.display = "block";
+                        tela3.style.display = "none";
+                    } else {
+                        // Display the countdown timer in tela3
+                        tela3.textContent = timeLeft;
+                        timeLeft--;
+                    }
+                }, 1000);
             } else {
-              checkedCount--;
+                checkedCount--;
             }
             if (checkedCount == repeticoes.value) {
-              setTimeout(function () {
-                desistir.click();
-              }, tempo.value * 1000);
+                setTimeout(function () {
+                    desistir.click();
+                }, tempo.value * 1000);
             }
-          }
+        }
 
           checkbox.addEventListener("change", function () {
             handleCheckboxChange(this);
