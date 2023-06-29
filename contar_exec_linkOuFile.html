@@ -39,7 +39,7 @@
         margin: 10px;
       }
       #ok { position:fixed;bottom:0;left:50%;} 
-      .butao { font-size: 1.5em; background:rgb(0,0,0,0);}
+      .butao { font-size: 1.5em; background:rgb(0,0,0,0); transform: scale(1.25); margin: 0.3em;}
       /* Show tela3 element on entire screen */
       #screen3 {
         position: fixed;
@@ -85,7 +85,7 @@
     <!-- Tela 2 -->
     <div class="screen" id="screen2">
       <div class="centra">
-            <div id="counter" style="font-size:6em;">0</div>
+            <div id="counter" style="font-size:6em;width:1em;text-align:center;margin-right:0.2em;">0</div>
             <div style="display: flex; flex-direction: column;width:fit-content;">
             <button onclick="increment()" class="butao">🔼</button>
             <button onclick="decrement()" class="butao">🔽</button>
@@ -120,19 +120,27 @@
       }
 
       function goToScreen3() {
-        hideAllScreens();
-        document.getElementById("screen3").classList.add("active");
-        let imageFile = document.getElementById("imageFile").files[0];
-        if (imageFile) {
+          hideAllScreens();
+          document.getElementById("screen3").classList.add("active");
+          displayImage();
+          setTimeout(goToScreen1, 3000);
+      }
+
+      function displayImage() {
+          let imageFile = document.getElementById("imageFile").files[0];
+          if (imageFile) {
+              readImageFile(imageFile);
+          } else {
+              image.src = imageLink.value;
+          }
+      }
+
+      function readImageFile(imageFile) {
           let reader = new FileReader();
           reader.onload = function (e) {
-            image.src = e.target.result;
+              image.src = e.target.result;
           };
           reader.readAsDataURL(imageFile);
-        } else {
-          image.src = imageLink.value;
-        }
-        setTimeout(goToScreen1, 3000);
       }
 
       function hideAllScreens() {
@@ -146,8 +154,13 @@
         let value = parseInt(counter.textContent);
         value++;
         counter.textContent = value;
-        if (value >= parseInt(repetitions.value)) {
-          goToScreen3();
+        if (value == parseInt(repetitions.value)) {
+          //goToScreen3();
+          if ( document.getElementById("imageLink").value || document.getElementById("imageFile").files[0] ) {
+            goToScreen3();
+          } else {
+            goToScreen1();
+          }
         }
       }
 
