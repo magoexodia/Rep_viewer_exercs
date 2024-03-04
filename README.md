@@ -70,6 +70,10 @@
 <li> Same as before but with choice between link or image.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exerc_def.html</a>
 
+<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a></h2>
+<li> Ver sua lista links como uma lista links clicáveis. Agiliza muito poder viajar sem ter que selecionar copiar e colar. Cola uma vez, depois é só clicar no que quiser.
+<li> View your list of links as a clickable list. Speeds up see every line withou copy and paste every line. You need paste once then you just click whaterer link you want.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a>
   
 <h2>Doações<br>Donations</h2>
 <li>PayPal: Marinaldo-barbosa@hotmail.com</li>
