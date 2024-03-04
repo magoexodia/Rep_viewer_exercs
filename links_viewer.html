@@ -9,6 +9,7 @@
   #principal { width: calc(100vw - 1em); height: calc(100vh - 1.5em); }
   input[type="text"], button {font-size: 1em; margin-right: 5px;}
  #preview{width: calc(100% - 10px); height: calc(90% - 3em); background:rgb(255,255,255,0.5);}
+ .esconde {display:none;}
 
 </style>
 <body>
@@ -27,73 +28,79 @@
         https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html,
         https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/video_viewer.html,
         https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visuarificador.html,
-        https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html
+        https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html
         ">
-    <button onclick="adicionarLinks()">Adicionar links</button>
-    <button onclick="limparInput()">Limpar</button>
+    <button onclick="adicionarLinks()" title="põe botões dos links colados no espaço ao lado">➕</button>
+    <button onclick="limparInput()" title="limpeza. Ctrl + a, del">❌</button>
+    <button onclick="esconde()" title="troca entre ocultar e mostrar">Mostrar Botões</button>
 
-    <div id="botoes"></div><br>
-
+	<div id="botoes"></div><br>
     <iframe id="preview"></iframe>
     </div>
 
     <script>
         let links = []; //pré-adição de links aqui. Não visível na entrada de links
-        let indice = 0;
-        
-        function limparInput() {
-            document.getElementById("links").value = "";
-        }
+let indice = 0;
 
-        function adicionarLinks() {
-            let inputLinks = document.getElementById("links").value;
-            inputLinks = inputLinks.split(",");
-            for (let i = 0; i < inputLinks.length; i++) {
-                let link = inputLinks[i].trim();
-                link = link.replace(/^['"]/, "").replace(/['"]$/, "");
-                links.push(link);
-            }
+function esconde() {
+    document.getElementById("botoes").classList.toggle("esconde");
+    document.getElementById("alt").value = "Esconde" ? "Mostra" : "Esconde" ;
+}
+
+function limparInput() {
+    document.getElementById("links").value = "";
+}
+
+function adicionarLinks() {
+    let inputLinks = document.getElementById("links").value;
+    inputLinks = inputLinks.split(",");
+    for (let i = 0; i < inputLinks.length; i++) {
+        let link = inputLinks[i].trim();
+        link = link.replace(/^['"]/, "").replace(/['"]$/, "");
+        links.push(link);
+    }
+    exibirPreview();
+    criarBotoes();
+}
+
+function exibirPreview() {
+    if (links.length > 0) {
+        document.getElementById("preview").src = links[indice];
+    }
+}
+
+function criarBotoes() {
+    let divBotoes = document.getElementById("botoes");
+    divBotoes.innerHTML = "";
+    for (let i = 0; i < links.length; i++) {
+        let botao = document.createElement("button");
+        botao.textContent = links[i].substring(links[i].lastIndexOf("/") + 1, links[i].lastIndexOf("."));
+        botao.addEventListener("click", function() {
+            indice = i;
             exibirPreview();
-            criarBotoes();
-        }
-
-        function exibirPreview() {
-            if (links.length > 0) {
-                document.getElementById("preview").src = links[indice];
-            }
-        }
-
-        function criarBotoes() {
-            let divBotoes = document.getElementById("botoes");
-            divBotoes.innerHTML = "";
-            for (let i = 0; i < links.length; i++) {
-                let botao = document.createElement("button");
-                botao.textContent = links[i].substring(links[i].lastIndexOf("/") + 1, links[i].lastIndexOf("."));
-                botao.addEventListener("click", function() {
-                    indice = i;
-                    exibirPreview();
-                });
-                divBotoes.appendChild(botao);
-            }
-        }
-
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "ArrowLeft") {
-                // exibir preview anterior
-                indice--;
-                if (indice < 0) {
-                    indice = links.length - 1;
-                }
-                exibirPreview();
-            } else if (event.key === "ArrowRight") {
-                // exibir próximo preview
-                indice++;
-                if (indice >= links.length) {
-                    indice = 0;
-                }
-                exibirPreview();
-            }
+            esconde();
         });
+        divBotoes.appendChild(botao);
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "ArrowLeft") {
+        // exibir preview anterior
+        indice--;
+        if (indice < 0) {
+            indice = links.length - 1;
+        }
+        exibirPreview();
+    } else if (event.key === "ArrowRight") {
+        // exibir próximo preview
+        indice++;
+        if (indice >= links.length) {
+            indice = 0;
+        }
+        exibirPreview();
+    }
+});
         /*isto link: https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html,*/
     </script>
 </body>
