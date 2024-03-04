@@ -23,13 +23,17 @@
       button { font-size: 0.5em;background:rgb(0,0,0,0.1);}
       #ok { font-size: 1em; position:fixed;bottom:0;left:50%;}  
        input[type="number"], input[type="text"] {
-            width: 4em;
             margin-left: 5px;
             background: rgb(255, 255, 255, 0.25);
             font-size: 1em;
             text-align: center;
         }
-
+        input[type="number"]{
+            width: 2em;
+        } 
+       input[type="text"] {
+            width: 50vw;
+        }
       /* Show tela3 element on entire screen */
       #screen3 {
         position: fixed;
@@ -76,19 +80,20 @@
     <div id="screen1"><div style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
       <div><p class="retrato">&nbsp;</p></div>
         <form>
-          <label for="hours">⏱️Houras:&nbsp;&nbsp;</label>
-          <input type="number" id="hours" min="0" max="23" value="0" required>
-          <br>
-          <label for="minutes">⏱️Mins:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="number" id="minutes" min="0" max="59" value="0" required>
-          <br>
-          <label for="seconds">⏱️Segs:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <input type="number" id="seconds" min="0" max="59" value="1" required>
-          <br>
-          <label for="rest">⏱️Descanso:</label>
+          ⏱️<br class="retrato">
+          <label for="hours">HH</label>
+          <input type="number" id="hours" min="0" max="23" value="0" required><br class="retrato">
+          <label for="minutes">MM</label>
+          <input type="number" id="minutes" min="0" max="59" value="0" required><br class="retrato">
+          <label for="seconds">SS</label>
+          <input type="number" id="seconds" min="0" max="59" value="1" required><br class="retrato">
+          <br class="paisagem">
+          <br class="paisagem">
+          <label for="rest">⏱️Descanso:</label><br class="retrato">
           <input type="number" id="rest" min="0" max="3600" value="3" required>
+          <br class="paisagem">
           <br>
-          <label for="image">📷Imagem:&nbsp;&nbsp;</label>
+          <label for="image">📷Imagem:&nbsp;&nbsp;</label><br class="retrato">
           <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
           <br><br>
           <button type="submit" id="ok">✅</button>
