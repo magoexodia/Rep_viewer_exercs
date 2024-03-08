@@ -1,181 +1,221 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Contagem com visualização de arquivo de imagem ou link de imagem/title>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Repetições</title>
     <style>
-      /* Adicione seu CSS aqui para estilizar os elementos */
-      body {
-        font-family: Monospace, sans-serif;
-        font-size: calc(4vh + 4vw);
-        text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-        background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
-      }
+        /* Estilos gerais */
+        body {
+            font-family: Monospace, sans-serif;
+            font-size: calc(4vh + 4vw);
+            text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+            background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+        }
 
-      .screen {
-        display: none;
-        margin: 20px;
-      }
+        /* Estilos das telas */
+        .screen {
+            display: none;
+            margin: 20px;
+        }
 
-      .screen.active {
-        display: block;
-      }
+        .screen.active {
+            display: block;
+            height: 100vh;
+            width: 100vw;
+            min-heighy: 500px;
+            min-width: 500px;
+        }
 
-      input[type="number"],
-      input[type="text"], #imageFile {
-        font-size: 1em;
-        padding: 5px;
-        margin: 5px;
-        text-align: center;
-        width: 30vw;
-      }
+        input[type="number"],
+        input[type="text"],
+        #imageFile {
+            font-size: 1em;
+            padding: 5px;
+            margin: 5px;
+            text-align: center;
+            width: 30vw;
+        }
 
-      button {
-        padding: 10px;
-        margin: 5px;
-      }
+        button {
+            padding: 10px;
+            margin: 5px;
+        }
 
-      #counter {
-        font-weight: bold;
-        margin: 10px;
-      }
-      #ok { position:fixed;bottom:0;left:50%;} 
-      .butao { font-size: 1.5em; background:rgb(0,0,0,0); transform: scale(1.25); margin: 0.3em;}
-      /* Show tela3 element on entire screen */
-      #screen3 {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-      }
+        #counter {
+            font-weight: bold;
+            margin: 10px;
+        }
 
-      /* Center image within tela3 element */
-      #screen3 img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        object-fit: contain;
-        max-width: 100vh;
-        height: 100vw;
-      }
-      .centra {display: flex; flex-direction: row;width:vw;align-items: center; justify-content: center;}
+        /* Tela 3 */
+        #screen3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #screen3 img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+            max-width: 100vh;
+            height: 100vw;
+        }
+
+        .centra {
+            display: flex;
+            flex-direction: row;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+        }
+        .butao {
+        	font-size: calc( 6vh + 6vh) ;
+            background: rgba(0,0,0, 0);
+            border: none;
+        }
+        #screen2 {
+        	height: fit-content;
+            display: flex-col;
+            min-width: 500px;
+            min-height: 500px;
+        }
+        .flex {
+            display: flex;
+        }
+        #counter {
+        	font-size: 6em;
+            width: 2ch;
+            text-align: right;
+            margin-right: 0.2em;
+        }
+        .umChar {
+             width: 1ch;
+        }
+        .controle {
+            height: 1ch;
+            widht: 100vw;
+            text-align: center;
+        }
+        #ok {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <!-- Tela 1 -->
     <div class="screen active" id="screen1">
-        <div style="display: flex; flex-direction: column;width:100vw;justify-content: center;align-items: center;">
-            <div class="centra">
-                <label for="repetitions">Contar até:</label>
-                <input type="number" id="repetitions" value="2" min="0">
-            </div>
-            <div class="centra">
-              <label for="imageFile">📷Arquivo:</label>
-              <input type="file" id="imageFile" accept="image/*">
-            </div>
-            <div class="centra">
-              <label for="imageLink">Ou 📷Link:</label>
-              <input type="text" id="imageLink">
-            </div>
-            <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
+        <div style="width: fit-contet; text-align: center; margin-right: 0.2em;"><br>
+            <label for="repetitions">0️⃣ a </label>
+            <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><label for="repetitions">s</label><br>
+            <label for="imageFile">📂</label>
+            <input type="file" id="imageFile" accept="image/*"><br>
+            <label for="imageLink">🔗</label>
+            <input type="text" id="imageLink">
         </div>
+        <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
     </div>
 
     <!-- Tela 2 -->
-    <div class="screen" id="screen2">
-      <div class="centra">
-            <div id="counter" style="font-size:6em;width:1em;text-align:center;margin-right:0.2em;">0</div>
-            <div style="display: flex; flex-direction: column;width:fit-content;">
-            <button onclick="increment()" class="butao">🔼</button>
-            <button onclick="decrement()" class="butao">🔽</button>
+    <div id="screen2">
+        <div class="flex">
+            <div id="counter">0</div>
+            <div class="umChar">
+                <button onclick="increment()" class="butao">🔼</button>
+                <button onclick="decrement()" class="butao">🔽</button>
             </div>
-      </div>
-        <div  class="centra">
-          <button onclick="reset()" class="butao">🔁</button>
-          <button onclick="goToScreen1()" class="butao">❌</button>
+        </div>
+        <div class="controle" >
+            <button onclick="reset()" class="butao">🔁</button>
+            <button onclick="goToScreen1()" class="butao">❌</button>
         </div>
     </div>
 
     <!-- Tela 3 -->
     <div class="screen" id="screen3">
-      <img id="image" src="">
+        <img id="image" src="">
     </div>
 
     <script>
-      let repetitions = document.getElementById("repetitions");
-      let imageLink = document.getElementById("imageLink");
-      let counter = document.getElementById("counter");
-      let image = document.getElementById("image");
+    let repetitions = document.getElementById("repetitions");
+    let imageLink = document.getElementById("imageLink");
+    let counter = document.getElementById("counter");
+    let image = document.getElementById("image");
 
-      function goToScreen1() {
+    function goToScreen1() {
         hideAllScreens();
         document.getElementById("screen1").classList.add("active");
-      }
+    }
 
-      function goToScreen2() {
+    function goToScreen2() {
         hideAllScreens();
         document.getElementById("screen2").classList.add("active");
         reset();
-      }
+    }
 
-      function goToScreen3() {
-          hideAllScreens();
-          document.getElementById("screen3").classList.add("active");
-          displayImage();
-          setTimeout(goToScreen1, 3000);
-      }
+    function goToScreen3() {
+        hideAllScreens();
+        document.getElementById("screen3").classList.add("active");
+        displayImage();
+        setTimeout(goToScreen1, 3000);
+    }
 
-      function displayImage() {
-          let imageFile = document.getElementById("imageFile").files[0];
-          if (imageFile) {
-              readImageFile(imageFile);
-          } else {
-              image.src = imageLink.value;
-          }
-      }
+    function displayImage() {
+        let imageFile = document.getElementById("imageFile").files[0];
+        if (imageFile) {
+            readImageFile(imageFile);
+        } else {
+            image.src = imageLink.value;
+        }
+    }
 
-      function readImageFile(imageFile) {
-          let reader = new FileReader();
-          reader.onload = function (e) {
-              image.src = e.target.result;
-          };
-          reader.readAsDataURL(imageFile);
-      }
+    function readImageFile(imageFile) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            image.src = e.target.result;
+        };
+        reader.readAsDataURL(imageFile);
+    }
 
-      function hideAllScreens() {
+    function hideAllScreens() {
         let screens = document.getElementsByClassName("screen");
         for (let i = 0; i < screens.length; i++) {
-          screens[i].classList.remove("active");
+            screens[i].classList.remove("active");
         }
-      }
+    }
 
-      function increment() {
+    function increment() {
         let value = parseInt(counter.textContent);
         value++;
         counter.textContent = value;
         if (value == parseInt(repetitions.value)) {
-          //goToScreen3();
-          if ( document.getElementById("imageLink").value || document.getElementById("imageFile").files[0] ) {
-            goToScreen3();
-          } else {
-            goToScreen1();
-          }
+            if (imageLink.value || document.getElementById("imageFile").files[0]) {
+                goToScreen3();
+            } else {
+                goToScreen1();
+            }
         }
-      }
+    }
 
-      function decrement() {
+    function decrement() {
         let value = parseInt(counter.textContent);
         value--;
         if (value < 0) {
-          value = 0;
+            value = 0;
         }
         counter.textContent = value;
-      }
+    }
 
-      function reset() {
+    function reset() {
         counter.textContent = "0";
-      }
-    </script>
-  </body>
+    }
+</script>
+
+</body>
 </html>
