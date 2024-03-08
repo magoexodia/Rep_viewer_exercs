@@ -7,7 +7,7 @@
     <style>
         /* Estilo opcional para melhorar a aparência */
         body {
-            font-family: Arial, sans-serif;
+            font-family: Lucida Sans, sans-serif;
         }
         .link-list {
             margin: 20px;
@@ -16,6 +16,7 @@
             background-color: #f9f9f9;
             max-height: 200px; /* Altura máxima para exibir 10 links com scroll */
             overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
+            width: 100ch;
         }
         .link-list a {
             display: block;
@@ -40,16 +41,24 @@
             anchorContainer.innerHTML = ''; // Limpa o conteúdo anterior
 
             lines.forEach((line, index) => {
+            if (line.trim() === '') {
+                // Ignora linhas vazias
+                return;
+            }
+            if (line.includes('/')) {
+                // Se a linha contém '/', cria um link
                 const anchor = document.createElement('a');
-                anchor.href = line; //`#link-${index}`;
-                anchor.textContent = line;
+                anchor.href = line;
+                anchor.textContent = line;//.substring(8);
                 anchorContainer.appendChild(anchor);
-
-                const target = document.createElement('div');
-                target.id = `link-${index}`;
-                target.textContent = ''; //`Você clicou em: ${line}`;
-                anchorContainer.appendChild(target);
-            });
+            } else {
+                // Caso contrário, exibe como título h2
+                const title = document.createElement('h3');
+                title.textContent = line;
+                anchorContainer.appendChild(title);
+            }
+            anchorContainer.appendChild(document.createElement('br')); // Adiciona uma quebra de linha
+        });
         }
     </script>
 </body>
