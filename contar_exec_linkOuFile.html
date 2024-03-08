@@ -37,6 +37,9 @@
             width: 30vw;
         }
 
+        input[type="radio"] {
+            transform: scale(3);
+        }
         button {
             padding: 10px;
             margin: 5px;
@@ -114,10 +117,18 @@
         <div style="width: fit-contet; text-align: center; margin-right: 0.2em;"><br>
             <label for="repetitions">0️⃣ a </label>
             <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><label for="repetitions">s</label><br>
-            <label for="imageFile">📂</label>
-            <input type="file" id="imageFile" accept="image/*"><br>
-            <label for="imageLink">🔗</label>
-            <input type="text" id="imageLink">
+        </div>
+        <div>
+            <div style="width: fit-contet; text-align: center; margin-right: 0.2em;">
+                <input type="radio" name="opcao" value="A" checked id="inputA" onchange="handleOptionChange()">
+                <label for="imageFile">📂</label>
+                <input type="file" id="imageFile" accept="image/*" class="opA"><br>
+            </div>
+            <div style="width: fit-contet; text-align: center; margin-right: 0.2em;">
+                <input type="radio" name="opcao" value="B" id="inputB" onchange="handleOptionChange()">
+                <label for="imageLink">🔗</label>
+                <input type="text" id="imageLink" class="opB" disabled>
+            </div>
         </div>
         <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
     </div>
@@ -215,6 +226,12 @@
     function reset() {
         counter.textContent = "0";
     }
+    
+    function handleOptionChange() {
+        document.getElementById('imageLink').disabled = document.getElementById('inputA').checked;
+        document.getElementById('imageFile').disabled = document.getElementById('inputB').checked;
+    }
+    
 </script>
 
 </body>
