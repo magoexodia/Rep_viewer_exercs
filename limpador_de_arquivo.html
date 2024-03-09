@@ -3,31 +3,122 @@
 <!-- A função deste arquivo é pegar um arquivo plural, sujo, cheio de links e retornar somente os links.-->
 <head charset="UTF-8"><title>"Limpar texto do tipo linhas com http</title></head>
 <body>
-    <style> body { font-size: calc(4vh + 4vw); background:rgba(0, 0, 0, 0.212)} button {font-size: 30px;} p {background: white;} textarea {width:calc(99vw - 1em); height: 40vh;font-size: 20px;}</style>
-<textarea id="input" rows="4" cols="50">
-</textarea>
-<br>
-<button onclick="filterLines()">Filtrar linhas</button>
-<br><p>imagens</p>
-<textarea id="0" rows="4" cols="50" readonly>
-</textarea>
-<br><p>http</p>
-<textarea id="1" rows="4" cols="50" readonly>
-</textarea>
-<br><p>gif</p>
-<textarea id="2" rows="4" cols="50" readonly>
-</textarea>
-<br><p>notgif</p>
-<textarea id="3" rows="4" cols="50" readonly>
-</textarea>
-<br>
-<p>texto</p>
-<textarea id="4" rows="4" cols="50" readonly>
-</textarea>
-<br>
-<p>video</p>
-<textarea id="5" rows="4" cols="50" readonly>
-</textarea>
+    <style>
+    body {
+        cursor: crosshair;
+        font-size: calc(4vh + 4vw);
+        background: rgba(0, 0, 0, 0.10);
+    }
+
+    button {
+        font-size: 1.5ch;
+        position: fixed;
+        bottom: 1ch;
+        left: 30%;
+        right: 30%;
+        background: rgba(0, 0, 0, 0.10);
+        width: fit-content;
+    }
+
+    button:hover {
+        background: purple;
+        color: white;
+    }
+
+    p,
+    h1,
+    h2,
+    h3 {
+        color: rgba(255, 0, 0, 0.65);
+        writing-mode: vertical-rl;
+        width: 0.2ch;
+        height: 5ch;
+        white-space: nowrap;
+    }
+
+    p:hover,
+    h1:hover,
+    h2:hover,
+    h3:hover {
+        background: purple;
+        color: black;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    textarea {
+        width: calc(99vw - 1em);
+        height: 55ch;
+        font-size: 0.5ch;
+    }
+
+    .escondido,
+    input[type=checkbox] {
+        display: none;
+    }
+
+    input[type=checkbox]:checked + label {
+        background: green;
+    }
+
+    input[type=checkbox] + label:hover {
+        background: white;
+    }
+
+    #opcoes {
+        display: absolute;
+        top: -1ch;
+        right: 50%;
+        left: 50%;
+        height: 2.2ch;
+        width: fit-content;
+    }
+</style>
+    <div id="principal">
+        <div id="entrada">
+        <textarea id="input"></textarea>
+        <button onclick="filterLines()">Filtrar♻️</button>
+        </div>
+        <div id="opcoes" class="escondido">
+            <input type="checkbox" id="cb0" onchange="esconde(this.value)" value="0">
+            <label for="cb0">📷</label>
+            <input type="checkbox" id="cb1" onchange="esconde(this.value)" value="1">
+            <label for="cb1">🔗</label>
+            <input type="checkbox" id="cb2" onchange="esconde(this.value)" value="2">
+            <label for="cb2">🎆</label>
+            <input type="checkbox" id="cb3" onchange="esconde(this.value)" value="3">
+            <label for="cb3">🖼️</label>
+            <input type="checkbox" id="cb4" onchange="esconde(this.value)" value="4">
+            <label for="cb4">🔤</label>
+            <input type="checkbox" id="cb5" onchange="esconde(this.value)" value="5">
+            <label for="cb5">🎥</label>
+        </div>
+        <div class="flex escondido" id="div0">
+        <textarea id="0" readonly></textarea>
+        <h3>&nbsp;IMAGENS</h3>
+        </div>
+        <div class="flex escondido" id="div1">
+        <textarea id="1" readonly></textarea>
+        <h3>&nbsp;LINKS HTTP</h3>
+        </div>
+        <div class="flex escondido" id="div2">
+        <textarea id="2" readonly></textarea>
+        <h3>&nbsp;GIFS</h3>
+        </div>
+        <div class="flex escondido" id="div3">
+        <textarea id="3" readonly></textarea>
+        <h3>&nbsp;ESTÁTICAS</h3>
+        </div>
+        <div class="flex escondido" id="div4">
+        <textarea id="4" readonly></textarea>
+        <h3>&nbsp;TEXTO</h3>
+        </div>
+        <div class="flex escondido" id="div5">
+        <textarea id="5" readonly></textarea>
+        <h3>&nbsp;VIDEO</h3>
+   </div>
 
 <script>
 function filterLines() {
@@ -37,6 +128,8 @@ function filterLines() {
     gif();
     texto();
     video();
+    troca("entrada");
+    troca("opcoes");
 }
 function image() {
     var input = document.getElementById("input").value;
@@ -104,6 +197,16 @@ function video() {
     }
     document.getElementById("5").value = output;
 }
+
+  function esconde(value) {
+    troca("div" + value);
+    /*document.getElementById("resultado").innerText = "Valor da checkbox alterado: " + value;*/
+  }
+  
+  function troca(quem = "botoes") {
+    document.getElementById(quem).classList.toggle("escondido");
+  }
+        
 </script>
 </body>
 
