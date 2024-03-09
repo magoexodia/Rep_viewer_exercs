@@ -5,15 +5,60 @@
     <title>Preview de Links do GitHub</title>
 </head>
 <style>
-  body { cursor: crosshair; font-family: 'Lucida Sans', sans-serif; font-size: calc(2vh + 1vw); background: rgba(0, 0, 0, 0.164);background-image:url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");background-size: contain; overflow: hidden;}
-  #principal {display: flex-row;}
-  input[type="text"], button {font-size: 1em; margin-right: 5px;}
-  #preview{ width: 99%; height: calc(100vh - 1.5em); background:rgba(255,255,255,0.5); overflow: hidden;}
-  #botoes {position: fixed; top:3ch; right: 0; width: 21ch; height: 90vh; overflow-y: auto;}
-  #botoes button { width: 20ch; background: black; color: silver; overflow: hidden; text-shadow: 0px 0px 1px white, 0px 0px 3px black;}
-  #botoes button:hover{color: black; cursor: pointer; background: white; text-shadow: 0px 0px 5px green, 0px 0px 12px black; }
-  .esconde {display:none;}
-  #destaque {position: absolute; top:0; left: 0;}
+  body {
+	  font-family: 'Lucida Sans', sans-serif;
+	  font-size: calc(2vh + 2vw);
+	  background: rgba(0, 0, 0, 0.164);
+	  background-image:url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
+	  background-size: contain;
+	  cursor: crosshair;
+	  overflow: hidden;
+  }
+  #principal {
+	  height: calc(100svh - (2ch));
+	  width: calc(100svw - (1ch));
+	  margin-top: 1ch;
+	  margin-bottom: 0;
+	  border: none;
+  }
+  input[type="text"], button {
+	  font-size: 1em; 
+  }
+  #preview{
+	  background:rgba(255,255,255,0.5);
+	  height: 100%;
+	  width: 100%;
+	  overflow: auto;
+  }
+  #botoes {
+	  position: fixed; 
+	  top: 2ch; 
+	  right: -2ch;
+	  width: 21ch;
+	  height: calc(2 * 15ch);
+	  overflow-y: auto;
+  }
+  #botoes button {
+	  width: 20ch;
+	  background: black;
+	  color: silver;
+	  overflow: hidden;
+	  text-shadow: 0px 0px 1px white, 0px 0px 3px black;
+  }
+  #botoes button:hover{
+	  color: black;
+	  cursor: pointer;
+	  background: white;
+	  text-shadow: 0px 0px 5px green, 0px 0px 12px black;
+  }
+  .esconde {
+	  display:none;
+  }
+  #destaque {
+	  position: absolute;
+	  top:0;
+	  left: 0;
+  }
 </style>
 
 
