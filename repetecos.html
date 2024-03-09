@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repetecos</title>
+    <style>
+        body, input[type=button], input[type=number], input[type=text] {
+            font-size: calc(3vmax + 4vmin);
+        }
+        body {
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+        }
+        input[type=number] {
+            width: 4ch;
+        }
+        input[type=text] {
+            width: 7ch;
+        }
+        .centralizado {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100svh;
+            overflow: auto;
+        }
+        .justificado {
+            justify-content: center;
+        }
+        .imagem-emoticon {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        input[type="checkbox"] {
+            appearance: none;
+            width: 9ch;
+            height: 9ch;
+            background-color: #fafafa;
+            border: 1px solid #cacece;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+        }
+        input[type="checkbox"]:checked {
+            background-color: #99a1a7;
+        }
+        input[type="checkbox"]:checked:after {
+            content: '✔'; /* Aqui você pode substituir pelo caractere que preferir */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: white;
+        }
+        #emoticon {transform: scale(8);}
+    </style>
+</head>
+<body>
+
+<!-- Primeira Tela -->
+<div id="tela1" class="justificado centralizado">
+  <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
+    🔢 <input type="number" id="valor1" required><br>
+    ⏱️ <input type="number" id="valor2" required><br>
+    📷 <input type="text" id="linkImagem"><br>
+    <input type="submit" value="🆗">
+  </form>
+</div>
+
+<!-- Segunda Tela -->
+<div id="tela2" class="centralizado" style="display: none;">
+  <div id="indices"></div>
+</div>
+
+<!-- Terceira Tela -->
+<div id="tela3" class="centralizado" style="display: none;">
+  <img id="imagem" class="imagem-emoticon">
+  <p id="emoticon" class="imagem-emoticon" style="font-size: 50px; display: none;"></p>
+</div>
+
+<script>
+function validarForm() {
+  var valor1 = document.getElementById('valor1').value;
+  var valor2 = document.getElementById('valor2').value;
+  if(valor1 == "" || valor2 == "") {
+    alert("Por favor, preencha ambos os valores.");
+    return false;
+  }
+  return true;
+}
+
+function criarIndice(i, valor1) {
+  var indice = document.createElement('input');
+  indice.type = 'checkbox';
+  indice.onchange = function() {
+    if (Array.from(document.querySelectorAll('#indices input[type="checkbox"]')).every(x => x.checked)) {
+      abrirTela3();
+    }
+  };
+  return indice;
+}
+
+function abrirTela2() {
+  document.getElementById('tela1').style.display = 'none';
+  var valor1 = document.getElementById('valor1').value;
+  for (var i = 1; i <= valor1; i++) {
+    document.getElementById('indices').appendChild(criarIndice(i, valor1));
+  }
+  document.getElementById('tela2').style.display = 'flex';
+}
+
+function abrirTela3() {
+  document.getElementById('tela2').style.display = 'none';
+  var linkImagem = document.getElementById('linkImagem').value;
+  if (linkImagem != "") {
+    document.getElementById('imagem').src = linkImagem;
+    document.getElementById('imagem').style.display = 'block';
+  } else {
+    document.getElementById('emoticon').style.display = 'block';
+    var emoticons = ['🙂','😁','😄','😯','😉'];
+    var i = 0;
+    setInterval(function() {
+      document.getElementById('emoticon').textContent = emoticons[i];
+      i = (i + 1) % emoticons.length;
+    }, 250);
+  }
+  document.getElementById('tela3').style.display = 'flex';
+  var valor2 = document.getElementById('valor2').value;
+  setTimeout(function() {
+    document.getElementById('tela3').style.display = 'none';
+    document.getElementById('tela1').style.display = 'flex';
+    document.getElementById('indices').innerHTML = '';
+    document.getElementById('meuForm').reset();
+    document.getElementById('imagem').style.display = 'none';
+    document.getElementById('emoticon').style.display = 'none';
+  }, valor2 * 1000);
+}
+</script>
+
+</body>
+</html>
