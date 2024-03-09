@@ -8,9 +8,11 @@
         /* Estilos gerais */
         body {
             font-family: Monospace, sans-serif;
-            font-size: calc(4vh + 4vw);
+            font-size: calc(4vmax + 4vmin);
             text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
             background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+            width: 100svw;
+            height: 100svh;
         }
 
         /* Estilos das telas */
@@ -21,16 +23,14 @@
 
         .screen.active {
             display: block;
-            height: 100vh;
-            width: 100vw;
-            min-heighy: 500px;
-            min-width: 500px;
+            height: 100%;
+            width: 100svw;
         }
 
         input[type="number"],
         input[type="text"],
         #imageFile {
-            font-size: 1em;
+            font-size: 1ch;
             padding: 5px;
             margin: 5px;
             text-align: center;
@@ -71,8 +71,7 @@
 
         .centra {
             display: flex;
-            flex-direction: row;
-            width: 100vw;
+            width: 100%;
             align-items: center;
             justify-content: center;
         }
@@ -84,8 +83,6 @@
         #screen2 {
         	height: fit-content;
             display: flex-col;
-            min-width: 500px;
-            min-height: 500px;
         }
         .flex {
             display: flex;
@@ -114,17 +111,17 @@
 <body>
     <!-- Tela 1 -->
     <div class="screen active" id="screen1">
-        <div style="width: fit-contet; text-align: center; margin-right: 0.2em;"><br>
+        <div style="text-align: center;"><br>
             <label for="repetitions">0️⃣ a </label>
             <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><label for="repetitions">s</label><br>
         </div>
         <div>
-            <div style="width: fit-contet; text-align: center; margin-right: 0.2em;">
+            <div style="text-align: center;">
                 <input type="radio" name="opcao" value="A" checked id="inputA" onchange="handleOptionChange()">
                 <label for="imageFile">📂</label>
                 <input type="file" id="imageFile" accept="image/*" class="opA"><br>
             </div>
-            <div style="width: fit-contet; text-align: center; margin-right: 0.2em;">
+            <div style="text-align: center;">
                 <input type="radio" name="opcao" value="B" id="inputB" onchange="handleOptionChange()">
                 <label for="imageLink">🔗</label>
                 <input type="text" id="imageLink" class="opB" disabled>
@@ -134,8 +131,8 @@
     </div>
 
     <!-- Tela 2 -->
-    <div id="screen2">
-        <div class="flex">
+    <div class="screen" id="screen2">
+        <div class="centra">
             <div id="counter">0</div>
             <div class="umChar">
                 <button onclick="increment()" class="butao">🔼</button>
@@ -176,6 +173,10 @@
         displayImage();
         setTimeout(goToScreen1, 3000);
     }
+
+      function changeScreen(screen) {
+        document.getElementById("screen" + screen).classList.add("active");
+      }
 
     function displayImage() {
         let imageFile = document.getElementById("imageFile").files[0];
