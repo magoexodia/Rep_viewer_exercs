@@ -169,7 +169,7 @@ function notgif() {
     var lines = input.split("\n");
     var output = "";
     for (var i = 0; i < lines.length; i++) {
-        if (! lines[i].includes(".gif") ) { 
+        if ( lines[i].includes("http") && ! lines[i].includes(".gif") && ! lines[i].includes(".mp4") ) { 
             output += lines[i] + "\n";
         }
     }
