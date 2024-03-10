@@ -5,19 +5,18 @@
     <title>Lista de Imagens</title>
 </head>
 <style> 
-body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[type=text]{font-size: 1em;}
+body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[type=text]{font-size: 4vmax;}
 img { height: 20vh; width: auto;}
 .enlarged { max-width: 100%; height: 99vh; object-fit: contain; position: fixed; top:0; bottom:0; left:50%; right:50%; transform: translate(-50%,0);}
 .lista { width: 99vw; height: 99vw; display:flex-row;}
 </style>
 <body>
     <div >
-    <label for="links"><br><br>Insira os links separados por vírgulas:</label>
-    <input type="text" id="links">
-    <button onclick="adicionarLinks()">Adicionar</button>
+    <input type="text" id="links" placeholder="🔗📷, 🔗📷, 🔗📷, 🔗📷,">
+    <button onclick="adicionarLinks()">➕</button>
 
-    <button id="anterior">&lt;</button>
-    <button id="proximo">&gt;</button>
+    <button id="anterior">🔙</button>
+    <button id="proximo">🔜</button>
     <div class="lista" style="height: fit-content; width: fit-content;"></div>
     </div>
     <script>
@@ -77,12 +76,15 @@ img { height: 20vh; width: auto;}
         });
 
         function adicionarLinks() {
+            imagens = [];
             let links = document.getElementById("links").value;
             links = links.split(",");
             for (let i = 0; i < links.length; i++) {
                 let link = links[i].trim();
-                link = link.replace(/^['"]/, "").replace(/['"]$/, "");
-                imagens.push(link);
+                if (link !== "") { // Verifica se o link não é uma string vazia
+                    link = link.replace(/^['"]/, "").replace(/['"]$/, "");
+                    imagens.push(link);
+                }
             }
             exibirImagens(imagens, indice, tamanho);
         }
