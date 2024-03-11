@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<!-- <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -234,6 +234,199 @@
     }
     
 </script>
+
+</body>
+</html> -->
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Repetições</title>
+
+    <style>
+    body {
+        --tam: calc(4vmin + 4vmax);
+        font-family: Monospace, sans-serif;
+        font-size: var(--tam);
+        text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+        background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .screen {
+        display: none;
+        width: 100%;
+    }
+
+    .screen.active {
+        display: block;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    #imageFile {
+        font-size: 1ch;
+        padding: 5px;
+        margin: 5px;
+        text-align: center;
+        width: 30vw;
+    }
+
+    input[type="radio"] {
+        --size: calc(var(--tam) - 2ch);
+        height: var(--size);
+        width:  var(--size);
+    }
+
+    button {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    #counter {
+        font-size: 8ch;
+        font-weight: bold;
+        margin: 10px;
+        width: 2ch;
+        text-align: right;
+    }
+
+    #screen3 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #screen3 img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        width: 100%;
+        max-height: 100%;
+    }
+
+    .butao {
+        font-size: calc( 6vh + 6vh);
+        background: rgba(0,0,0, 0);
+        border: none;
+    }
+
+    #ok {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    </style>
+</head>
+<body>
+      <!-- Tela 1 -->
+      <div class="screen active" id="screen1">
+          <div><br>
+              <label for="repetitions">&nbsp;&nbsp;&nbsp;0️⃣ a </label>
+              <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><br>
+          </div>
+          <div id="selecao">
+              <div>
+                  <input type="radio" name="opcao" value="A" checked id="inputA" onchange="handleOptionChange()">
+                  <label for="imageFile">📂</label>
+                  <input type="file" id="imageFile" accept="image/*" class="opA"><br>
+              </div>
+              <div>
+                  <input type="radio" name="opcao" value="B" id="inputB" onchange="handleOptionChange()">
+                  <label for="imageLink">🔗</label>
+                  <input type="text" id="imageLink" class="opB" disabled>
+              </div>
+          </div>
+          &nbsp;&nbsp;&nbsp;&nbsp;<button onclick="changeScreen(2)" class="butao" id="ok" onhover="load()">✅</button>
+      </div>
+
+      <!-- Tela 2 -->
+      <div class="screen centra" id="screen2">
+          <div style="display: flex; direction: column;">
+              <div id="counter">0</div>
+              <div style="width: 1ch;">
+                  <button onclick="updateCounter(1)" class="butao">🔼</button>
+                  <button onclick="updateCounter(-1)" class="butao">🔽</button>
+              </div>
+          </div>
+          <div class="controle" >
+              <button onclick="updateCounter(-parseInt(counter.textContent))" class="butao">🔁</button>
+              <button onclick="changeScreen(1)" class="butao">❌</button>
+          </div>
+      </div>
+
+      <!-- Tela 3 -->
+      <div class="screen" id="screen3">
+          <img id="image" src="">
+      </div>
+
+
+    <script>
+let repetitions = document.getElementById("repetitions");
+let imageLink = document.getElementById("imageLink");
+let counter = document.getElementById("counter");
+let image = document.getElementById("image");
+
+function changeScreen(screen) {
+    Array.from(document.getElementsByClassName("screen")).forEach(s => s.classList.remove("active"));
+    document.getElementById("screen" + screen).classList.add("active");
+    if (screen === 1) {
+        updateCounter(-parseInt(counter.textContent));
+    }
+    if (screen === 3) {
+        setTimeout(displayImage, 1000);
+    }
+}
+
+function displayImage() {
+    let imageFile = document.getElementById("imageFile").files[0];
+    image.src = imageFile ? URL.createObjectURL(imageFile) : imageLink.value;
+    image.onload = function() {
+        setTimeout(() => changeScreen(1), 3000);
+    };
+}
+
+function updateCounter(delta) {
+    let value = parseInt(counter.textContent) + delta;
+    counter.textContent = Math.max(value, 0);
+    if (value == parseInt(repetitions.value)) {
+        changeScreen(imageLink.value || document.getElementById("imageFile").files[0] ? 3 : 1);
+    }
+}
+
+function handleOptionChange() {
+    document.getElementById('imageLink').disabled = document.getElementById('inputA').checked;
+    document.getElementById('imageFile').disabled = document.getElementById('inputB').checked;
+}
+
+document.getElementById("goToScreen1").addEventListener("click", () => changeScreen(1));
+document.getElementById("goToScreen2").addEventListener("click", () => { changeScreen(2); updateCounter(-parseInt(counter.textContent)); });
+document.getElementById("increment").addEventListener("click", () => updateCounter(1));
+document.getElementById("decrement").addEventListener("click", () => updateCounter(-1));
+
+
+function load(){
+	const img = new Image();
+    img.style.display = "block"; // Hide the image
+    // Set the image source (replace with your desired image URL)
+    img.src = document.getElementById("imageLink").value;
+    // Optionally, add the image to a specific element in your HTML
+    document.getElementById("your-container").appendChild(img);
+}
+    </script>
 
 </body>
 </html>
