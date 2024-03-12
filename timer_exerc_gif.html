@@ -61,6 +61,14 @@
         }
         .retrato {display:block; font-size:1em;}
         .paisagem {display:none;}
+        #screen2 {
+            font-size: calc(4vim + 4vmax);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+            transform-origin: center;
+        }
       }
       @media screen and (orientation: landscape) {
         #screen3 img {
