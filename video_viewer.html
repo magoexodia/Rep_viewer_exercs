@@ -2,6 +2,67 @@
 <html>
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Vídeos</title>
+    <style>
+        body {background: red; font-size: 3vmax;} input[type=text], button {font-size: 2ch;}
+        #mainVideo {
+            position: fixed;
+            top: 3ch;
+            left: 3px;
+            bottom: 3px;
+            width: 80%;
+            height: calc(100% - 3ch);
+        }
+        #videoList {
+            position: fixed;
+            right: 0;
+            width: 20%;
+            height: 100%;
+            overflow-y: scroll;
+        }
+        .some {display:none;}
+    </style>
+</head>
+<body>
+    <input type="text" id="videoLinksInput" placeholder="🎥🔗, 🎥🔗, 🎥🔗,">
+    <button onclick="createVideoList()">➕</button>
+    <video id="mainVideo" controls class="some"></video>
+    <div id="videoList"></div>
+
+    <script>
+        function createVideoList() {
+            var videoLinksInput = document.getElementById("videoLinksInput");
+            var videoLinks = videoLinksInput.value;
+            var videos = videoLinks.split(",");
+            var videoList = document.getElementById("videoList");
+            var mainVideo = document.getElementById("mainVideo");
+            videoList.innerHTML = "";
+            for (var i = 0; i < videos.length; i++) {
+                var videoSrc = videos[i].trim().replace(/^['"]/, "").replace(/['"]$/, "");
+                if (videoSrc == "") continue;
+                var button = document.createElement("button");
+                button.textContent = "Vídeo " + (i + 1);
+                button.onclick = (function(src) {
+                    return function() {
+                        mainVideo.src = src;
+                    }
+                })(videoSrc);
+                if (i == 0) {
+                    mainVideo.src = videoSrc;
+                }
+                videoList.appendChild(button);
+            }
+            mainVideo.classList.remove("some");
+        }
+    </script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Lista de Imagens</title>
     <title>Lista de Vídeos</title>
     <style>
@@ -55,4 +116,4 @@
         }
     </script>
 </body>
-</html>
+</html> -->
