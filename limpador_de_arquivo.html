@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-<!-- A função deste arquivo é pegar um arquivo plural, sujo, cheio de links e retornar somente os links.-->
-<head charset="UTF-8"><title>"Limpar texto do tipo linhas com http</title></head>
-<body>
+<head>
     <style>
-    body {
+    body, button {
         cursor: crosshair;
         font-size: calc(4vh + 4vw);
         background: rgba(0, 0, 0, 0.10);
@@ -16,32 +14,20 @@
         bottom: 1ch;
         left: 30%;
         right: 30%;
-        background: rgba(0, 0, 0, 0.10);
         width: fit-content;
     }
 
-    button:hover {
+    button:hover, p:hover, h1:hover, h2:hover, h3:hover {
         background: purple;
         color: white;
     }
 
-    p,
-    h1,
-    h2,
-    h3 {
+    p, h1, h2, h3 {
         color: rgba(255, 0, 0, 0.65);
         writing-mode: vertical-rl;
         width: 0.2ch;
         height: 5ch;
         white-space: nowrap;
-    }
-
-    p:hover,
-    h1:hover,
-    h2:hover,
-    h3:hover {
-        background: purple;
-        color: black;
     }
 
     .flex {
@@ -54,8 +40,7 @@
         font-size: 0.5ch;
     }
 
-    .escondido,
-    input[type=checkbox] {
+    .escondido, input[type=checkbox] {
         display: none;
     }
 
@@ -75,7 +60,9 @@
         height: 2.2ch;
         width: fit-content;
     }
-</style>
+    </style>
+</head>
+<body>
     <div id="principal">
         <div id="entrada">
         <textarea id="input"></textarea>
@@ -94,120 +81,74 @@
             <label for="cb4">🔤</label>
             <input type="checkbox" id="cb5" onchange="esconde(this.value)" value="5">
             <label for="cb5">🎥</label>
+            <input type="checkbox" id="cb6" onchange="reset()" value="6">
+            <label for="cb6">🔄</label>
         </div>
         <div class="flex escondido" id="div0">
         <textarea id="0" readonly></textarea>
-        <h3>&nbsp;IMAGENS</h3>
+        <h3> IMAGENS</h3>
         </div>
         <div class="flex escondido" id="div1">
         <textarea id="1" readonly></textarea>
-        <h3>&nbsp;LINKS HTTP</h3>
+        <h3> LINKS HTTP</h3>
         </div>
         <div class="flex escondido" id="div2">
         <textarea id="2" readonly></textarea>
-        <h3>&nbsp;GIFS</h3>
+        <h3> GIFS</h3>
         </div>
         <div class="flex escondido" id="div3">
         <textarea id="3" readonly></textarea>
-        <h3>&nbsp;ESTÁTICAS</h3>
+        <h3> ESTÁTICAS</h3>
         </div>
         <div class="flex escondido" id="div4">
         <textarea id="4" readonly></textarea>
-        <h3>&nbsp;TEXTO</h3>
+        <h3> TEXTO</h3>
         </div>
         <div class="flex escondido" id="div5">
         <textarea id="5" readonly></textarea>
-        <h3>&nbsp;VIDEO</h3>
-   </div>
+        <h3> VIDEO</h3>
+        </div>
+    </div>
+    <script>
+    function filterLines() {
+        filter("http", null, ".mp4", null, false, "0");
+        filter("http", null, null, null, false, "1");
+        filter("http", ".gif", null, null, false, "2");
+        filter("http", null, ".gif", null, false, "3");
+        filter("http", null, null, null, true, "4");
+        filter(".mp4", null, null, null, false, "5");
+        troca("entrada");
+        troca("opcoes");
+    }
+    
+    function filter(include1, include2, exclude1, exclude2, invert, outputId) {
+        var input = document.getElementById("input").value;
+        var lines = input.split("\n");
+        var output = "";
+        for (var i = 0; i < lines.length; i++) {
+            if (invert ? !(lines[i].includes(include1) || lines[i].includes(include2)) : 
+                (lines[i].includes(include1) || lines[i].includes(include2)) && 
+                (!exclude1 || !lines[i].includes(exclude1)) && 
+                (!exclude2 || !lines[i].includes(exclude2))) {
+                output += lines[i] + "\n";
+            }
+        }
+        document.getElementById(outputId).value = output;
+    }
+    
+    function troca(quem = "botoes") {
+        document.getElementById(quem).classList.toggle("escondido");
+    }
+    
+    function esconde(value) {
+        troca("div" + value);
+    }
+    
+    function reset() {
+        document.getElementById("entrada").classList.remove("escondido");
+        document.getElementById("opcoes").classList.add("escondido");
+    }
 
-<script>
-function filterLines() {
-    http();
-    notgif();
-    image();
-    gif();
-    texto();
-    video();
-    troca("entrada");
-    troca("opcoes");
-}
-function image() {
-    var input = document.getElementById("input").value;
-    var lines = input.split("\n");
-    var output = "";
-    for (var i = 0; i < lines.length; i++) {
-        if (lines[i].includes("http") && !lines[i].includes(".mp4") ) { 
-            output += lines[i] + "\n";
-        }
-    }
-    document.getElementById("0").value = output;
-}
-function http() {
-    var input = document.getElementById("input").value;
-    var lines = input.split("\n");
-    var output = "";
-    for (var i = 0; i < lines.length; i++) {
-        if (lines[i].includes("http") ) {
-            output += lines[i] + "\n";
-        }
-    }
-    document.getElementById("1").value = output;
-}
-function gif() {
-    var input = document.getElementById("input").value;
-    var lines = input.split("\n");
-    var output = "";
-    for (var i = 0; i < lines.length; i++) {
-        if (lines[i].includes(".gif")) { 
-            output += lines[i] + "\n";
-        }
-    }
-    document.getElementById("2").value = output;
-}
-function notgif() {
-    var input = document.getElementById("input").value;
-    var lines = input.split("\n");
-    var output = "";
-    for (var i = 0; i < lines.length; i++) {
-        if ( lines[i].includes("http") && ! lines[i].includes(".gif") && ! lines[i].includes(".mp4") ) { 
-            output += lines[i] + "\n";
-        }
-    }
-    document.getElementById("3").value = output;
-}
-function texto() {
-    var input = document.getElementById("input").value;
-    var lines = input.split("\n");
-    var output = "";
-    for (var i = 0; i < lines.length; i++) {
-        if (! lines[i].includes("http") ) { 
-            output += lines[i] + "\n";
-        }
-    }
-    document.getElementById("4").value = output;
-}
-function video() {
-    var input = document.getElementById("input").value;
-    var lines = input.split("\n");
-    var output = "";
-    for (var i = 0; i < lines.length; i++) {
-        if ( lines[i].includes("http") && lines[i].includes(".mp4")) { 
-            output += lines[i] + "\n";
-        }
-    }
-    document.getElementById("5").value = output;
-}
-
-  function esconde(value) {
-    troca("div" + value);
-    /*document.getElementById("resultado").innerText = "Valor da checkbox alterado: " + value;*/
-  }
-  
-  function troca(quem = "botoes") {
-    document.getElementById(quem).classList.toggle("escondido");
-  }
-        
-</script>
+    </script>
 </body>
-
 </html>
