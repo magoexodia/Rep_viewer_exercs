@@ -16,7 +16,7 @@
             background-color: #f9f9f9;
             max-height: 200px; /* Altura máxima para exibir 10 links com scroll */
             overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
-            width: 100ch;
+            width: 99vw;
         }
         .link-list a {
             display: block;
@@ -28,7 +28,7 @@
 </head>
 <body>
     <div class="link-list">
-        <textarea id="text-input" rows="5" cols="50" wrap="off" oninput="createAnchors()"></textarea>
+        <textarea id="text-input" rows="5" cols="50" wrap="off" oninput="createAnchors()" onclick="this.select()"></textarea>
     </div>
     <div id="anchor-container" nowrap></div>
 
