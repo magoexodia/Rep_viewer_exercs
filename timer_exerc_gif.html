@@ -20,7 +20,7 @@
       body {
         font-size: calc(3vw + 3vh);
       }
-      button { font-size: 0.5em;background:rgb(0,0,0,0.1);}
+      button { font-size: 1em;background:rgb(0,0,0,0.1);}
       #ok { font-size: 1em; position:fixed;bottom:0;left:50%;}  
        input[type="number"], input[type="text"] {
             margin-left: 5px;
@@ -76,9 +76,10 @@
           height: 100vw;
           object-fit: contain;
         }
-         .paisagem {display:block; font-size:0.5em;}
+         .paisagem {display:block; font-size:2ch;}
          .retrato {display:none;}
       }
+      #timer {transform: scale(2); }
     </style>
 </head>
 <body>
@@ -114,7 +115,7 @@
     <!-- Screen 2: Timer -->
     <div id="screen2" style="display:none;font-size: 1.5em;">
       <div><p class="retrato">&nbsp;</p><p class="paisagem">&nbsp;</p></div>
-      <div id="timer"></div>
+      <div id="timer"></div><br>
       <div style="display:flex-column;">
         <button id="repeat">🔁</button>
         <button id="cancel">❌</button>
