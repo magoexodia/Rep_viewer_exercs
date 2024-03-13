@@ -88,27 +88,27 @@
             <label for="cb6"></label>
         </div>
         <div class="flex escondido" id="div0">
-            <textarea id="0" readonly onclick="selectText(this)"></textarea>
+            <textarea id="0" readonly onclick="this.select()"></textarea>
             <h3> IMAGENS</h3>
         </div>
         <div class="flex escondido" id="div1">
-            <textarea id="1" readonly onclick="selectText(this)"></textarea>
+            <textarea id="1" readonly onclick="this.select()"></textarea>
             <h3> LINKS HTTP</h3>
         </div>
         <div class="flex escondido" id="div2">
-            <textarea id="2" readonly onclick="selectText(this)"></textarea>
+            <textarea id="2" readonly onclick="this.select()"></textarea>
             <h3> GIFS</h3>
         </div>
         <div class="flex escondido" id="div3">
-            <textarea id="3" readonly onclick="selectText(this)"></textarea>
+            <textarea id="3" readonly onclick="this.select()"></textarea>
             <h3> ESTÁTICAS</h3>
         </div>
         <div class="flex escondido" id="div4">
-            <textarea id="4" readonly onclick="selectText(this)"></textarea>
+            <textarea id="4" readonly onclick="this.select()"></textarea>
             <h3> TEXTO</h3>
         </div>
         <div class="flex escondido" id="div5">
-            <textarea id="5" readonly onclick="selectText(this)"></textarea>
+            <textarea id="5" readonly onclick="this.select()"></textarea>
             <h3> VIDEO</h3>
         </div>
     </div>
@@ -151,7 +151,6 @@
         document.getElementById("entrada").classList.remove("escondido");
         document.getElementById("opcoes").classList.add("escondido");
     }
-    function selectText(element) { element.select(); }
 
     </script>
 </body>
