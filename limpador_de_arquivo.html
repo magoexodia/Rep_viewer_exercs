@@ -2,24 +2,26 @@
 <html>
 <head>
     <style>
-    body, button {
+    body, button, div {
         cursor: crosshair;
         font-size: calc(4vh + 4vw);
         background: rgba(0, 0, 0, 0.10);
     }
+    label {font-size: calc(10vw * 0.7);}
 
     button {
-        font-size: 1.5ch;
         position: fixed;
-        bottom: 1ch;
+        bottom: 5px;
         left: 30%;
         right: 30%;
         width: fit-content;
+        text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
     }
 
     button:hover, p:hover, h1:hover, h2:hover, h3:hover {
         background: purple;
         color: white;
+        text-shadow: 0px 0px 2px black, 0px 0px 3px white;
     }
 
     p, h1, h2, h3 {
@@ -36,9 +38,10 @@
 
     textarea {
         width: 85%;
-        height: 75svh;
+        height: 87svh;
         font-size: 0.5ch;
     }
+    #input { width: 100%; height: calc(90vh - 4ch);}
 
     .escondido, input[type=checkbox] {
         display: none;
@@ -54,19 +57,19 @@
 
     #opcoes {
         display: absolute;
-        top: -1ch;
+        top: -2ch;
         right: 50%;
         left: 50%;
-        height: 2.2ch;
-        width: fit-content;
+        height: 2.5ch;
+        width: 100%;
     }
     </style>
 </head>
 <body>
     <div id="principal">
         <div id="entrada">
-        <textarea id="input"></textarea>
-        <button onclick="filterLines()">Filtrar♻️</button>
+            <textarea id="input" ondblclick="selectText(this)"></textarea>
+            <button onclick="filterLines()">Filtrar♻️</button>
         </div>
         <div id="opcoes" class="escondido">
             <input type="checkbox" id="cb0" onchange="esconde(this.value)" value="0">
@@ -81,32 +84,32 @@
             <label for="cb4">🔤</label>
             <input type="checkbox" id="cb5" onchange="esconde(this.value)" value="5">
             <label for="cb5">🎥</label>
-            <input type="checkbox" id="cb6" onchange="reset()" value="6">
-            <label for="cb6">🔄</label>
+            <button id="cb6" onclick="reset()" value="6" style="z-index: -1;">🔄</button>
+            <label for="cb6"></label>
         </div>
         <div class="flex escondido" id="div0">
-        <textarea id="0" readonly></textarea>
-        <h3> IMAGENS</h3>
+            <textarea id="0" readonly onclick="selectText(this)"></textarea>
+            <h3> IMAGENS</h3>
         </div>
         <div class="flex escondido" id="div1">
-        <textarea id="1" readonly></textarea>
-        <h3> LINKS HTTP</h3>
+            <textarea id="1" readonly onclick="selectText(this)"></textarea>
+            <h3> LINKS HTTP</h3>
         </div>
         <div class="flex escondido" id="div2">
-        <textarea id="2" readonly></textarea>
-        <h3> GIFS</h3>
+            <textarea id="2" readonly onclick="selectText(this)"></textarea>
+            <h3> GIFS</h3>
         </div>
         <div class="flex escondido" id="div3">
-        <textarea id="3" readonly></textarea>
-        <h3> ESTÁTICAS</h3>
+            <textarea id="3" readonly onclick="selectText(this)"></textarea>
+            <h3> ESTÁTICAS</h3>
         </div>
         <div class="flex escondido" id="div4">
-        <textarea id="4" readonly></textarea>
-        <h3> TEXTO</h3>
+            <textarea id="4" readonly onclick="selectText(this)"></textarea>
+            <h3> TEXTO</h3>
         </div>
         <div class="flex escondido" id="div5">
-        <textarea id="5" readonly></textarea>
-        <h3> VIDEO</h3>
+            <textarea id="5" readonly onclick="selectText(this)"></textarea>
+            <h3> VIDEO</h3>
         </div>
     </div>
     <script>
@@ -148,6 +151,7 @@
         document.getElementById("entrada").classList.remove("escondido");
         document.getElementById("opcoes").classList.add("escondido");
     }
+    function selectText(element) { element.select(); }
 
     </script>
 </body>
