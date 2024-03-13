@@ -5,8 +5,8 @@
     <title>Lista de Imagens</title>
 </head>
 <style> 
-body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[type=text]{font-size: 4vmax;}
-.lista img { height: 20vmax; width: auto;}
+body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[type=text], input[type=number]{font-size: 4vmax;} input[type=number]{width: 3ch;}
+.lista img { height: 15vh; width: auto;}
 .grande {
     position: fixed;
     top: 0;
@@ -60,6 +60,7 @@ body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[typ
 <body>
     <div >
     <input type="text" id="links" placeholder="🔗📷, 🔗📷, 🔗📷, 🔗📷,">
+    <input type="number" id="quanto">
     <button onclick="adicionarLinks()">➕</button>
 
     <button id="anterior">🔙</button>
@@ -71,14 +72,14 @@ body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[typ
     </div>
     <script>
         let indice = 0;
-        let tamanho = 20; //<= a quantidade a ser exibida
-function exibirImagens(imagens, indice, tamanho) {
+        let tamanho = 20;//document.getElementById('quanto').value;//<= a quantidade a ser exibida
+function exibirImagens(imagens) {
     let lista = document.querySelector(".lista");
     lista.innerHTML = "";
-    for (let i = indice; i < indice + tamanho; i++) {
+    for (let i = 0; i < tamanho; i++) {
         if (i < imagens.length) {
             let img = document.createElement("img");
-            img.src = imagens[i];
+            img.src = imagens[i + indice];
             img.onclick = function() { 
                 document.getElementById('imagemGrande').src = img.src;
                 document.querySelector('.grande').classList.add('visivel');
@@ -120,41 +121,31 @@ function exibirImagens(imagens, indice, tamanho) {
 }
 
         let imagens = [];
-        exibirImagens(imagens, indice, tamanho);
+        exibirImagens(imagens);
 
         let anterior = document.getElementById("anterior");
         anterior.addEventListener("click", function() {
             indice -= tamanho;
             if (indice < 0) {
-                indice = 0;
+                indice = imagens.length - tamanho;
             }
-            exibirImagens(imagens, indice, tamanho);
+            exibirImagens(imagens);
         });
 
         let proximo = document.getElementById("proximo");
         proximo.addEventListener("click", function() {
             indice += tamanho;
             if (indice >= imagens.length) {
-                indice -= tamanho;
+                indice = 0;
             }
-            exibirImagens(imagens, indice, tamanho);
+            exibirImagens(imagens);
         });
 
         document.addEventListener("keydown", function(event) {
             if (event.key === "ArrowLeft") {
-                // exibir imagens anteriores
-                indice -= tamanho;
-                if (indice < 0) {
-                    indice = imagens.length - tamanho;
-                }
-                exibirImagens(imagens, indice, tamanho);
+                document.getElementById("anterior").click();
             } else if (event.key === "ArrowRight") {
-                // exibir próximas imagens
-                indice += tamanho;
-                if (indice >= imagens.length) {
-                    indice = 0;
-                }
-                exibirImagens(imagens, indice, tamanho);
+                document.getElementById("proximo").click();
             }
         });
 
@@ -169,7 +160,7 @@ function exibirImagens(imagens, indice, tamanho) {
                     imagens.push(link);
                 }
             }
-            exibirImagens(imagens, indice, tamanho);
+            exibirImagens(imagens);
         }
     </script>
 </body>
