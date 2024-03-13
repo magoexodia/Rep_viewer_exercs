@@ -98,6 +98,16 @@
         transform: translateX(-50%);
     }
 
+    @media screen and (orientation: landscape) {
+        #screen1, #screen2 {
+          max-width: 60vh;
+          height: 80vw;
+          transform: rotate(90deg);
+		  transform-origin: center;
+        }
+         .paisagem {display:block; font-size:2ch;}
+         .retrato {display:none;}
+    }
     </style>
 </head>
 <body>
