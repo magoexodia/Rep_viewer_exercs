@@ -104,8 +104,9 @@
       <!-- Tela 1 -->
       <div class="screen active" id="screen1">
           <div><br>
-              <label for="repetitions">&nbsp;&nbsp;&nbsp;0️⃣ a </label>
-              <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><br>
+              <label for="repetitions">0️⃣ a </label>
+              <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><br><label for="tempo"> ⏳ &nbsp;</label>
+              <input type="number" id="tempo" value="1" min="0" style="width: 4.5ch; text-align: right;"><br>
           </div>
           <div id="selecao">
               <div>
@@ -155,12 +156,12 @@
                 updateCounter(-parseInt(counter.textContent));
             }
             if (screen === 3) {
-                setTimeout(displayImage, 1000);
+                displayImage();
             }
         }
 
         function displayImage() { //dá um tempo e volta pra screen1
-            setTimeout(() => changeScreen(1), 3000);
+            setTimeout(() => changeScreen(1), document.getElementById('tempo').value * 1000);
         }
 
         function updateCounter(delta) {
