@@ -1,243 +1,4 @@
 <!DOCTYPE html>
-<!-- <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador de Repetições</title>
-    <style>
-        /* Estilos gerais */
-        body {
-            font-family: Monospace, sans-serif;
-            font-size: calc(4vmax + 4vmin);
-            text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-            background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
-            width: 100svw;
-            height: 100svh;
-        }
-
-        /* Estilos das telas */
-        .screen {
-            display: none;
-            margin: 20px;
-        }
-
-        .screen.active {
-            display: block;
-            height: 100%;
-            width: 100svw;
-        }
-
-        input[type="number"],
-        input[type="text"],
-        #imageFile {
-            font-size: 1ch;
-            padding: 5px;
-            margin: 5px;
-            text-align: center;
-            width: 30vw;
-        }
-
-        input[type="radio"] {
-            transform: scale(3);
-        }
-        button {
-            padding: 10px;
-            margin: 5px;
-        }
-
-        #counter {
-            font-weight: bold;
-            margin: 10px;
-        }
-
-        /* Tela 3 */
-        #screen3 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        #screen3 img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: contain;
-            max-width: 100vh;
-            height: 100vw;
-        }
-
-        .centra {
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: center;
-        }
-        .butao {
-        	font-size: calc( 6vh + 6vh) ;
-            background: rgba(0,0,0, 0);
-            border: none;
-        }
-        #screen2 {
-        	height: fit-content;
-            display: flex-col;
-        }
-        .flex {
-            display: flex;
-        }
-        #counter {
-        	font-size: 6em;
-            width: 2ch;
-            text-align: right;
-            margin-right: 0.2em;
-        }
-        .umChar {
-             width: 1ch;
-        }
-        .controle {
-            height: 1ch;
-            widht: 100vw;
-            text-align: center;
-        }
-        #ok {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-        }
-    </style>
-</head>
-<body>
-    <!-- Tela 1 -->
-    <div class="screen active" id="screen1">
-        <div style="text-align: center;"><br>
-            <label for="repetitions">0️⃣ a </label>
-            <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><label for="repetitions">s</label><br>
-        </div>
-        <div>
-            <div style="text-align: center;">
-                <input type="radio" name="opcao" value="A" checked id="inputA" onchange="handleOptionChange()">
-                <label for="imageFile">📂</label>
-                <input type="file" id="imageFile" accept="image/*" class="opA"><br>
-            </div>
-            <div style="text-align: center;">
-                <input type="radio" name="opcao" value="B" id="inputB" onchange="handleOptionChange()">
-                <label for="imageLink">🔗</label>
-                <input type="text" id="imageLink" class="opB" disabled>
-            </div>
-        </div>
-        <button onclick="goToScreen2()" class="butao" id="ok">✅</button>
-    </div>
-
-    <!-- Tela 2 -->
-    <div class="screen" id="screen2">
-        <div class="centra">
-            <div id="counter">0</div>
-            <div class="umChar">
-                <button onclick="increment()" class="butao">🔼</button>
-                <button onclick="decrement()" class="butao">🔽</button>
-            </div>
-        </div>
-        <div class="controle" >
-            <button onclick="reset()" class="butao">🔁</button>
-            <button onclick="goToScreen1()" class="butao">❌</button>
-        </div>
-    </div>
-
-    <!-- Tela 3 -->
-    <div class="screen" id="screen3">
-        <img id="image" src="">
-    </div>
-
-    <script>
-    let repetitions = document.getElementById("repetitions");
-    let imageLink = document.getElementById("imageLink");
-    let counter = document.getElementById("counter");
-    let image = document.getElementById("image");
-
-    function goToScreen1() {
-        hideAllScreens();
-        document.getElementById("screen1").classList.add("active");
-    }
-
-    function goToScreen2() {
-        hideAllScreens();
-        document.getElementById("screen2").classList.add("active");
-        reset();
-    }
-
-    function goToScreen3() {
-        hideAllScreens();
-        document.getElementById("screen3").classList.add("active");
-        displayImage();
-        setTimeout(goToScreen1, 3000);
-    }
-
-      function changeScreen(screen) {
-        document.getElementById("screen" + screen).classList.add("active");
-      }
-
-    function displayImage() {
-        let imageFile = document.getElementById("imageFile").files[0];
-        if (imageFile) {
-            readImageFile(imageFile);
-        } else {
-            image.src = imageLink.value;
-        }
-    }
-
-    function readImageFile(imageFile) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            image.src = e.target.result;
-        };
-        reader.readAsDataURL(imageFile);
-    }
-
-    function hideAllScreens() {
-        let screens = document.getElementsByClassName("screen");
-        for (let i = 0; i < screens.length; i++) {
-            screens[i].classList.remove("active");
-        }
-    }
-
-    function increment() {
-        let value = parseInt(counter.textContent);
-        value++;
-        counter.textContent = value;
-        if (value == parseInt(repetitions.value)) {
-            if (imageLink.value || document.getElementById("imageFile").files[0]) {
-                goToScreen3();
-            } else {
-                goToScreen1();
-            }
-        }
-    }
-
-    function decrement() {
-        let value = parseInt(counter.textContent);
-        value--;
-        if (value < 0) {
-            value = 0;
-        }
-        counter.textContent = value;
-    }
-
-    function reset() {
-        counter.textContent = "0";
-    }
-    
-    function handleOptionChange() {
-        document.getElementById('imageLink').disabled = document.getElementById('inputA').checked;
-        document.getElementById('imageFile').disabled = document.getElementById('inputB').checked;
-    }
-    
-</script>
-
-</body>
-</html> -->
-
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -306,6 +67,14 @@
         height: 100vh;
     }
 
+    #screen1 {
+        position: fixed;
+        top: 10%;
+        left: 20%;
+        width: 100vw;
+        height: 100vh;
+    }
+
     #screen3 img {
         position: absolute;
         top: 50%;
@@ -340,23 +109,23 @@
           </div>
           <div id="selecao">
               <div>
-                  <input type="radio" name="opcao" value="A" checked id="inputA" onchange="handleOptionChange()">
+                  <input type="radio" name="opcao" checked id="inputA" onchange="handleOptionChange()">
                   <label for="imageFile">📂</label>
                   <input type="file" id="imageFile" accept="image/*" class="opA"><br>
               </div>
               <div>
-                  <input type="radio" name="opcao" value="B" id="inputB" onchange="handleOptionChange()">
+                  <input type="radio" name="opcao" id="inputB" onchange="handleOptionChange()">
                   <label for="imageLink">🔗</label>
-                  <input type="text" id="imageLink" class="opB" disabled>
+                  <input type="text" id="imageLink" class="opB" disabled value="" onclick="this.select()">
               </div>
           </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;<button onclick="changeScreen(2)" class="butao" id="ok" onhover="load()">✅</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;<button onclick="changeScreen(2)" class="butao" id="ok">✅</button>
       </div>
 
       <!-- Tela 2 -->
       <div class="screen centra" id="screen2">
           <div style="display: flex; direction: column;">
-              <div id="counter">0</div>
+              <div id="counter" onload="load()">0</div>
               <div style="width: 1ch;">
                   <button onclick="updateCounter(1)" class="butao">🔼</button>
                   <button onclick="updateCounter(-1)" class="butao">🔽</button>
@@ -375,57 +144,56 @@
 
 
     <script>
-let repetitions = document.getElementById("repetitions");
-let imageLink = document.getElementById("imageLink");
-let counter = document.getElementById("counter");
-let image = document.getElementById("image");
+        let repetitions = document.getElementById("repetitions");
+        let counter = document.getElementById("counter");
+        let image = document.getElementById("image");
 
-function changeScreen(screen) {
-    Array.from(document.getElementsByClassName("screen")).forEach(s => s.classList.remove("active"));
-    document.getElementById("screen" + screen).classList.add("active");
-    if (screen === 1) {
-        updateCounter(-parseInt(counter.textContent));
-    }
-    if (screen === 3) {
-        setTimeout(displayImage, 1000);
-    }
-}
+        function changeScreen(screen) {
+            Array.from(document.getElementsByClassName("screen")).forEach(s => s.classList.remove("active"));
+            document.getElementById("screen" + screen).classList.add("active");
+            if (screen === 1) {
+                updateCounter(-parseInt(counter.textContent));
+            }
+            if (screen === 3) {
+                setTimeout(displayImage, 1000);
+            }
+        }
 
-function displayImage() {
-    let imageFile = document.getElementById("imageFile").files[0];
-    image.src = imageFile ? URL.createObjectURL(imageFile) : imageLink.value;
-    image.onload = function() {
-        setTimeout(() => changeScreen(1), 3000);
-    };
-}
+        function displayImage() { //dá um tempo e volta pra screen1
+            setTimeout(() => changeScreen(1), 3000);
+        }
 
-function updateCounter(delta) {
-    let value = parseInt(counter.textContent) + delta;
-    counter.textContent = Math.max(value, 0);
-    if (value == parseInt(repetitions.value)) {
-        changeScreen(imageLink.value || document.getElementById("imageFile").files[0] ? 3 : 1);
-    }
-}
+        function updateCounter(delta) {
+            let value = parseInt(counter.textContent) + delta;
+            counter.textContent = Math.max(value, 0);
+            if (value == parseInt(repetitions.value)) {
+                load();
+            }
+        }
 
-function handleOptionChange() {
-    document.getElementById('imageLink').disabled = document.getElementById('inputA').checked;
-    document.getElementById('imageFile').disabled = document.getElementById('inputB').checked;
-}
+        function handleOptionChange() {
+            document.getElementById('imageLink').disabled = document.getElementById('inputA').checked;
+            document.getElementById('imageFile').disabled = document.getElementById('inputB').checked;
+        }
 
-document.getElementById("goToScreen1").addEventListener("click", () => changeScreen(1));
-document.getElementById("goToScreen2").addEventListener("click", () => { changeScreen(2); updateCounter(-parseInt(counter.textContent)); });
-document.getElementById("increment").addEventListener("click", () => updateCounter(1));
-document.getElementById("decrement").addEventListener("click", () => updateCounter(-1));
+        document.getElementById("goToScreen1").addEventListener("click", () => changeScreen(1));
+        document.getElementById("goToScreen2").addEventListener("click", () => { changeScreen(2); updateCounter(-parseInt(counter.textContent)); });
+        document.getElementById("increment").addEventListener("click", () => updateCounter(1));
+        document.getElementById("decrement").addEventListener("click", () => updateCounter(-1));
 
 
-function load(){
-	const img = new Image();
-    img.style.display = "block"; // Hide the image
-    // Set the image source (replace with your desired image URL)
-    img.src = document.getElementById("imageLink").value;
-    // Optionally, add the image to a specific element in your HTML
-    document.getElementById("your-container").appendChild(img);
-}
+        function load() {
+            const imageLink = document.getElementById("imageLink").value;
+            const imageFile = document.getElementById("imageFile").files[0];
+            const inputBChecked = document.getElementById('inputB').checked;
+
+            if (!imageLink && !imageFile) {
+              changeScreen(1); return;
+            }
+
+            image.src = inputBChecked ? imageLink : URL.createObjectURL(imageFile);
+            changeScreen(3);
+        }
     </script>
 
 </body>
