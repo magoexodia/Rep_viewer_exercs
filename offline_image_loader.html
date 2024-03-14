@@ -1,44 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-      <title>Lista de Imagens e videos offline</title></head>
-  <body>
-  <style> 
-    body {background: rgba(248, 98, 211, 0.726);font-size: 20px;} button {font-size: 1em;}
-    img { height: calc(20vh + 2vw); margin: 10px; z-index: 0;}
-    video { height: calc(20vh + 20vw); margin: 10px; z-index: 0;}
-    video:hover {transform: scale(2);}
-    .enlarged { max-width: 100%; height: 99vh; object-fit: contain; position: fixed; top:0; bottom:0; left:50%; right:50%; transform: translate(-50%,0);}
-    .full-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index:120; } 
-  </style>
-    <input type="file" id="file-input" multiple onchange="handleFileSelect(event)">
-    <div id="im-container"></div>
-    <div id="vd-container"></div>
-    <script>
-      function handleFileSelect(event) {
-        const files = event.target.files;
-        let imHtml = '';
-        let vdHtml = '';
-        for (const file of files) {
-          const objectURL = URL.createObjectURL(file);
-          if (file.type.startsWith('image/')) {
-            imHtml += '<img src="' + objectURL + '" onclick="enlarge(this)">';
-          } else if (file.type.startsWith('video/')) {
-            vdHtml += '<video src="' + objectURL + '" controls onclick="videoFull(this)"></video>';
-          }
-        }
-        document.getElementById('im-container').innerHTML = imHtml;
-        document.getElementById('vd-container').innerHTML = vdHtml;
-      }
-      
-      function enlarge(element) {
-        element.classList.toggle('enlarged');
-      }
-      
-      function videoFull(element) {
-        this.classList.toggle('full-screen');
-      }
-    </script>
-  </body>
+
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lista de Imagens e videos offline</title>
+    </head>
+
+    <body>
+        <style>
+            body {
+                background: rgba(248, 98, 211, 0.726);
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 1em;
+            }
+
+            img {
+                height: calc(20vh + 2vw);
+                margin: 10px;
+                z-index: 0;
+            }
+
+            video {
+                width: 33vw;
+                margin: 10px;
+                z-index: 99;
+            }
+
+            .enlarged {
+                max-width: 100%;
+                height: 99vh;
+                object-fit: contain;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                right: 50%;
+                transform: translate(-50%, 0);
+            }
+
+            .esconde {
+                display: none;
+            }
+
+        </style>
+        <input type="file" id="file-input" multiple onchange="handleFileSelect(event)">
+        <button onclick="troca()">
+            📷↔️🎥
+        </button>
+        <div id="im-container"></div>
+        <div class="esconde" id="vd-container"></div>
+        <script>
+            function handleFileSelect(event) {
+                const files = event.target.files;
+                let imHtml = '';
+                let vdHtml = '';
+                for (const file of files) {
+                    const objectURL = URL.createObjectURL(file);
+                    if (file.type.startsWith('image/')) {
+                        imHtml += '<img src="' + objectURL + '" onclick="enlarge(this)">';
+                    } else if (file.type.startsWith('video/')) {
+                        vdHtml += '<video src="' + objectURL + '" onclick="toca(this.src)"></video>';
+                    }
+                }
+                document.getElementById('im-container').innerHTML = imHtml;
+                document.getElementById('vd-container').innerHTML = `<video id="main" src="" controls style="width: 80%; height: 90%;"></video>` + vdHtml;
+            }
+
+            function enlarge(element) {
+                element.classList.toggle('enlarged');
+            }
+
+            function videoFull(element) {
+                this.classList.toggle('full-screen');
+            }
+
+            function troca() {
+                document.getElementById('im-container').classList.toggle('esconde');
+                document.getElementById('vd-container').classList.toggle('esconde');
+            }
+
+            function toca(src) {
+                document.getElementById('main').src = src;
+            }
+
+        </script>
+    </body>
+
 </html>
