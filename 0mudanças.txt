@@ -5,3 +5,4 @@ limpador de arquivos
 com
 texto_2_links
 
+repetecos e rep2counter
