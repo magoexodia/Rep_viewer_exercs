@@ -1,216 +1,272 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lista de Imagens</title>
-</head>
-<style> 
-body {background: rgba(255, 129, 129, 0.836);font-size: 20px;} button, input[type=text], input[type=number]{font-size: 4vmax;} input[type=number]{width: 3ch;}
-.lista img { height: 15vh; width: auto;}
-.grande {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    z-index: 9999;
-    display: none; /* Esconda por padrão */
-}
 
-.grande.visivel {
-    display: flex; /* Mostre quando a classe 'visivel' é adicionada */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-}
-#fechar {
-    background-color: white;
-    padding: 5px;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-    position: fixed;
-    right: 2ch;
-    top: 2ch;
-    cursor: pointer;
-}
-    
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-#imagemGrande {
-    width: 100%;
-    max-height: 100%;
-    margin: auto;
-    transform-origin: top left;
-    object-fit: contain;
-}
-
-.enlarged { max-width: 100%; min-height: 100%; object-fit: contain; position: fixed; top:50%; bottom:50%; left:50%; right:50%; transform: translate(-50%,-50%);}
-.lista { width: 99vw; height: 99vw; display:flex-row;}
-</style>
-<body>
-    <div >
-    <input type="text" id="links" placeholder="🔗📷, 🔗📷, 🔗📷, 🔗📷,">
-    <input type="number" id="quanto">
-    <button onclick="adicionarLinks()">➕</button>
-
-    <button id="anterior">🔙</button>
-    <button id="proximo">🔜</button>
-    <div class="lista" style="height: fit-content; width: fit-content;"></div>
-    <div class="grande some">
-      <img id="imagemGrande" src="">
-    </div>
-    </div>
-    <script>
-        let indice = 0;
-        let tamanho = 20;//document.getElementById('quanto').value;//<= a quantidade a ser exibida
-function exibirImagens(imagens) {
-    let lista = document.querySelector(".lista");
-    lista.innerHTML = "";
-    for (let i = 0; i < tamanho; i++) {
-        if (i < imagens.length) {
-            let img = document.createElement("img");
-            img.src = imagens[i + indice];
-            img.onclick = function() { 
-                document.getElementById('imagemGrande').src = img.src;
-                document.querySelector('.grande').classList.add('visivel');
-            };
-            lista.appendChild(img);
+    <head>
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lista de Imagens e Videos</title>
+    </head>
+    <style>
+        body {
+            background: rgba(255, 129, 129, 0.836);
+            font-size: 3vmax;
         }
-    }
 
-    // Crie o botão de fechamento
-    let botaoFechar = document.createElement('span');
-    botaoFechar.id = 'fechar';
-    botaoFechar.textContent = 'X';
-
-    // Adicione um evento de clique ao botão de fechamento
-    botaoFechar.onclick = function() {
-        // Esconda a div grande
-        let divGrande = document.querySelector('.grande');
-        divGrande.classList.remove('visivel');
-
-        // Limpe o src da imagem grande
-        let imagemGrande = document.getElementById('imagemGrande');
-        imagemGrande.style.transform = 'scale(1)';
-        imagemGrande.src = '';
-    };
-
-    // Adicione o botão de fechamento à div grande
-    let divGrande = document.querySelector('.grande');
-    divGrande.appendChild(botaoFechar);
-
-    // Adicione um evento de clique à imagem grande
-    let imagemGrande = document.getElementById('imagemGrande');
-    imagemGrande.onclick = function() {
-        if (imagemGrande.style.transform === 'scale(3)') {
-            imagemGrande.style.transform = 'scale(1)';
-        } else {
-            imagemGrande.style.transform = 'scale(3)';
+        button,
+        input[type=text],
+        input[type=number] {
+            font-size: 4vmax;
         }
-    };
-}
 
-        let imagens = [];
-        exibirImagens(imagens);
+        input[type=number] {
+            width: 3ch;
+        }
 
-        let anterior = document.getElementById("anterior");
-        anterior.addEventListener("click", function() {
-            indice -= tamanho;
-            if (indice < 0) {
-                indice = imagens.length - tamanho;
+        .lista img {
+            height: 15vh;
+            width: auto;
+        }
+
+        .grande {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            z-index: 9999;
+            display: none;
+            /* Esconda por padrão */
+        }
+
+        .grande.visivel {
+            display: flex;
+            /* Mostre quando a classe 'visivel' é adicionada */
+            justify-content: center;
+            /* Centraliza horizontalmente */
+            align-items: center;
+            /* Centraliza verticalmente */
+        }
+
+        #fechar {
+            background-color: white;
+            padding: 5px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            position: fixed;
+            right: 2ch;
+            top: 2ch;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
             }
-            exibirImagens(imagens);
-        });
 
-        let proximo = document.getElementById("proximo");
-        proximo.addEventListener("click", function() {
-            indice += tamanho;
-            if (indice >= imagens.length) {
-                indice = 0;
+            50% {
+                transform: scale(1.1);
             }
-            exibirImagens(imagens);
-        });
 
-        document.addEventListener("keydown", function(event) {
-            if (event.key === "ArrowLeft") {
-                document.getElementById("anterior").click();
-            } else if (event.key === "ArrowRight") {
-                document.getElementById("proximo").click();
+            100% {
+                transform: scale(1);
             }
-        });
+        }
 
-        function adicionarLinks() {
-            imagens = [];
-            let links = document.getElementById("links").value;
-            links = links.split(",");
-            for (let i = 0; i < links.length; i++) {
-                let link = links[i].trim();
-                if (link !== "") { // Verifica se o link não é uma string vazia
-                    link = link.replace(/^['"]/, "").replace(/['"]$/, "");
-                    imagens.push(link);
+        #imagemGrande {
+            width: 100%;
+            max-height: 100%;
+            margin: auto;
+            transform-origin: top left;
+            object-fit: contain;
+        }
+
+        .enlarged {
+            max-width: 100%;
+            min-height: 100%;
+            object-fit: contain;
+            position: fixed;
+            top: 50%;
+            bottom: 50%;
+            left: 50%;
+            right: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .lista {
+            width: 99vw;
+            height: 99vw;
+            display: flex-row;
+        }
+
+        #vd-container {
+            display: flex;
+            width: 100vw;
+            height: 95vh;
+        }
+
+
+        #videoPlayer {
+            width: 80%;
+            height: calc(90vh - 2ch);
+            object-fit: contain;
+        }
+
+        #videos {
+            width: 18%;
+            height: calc(90vh - 2ch);
+            overflow-y: scroll;
+        }
+
+        .some,
+        .some #p2,
+        .some #videoPlayer,
+        .some #videos {
+            display: none;
+        }
+
+    </style>
+
+    <body>
+        <div id="im-container">
+            <div id="p1">
+                <input type="text" id="links" placeholder="🔗📷, 🔗📷, 🔗📷,">
+                <input type="number" id="quanto">
+                <button onclick="adicionarLinks()">➕</button>
+            </div>
+            <div id="p2" class="some">
+                <button onclick="alternarVisibilidade()">🎥↔️📷</button>
+                <button id="anterior">🔙</button>
+                <button id="proximo">🔜</button>
+                <button onclick="reseta()">🔁</button>
+            </div>
+            <div class="lista" style="height: fit-content; width: fit-content;"></div>
+            <div class="grande some">
+                <img id="imagemGrande" src="">
+            </div>
+        </div>
+        <div class="some" id="vd-container">
+            <video id="videoPlayer" controls></video>
+            <div id="videos"></div>
+        </div>
+
+        <script>
+            let indice = 0;
+            let tamanho = 20; //document.getElementById('quanto').value;//<= a quantidade a ser exibida
+            let imagens = [];
+            let videos = [];
+
+            function criarBotaoFechar() {
+                let botaoFechar = document.createElement('span');
+                botaoFechar.id = 'fechar';
+                botaoFechar.textContent = 'X';
+                botaoFechar.onclick = function() {
+                    let divGrande = document.querySelector('.grande');
+                    divGrande.classList.remove('visivel');
+                    let imagemGrande = document.getElementById('imagemGrande');
+                    imagemGrande.style.transform = 'scale(1)';
+                    imagemGrande.src = '';
+                };
+                return botaoFechar;
+            }
+
+            function exibirImagens(imagens) {
+                let lista = document.querySelector(".lista");
+                lista.innerHTML = "";
+                for (let i = 0; i < tamanho; i++) {
+                    if (i < imagens.length) {
+                        let img = document.createElement("img");
+                        img.src = imagens[i + indice];
+                        img.onclick = function() {
+                            document.getElementById('imagemGrande').src = img.src;
+                            document.querySelector('.grande').classList.add('visivel');
+                        };
+                        lista.appendChild(img);
+                    }
                 }
+
+                let divGrande = document.querySelector('.grande');
+                divGrande.appendChild(criarBotaoFechar());
+
+                let imagemGrande = document.getElementById('imagemGrande');
+                imagemGrande.onclick = function() {
+                    imagemGrande.style.transform = imagemGrande.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
+                };
             }
-            exibirImagens(imagens);
-        }
-    </script>
-</body>
+
+            function adicionarLinks() {
+                let links = document.getElementById("links").value.split(",");
+                links.forEach(link => {
+                    link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
+                    link.endsWith(".mp4") ? videos.push(link) : imagens.push(link);
+                });
+                exibirImagens(imagens);
+                exibirVideos(videos);
+                muda();
+            }
+
+            function exibirVideos(videos) {
+                let videoPlayer = document.getElementById("videoPlayer");
+                let videoDiv = document.getElementById("videos");
+                videoDiv.innerHTML = ""; // Clear the video div
+
+                videos.forEach((video, i) => {
+                    let videoButton = document.createElement("button");
+                    videoButton.textContent = "🎥 " + (i + 1);
+                    videoButton.onclick = () => videoPlayer.src = video;
+                    videoDiv.appendChild(videoButton);
+                });
+            }
+
+            let anterior = document.getElementById("anterior");
+            anterior.addEventListener("click", function() {
+                indice -= tamanho;
+                if (indice < 0) {
+                    indice = imagens.length - tamanho;
+                }
+                exibirImagens(imagens);
+            });
+
+            let proximo = document.getElementById("proximo");
+            proximo.addEventListener("click", function() {
+                indice += tamanho;
+                if (indice >= imagens.length) {
+                    indice = 0;
+                }
+                exibirImagens(imagens);
+            });
+
+            document.addEventListener("keydown", function(event) {
+                if (event.key === "ArrowLeft") {
+                    document.getElementById("anterior").click();
+                } else if (event.key === "ArrowRight") {
+                    document.getElementById("proximo").click();
+                }
+            });
+
+            function alternarVisibilidade() {
+                document.getElementById("vd-container").classList.toggle("some");
+                document.querySelector(".lista").classList.toggle("some");
+            }
+
+            function muda() {
+                document.getElementById("p1").classList.toggle("some");
+                document.getElementById("p2").classList.toggle("some");
+            }
+
+            function mostra(texto) {
+                document.getElementById("videos").innerHTML += texto;
+            }
+
+            function reseta() {
+                document.querySelector(".lista").innerHTML = "";
+                document.getElementById("videos").innerHTML = "";
+                muda();
+                document.getElementById("videoPlayer").src = "";
+				imagens = [];
+				videos = [];
+            }
+
+        </script>
+    </body>
+
 </html>
-
-<!-- function exibirImagens(imagens, indice, tamanho) {
-    let lista = document.querySelector(".lista");
-    lista.innerHTML = "";
-    for (let i = indice; i < indice + tamanho; i++) {
-        if (i < imagens.length) {
-            let img = document.createElement("img");
-            img.src = imagens[i];
-            img.onclick = function() { 
-                document.getElementById('imagemGrande').src = img.src;
-                document.querySelector('.grande').classList.add('visivel');
-            };
-            lista.appendChild(img);
-        }
-    }
-}
-
-function criarBotaoFechar() {
-    // Crie o botão de fechamento
-    let botaoFechar = document.createElement('span');
-    botaoFechar.id = 'fechar';
-    botaoFechar.textContent = 'X';
-
-    // Adicione um evento de clique ao botão de fechamento
-    botaoFechar.onclick = function() {
-        // Esconda a div grande
-        let divGrande = document.querySelector('.grande');
-        divGrande.classList.remove('visivel');
-
-        // Limpe o src da imagem grande
-        let imagemGrande = document.getElementById('imagemGrande');
-        imagemGrande.style.transform = 'scale(1)';
-        imagemGrande.src = '';
-    };
-
-    // Adicione o botão de fechamento à div grande
-    let divGrande = document.querySelector('.grande');
-    divGrande.appendChild(botaoFechar);
-}
-
-// Adicione um evento de clique à imagem grande
-let imagemGrande = document.getElementById('imagemGrande');
-imagemGrande.onclick = function() {
-    if (imagemGrande.style.transform === 'scale(3)') {
-        imagemGrande.style.transform = 'scale(1)';
-    } else {
-        imagemGrande.style.transform = 'scale(3)';
-    }
-}; -->
