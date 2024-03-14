@@ -58,16 +58,10 @@
 
 
 
-<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a></h2>
+<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a></h2>
 <li> Um contador simples pra fazer o mesmo que o repetecos, mas sem descanso entre as repetições. Bom para repetições demoradas e chatas.
 <li> The same as repetecos, but to slower repetitions.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a>
-
-
-
-<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a></h2>
-<li> o mesmo anterior mas podendo escolher entre link ou aquivo de imagem.
-<li> Same as before but with choice between link or image.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exerc_def.html</a>
 
 <h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a></h2>
