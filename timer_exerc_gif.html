@@ -1,226 +1,269 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Timer</title>
-    <style>
-    /* Center elements on screen */
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: black;
-        font-family: monospace;
-        justify-content: center;
-        text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
-      }
 
-      /* Set font size based on viewport size */
-      body {
-        font-size: calc(3vw + 3vh);
-      }
-      button { font-size: 1em;background:rgb(0,0,0,0.1);}
-      #ok { font-size: 1em; position:fixed;bottom:0;left:50%;}  
-       input[type="number"], input[type="text"] {
-            margin-left: 5px;
-            background: rgb(255, 255, 255, 0.25);
-            font-size: 1em;
-            text-align: center;
-        }
-        input[type="number"]{
-            width: 2em;
-        } 
-       input[type="text"] {
-            width: 50vw;
-        }
-      /* Show tela3 element on entire screen */
-      #screen3 {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-      }
+    <head>
+        <meta charset="UTF-8">
+        <title>Timer</title>
+        <style>
+            /* Center elements on screen */
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: black;
+                font-family: monospace;
+                justify-content: center;
+                text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+                background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+                font-size: calc(3vw + 3vh);
+            }
 
-      /* Center image within tela3 element */
-      #screen3 img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(1.5);
-      }
+            button {
+                font-size: 1em;
+                background: rgb(0, 0, 0, 0.1);
+            }
 
-      /* Rotate image by 90 degrees in portrait mode */
-      @media screen and (orientation: portrait) {
-        #screen3 img {
-          transform: translate(-50%, -50%) rotate(90deg);
-          max-width: 100vh;
-          height: 100vw;
-          object-fit: contain;
-        }
-        .retrato {display:block; font-size:1em;}
-        .paisagem {display:none;}
-        #screen2 {
-            font-size: calc(4vim + 4vmax);
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(90deg);
-            transform-origin: center;
-        }
-      }
-      @media screen and (orientation: landscape) {
-        #screen3 img {
-          max-width: 100vh;
-          height: 100vw;
-          object-fit: contain;
-        }
-         .paisagem {display:block; font-size:2ch;}
-         .retrato {display:none;}
-      }
-      #timer {transform: scale(2); }
-    </style>
-</head>
-<body>
-    
-<div id="principal">
-    <!-- Screen 1: Form -->
-    <div id="screen1"><div style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
-      <div><p class="retrato">&nbsp;</p></div>
-        <form>
-          <br class="paisagem">
-          <br class="paisagem">
-          ⏱️<br class="retrato">
-          <label for="hours">HH</label>
-          <input type="number" id="hours" min="0" max="23" value="0" required><br class="retrato">
-          <label for="minutes">MM</label>
-          <input type="number" id="minutes" min="0" max="59" value="0" required><br class="retrato">
-          <label for="seconds">SS</label>
-          <input type="number" id="seconds" min="0" max="59" value="1" required><br class="retrato">
-          <br class="paisagem">
-          <br class="paisagem">
-          <label for="rest">⏱️Descanso:</label><br class="retrato">
-          <input type="number" id="rest" min="0" max="3600" value="3" required>
-          <br class="paisagem">
-          <br>
-          <label for="image">📷Imagem:&nbsp;&nbsp;</label><br class="retrato">
-          <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
-          <br><br>
-          <button type="submit" id="ok">✅</button>
-        </form>
-      </div>
-    </div>
+            #screen2 {
+                font-family: Verdana;
+            }
 
-    <!-- Screen 2: Timer -->
-    <div id="screen2" style="display:none;font-size: 1.5em;">
-      <div><p class="retrato">&nbsp;</p><p class="paisagem">&nbsp;</p></div>
-      <div id="timer"></div><br>
-      <div style="display:flex-column;">
-        <button id="repeat">🔁</button>
-        <button id="cancel">❌</button>
-      </div>
-    </div>
+            #ok {
+                font-size: 1em;
+                position: fixed;
+                bottom: 0;
+                left: 50%;
+            }
 
-    <!-- Screen 3: Image -->
-    <div id="screen3" style="display:none;">
-      <img src="" alt="">
-    </div>
+            input[type="number"],
+            input[type="text"] {
+                margin-left: 5px;
+                background: rgb(255, 255, 255, 0.25);
+                font-size: 1em;
+                text-align: center;
+            }
 
- </div>
+            input[type="number"] {
+                width: 2em;
+            }
 
- <script>
- // Get references to elements
-  const screen1 = document.getElementById("screen1");
-  const screen2 = document.getElementById("screen2");
-  const screen3 = document.getElementById("screen3");
-  const hoursInput = document.getElementById("hours");
-  const minutesInput = document.getElementById("minutes");
-  const secondsInput = document.getElementById("seconds");
-  const restInput = document.getElementById("rest");
-  const imageInput = document.getElementById("image");
-  const timerDisplay = document.getElementById("timer");
-  const repeatButton = document.getElementById("repeat");
-  const cancelButton = document.getElementById("cancel");
-  const imageDisplay = screen3.querySelector("img");
+            input[type="text"] {
+                width: 50vw;
+            }
 
-  // Initialize variables
-  let duration = 0;
-  let rest = 0;
-  let image = "";
-  let timer = null;
+            /* Show tela3 element on entire screen */
+            #screen3 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+            }
 
-  // Handle form submission
-  screen1.querySelector("form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    let hours = parseInt(hoursInput.value);
-    let minutes = parseInt(minutesInput.value);
-    let seconds = parseInt(secondsInput.value);
-    duration = hours * 3600 + minutes * 60 + seconds;
-    rest = parseInt(restInput.value);
-    image = imageInput.value;
-    startTimer();
-  });
+            /* Center image within tela3 element */
+            #screen3 img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1.5);
+            }
 
-  // Start timer
-  function startTimer() {
-    screen1.style.display = "none";
-    screen2.style.display = "block";
-    screen3.style.display = "none";
-    let timeRemaining = duration;
-    updateTimerDisplay(timeRemaining);
-    timer = setInterval(function() {
-      timeRemaining--;
-      updateTimerDisplay(timeRemaining);
-      if (timeRemaining == 0) {
-        clearInterval(timer);
-        showImage();
-        repeatButton.disabled = false;
-      }
-    }, 1000);
-  }
+            /* Rotate image by 90 degrees in portrait mode */
+            @media screen and (orientation: portrait) {
+                #screen3 img {
+                    transform: translate(-50%, -50%) rotate(90deg);
+                    max-width: 100vh;
+                    height: 100vw;
+                    object-fit: contain;
+                }
 
-  // Update timer display
-  function updateTimerDisplay(timeRemaining) {
-    let hours = Math.floor(timeRemaining / 3600);
-    let minutes = Math.floor((timeRemaining % 3600) / 60);
-    let seconds = timeRemaining % 60;
-    let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    timerDisplay.textContent = formattedTime;
-  }
+                .retrato {
+                    display: block;
+                    font-size: 1em;
+                }
 
-  // Show image
-  function showImage() {
-      screen1.style.display="none";
-      screen2.style.display="none";
-      screen3.style.display="block";
-      imageDisplay.src=image;
-      setTimeout(function(){
-          screen1.style.display="none";
-          screen2.style.display="block";
-          screen3.style.display="none";
-          repeatButton.disabled=false;
-      }, rest*1000);
-  }
+                .paisagem {
+                    display: none;
+                }
 
-  // Handle repeat button click
-  repeatButton.addEventListener("click", function() {
-      if(this.disabled) return;
-      startTimer();
-  });
+                #screen2 {
+                    font-size: 3ch;
+                    transform: translatey(100%) rotate(90deg);
+                    transform-origin: center;
+                }
+            }
 
-  // Handle cancel button click
-  cancelButton.addEventListener("click", function() {
-      clearInterval(timer);
-      hideImage();
-  });
+            @media screen and (orientation: landscape) {
+                #screen3 img {
+                    max-width: 100vh;
+                    height: 100vw;
+                    object-fit: contain;
+                }
 
-  // Hide image
-  function hideImage() {
-      screen1.style.display="block";
-      screen2.style.display="none";
-      screen3.style.display="none";
-  }
- </script>
-</body>
+                #screen2 {
+                    transform: translatey(40%);
+                    transform-origin: center;
+                }
+
+                .paisagem {
+                    display: block;
+                    font-size: 2ch;
+                }
+
+                .retrato {
+                    display: none;
+                }
+            }
+
+            #timer {
+                transform: scale(2);
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <div id="principal">
+            <!-- Screen 1: Form -->
+            <div id="screen1">
+                <div style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
+                    <div>
+                        <p class="retrato">&nbsp;</p>
+                    </div>
+                    <form>
+                        <br class="paisagem">
+                        <br class="paisagem">
+                        ⏱️<br class="retrato">
+                        <label for="hours">HH</label>
+                        <input type="number" id="hours" min="0" max="23" value="0" required><br class="retrato">
+                        <label for="minutes">MM</label>
+                        <input type="number" id="minutes" min="0" max="59" value="0" required><br class="retrato">
+                        <label for="seconds">SS</label>
+                        <input type="number" id="seconds" min="0" max="59" value="1" required><br class="retrato">
+                        <br class="paisagem">
+                        <br class="paisagem">
+                        <label for="rest">⏱️Descanso:</label><br class="retrato">
+                        <input type="number" id="rest" min="0" max="3600" value="3" required>
+                        <br class="paisagem">
+                        <br>
+                        <label for="image">📷Imagem:&nbsp;&nbsp;</label><br class="retrato">
+                        <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
+                        <br><br>
+                        <button type="submit" id="ok">✅</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Screen 2: Timer -->
+            <div id="screen2" style="display:none;font-size: 1.5em;">
+                <div id="timer"></div><br>
+                <div style="display:flex-column;">
+                    <button id="repeat">🔁</button>
+                    <button id="cancel">❌</button>
+                </div>
+            </div>
+
+            <!-- Screen 3: Image -->
+            <div id="screen3" style="display:none;">
+                <img src="" alt="">
+            </div>
+
+        </div>
+
+        <script>
+            // Get references to elements
+            const screen1 = document.getElementById("screen1");
+            const screen2 = document.getElementById("screen2");
+            const screen3 = document.getElementById("screen3");
+            const hoursInput = document.getElementById("hours");
+            const minutesInput = document.getElementById("minutes");
+            const secondsInput = document.getElementById("seconds");
+            const restInput = document.getElementById("rest");
+            const imageInput = document.getElementById("image");
+            const timerDisplay = document.getElementById("timer");
+            const repeatButton = document.getElementById("repeat");
+            const cancelButton = document.getElementById("cancel");
+            const imageDisplay = screen3.querySelector("img");
+
+            // Initialize variables
+            let duration = 0;
+            let rest = 0;
+            let image = "";
+            let timer = null;
+
+            // Handle form submission
+            screen1.querySelector("form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                let hours = parseInt(hoursInput.value);
+                let minutes = parseInt(minutesInput.value);
+                let seconds = parseInt(secondsInput.value);
+                duration = hours * 3600 + minutes * 60 + seconds;
+                rest = parseInt(restInput.value);
+                image = imageInput.value;
+                startTimer();
+            });
+
+            // Start timer
+            function startTimer() {
+                screen1.style.display = "none";
+                screen2.style.display = "block";
+                screen3.style.display = "none";
+                let timeRemaining = duration;
+                updateTimerDisplay(timeRemaining);
+                timer = setInterval(function() {
+                    timeRemaining--;
+                    updateTimerDisplay(timeRemaining);
+                    if (timeRemaining == 0) {
+                        clearInterval(timer);
+                        showImage();
+                        repeatButton.disabled = false;
+                    }
+                }, 1000);
+            }
+
+            // Update timer display
+            function updateTimerDisplay(timeRemaining) {
+                let hours = Math.floor(timeRemaining / 3600);
+                let minutes = Math.floor((timeRemaining % 3600) / 60);
+                let seconds = timeRemaining % 60;
+                let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+                timerDisplay.textContent = formattedTime;
+            }
+
+            // Show image
+            function showImage() {
+                screen1.style.display = "none";
+                screen2.style.display = "none";
+                screen3.style.display = "block";
+                imageDisplay.src = image;
+                setTimeout(function() {
+                    screen1.style.display = "none";
+                    screen2.style.display = "block";
+                    screen3.style.display = "none";
+                    repeatButton.disabled = false;
+                }, rest * 1000);
+            }
+
+            // Handle repeat button click
+            repeatButton.addEventListener("click", function() {
+                if (this.disabled) return;
+                startTimer();
+            });
+
+            // Handle cancel button click
+            cancelButton.addEventListener("click", function() {
+                clearInterval(timer);
+                hideImage();
+            });
+
+            // Hide image
+            function hideImage() {
+                screen1.style.display = "block";
+                screen2.style.display = "none";
+                screen3.style.display = "none";
+            }
+
+        </script>
+    </body>
+
 </html>
