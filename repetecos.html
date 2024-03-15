@@ -282,14 +282,8 @@
                 document.getElementById('tela2').style.display = 'none';
                 var linkImagem = document.getElementById('linkImagem').value;
                 if (linkImagem) {
-                    if (linkImagem.includes(".mp4")) {
-                        document.getElementById('vdagem').src = linkImagem;
-                        document.getElementById('vdagem').load();
-                        document.getElementById('vdagem').style.display = 'block';
-                    } else {
-                        document.getElementById('imagem').src = linkImagem;
-                        document.getElementById('imagem').style.display = 'block';
-                    }
+                    document.getElementById('imagem').src = linkImagem;
+                    document.getElementById('imagem').style.display = 'block';
                 } else {
                     document.getElementById('emoticon').style.display = 'block';
                     var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
@@ -309,7 +303,6 @@
                 document.getElementById('tela1').style.display = 'flex';
                 document.getElementById('checkboxes').innerHTML = '';
                 document.getElementById('meuForm').reset();
-                document.getElementById('vdagem').style.display = 'none';
                 document.getElementById('imagem').style.display = 'none';
                 document.getElementById('emoticon').style.display = 'none';
             }
