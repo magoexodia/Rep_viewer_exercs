@@ -288,8 +288,8 @@
                 const imageFile = document.getElementById("imageFile").files[0];
                 const inputBChecked = document.getElementById('inputB').checked;
                 const screen3 = document.getElementById('screen3');
-                const fileSrc = inputBChecked ? imageLink : URL.createObjectURL(imageFile);
-                const isVideo = (inputBChecked ? imageLink.includes(".mp4") : imageFile.type.includes("video"));
+                const fileSrc = inputBChecked ? imageLink : (imageFile ? URL.createObjectURL(imageFile) : null);
+                const isVideo = (inputBChecked ? imageLink.includes(".mp4") : (imageFile ? imageFile.type.includes("video") : false));
 
                 if (!fileSrc) {
                     changeScreen(1);
