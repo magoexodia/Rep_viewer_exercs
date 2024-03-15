@@ -1,65 +1,82 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links Clicáveis</title>
-    <style>
-        /* Estilo opcional para melhorar a aparência */
-        body {
-            font-family: Lucida Sans, sans-serif;
-        }
-        .link-list {
-            margin: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            max-height: 200px; /* Altura máxima para exibir 10 links com scroll */
-            overflow-y: auto; /* Adiciona barra de rolagem vertical quando necessário */
-            width: 99vw;
-        }
-        .link-list a {
-            display: block;
-            margin-bottom: 5px;
-            text-decoration: none;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-    <div class="link-list">
-        <textarea id="text-input" rows="5" cols="50" wrap="off" oninput="createAnchors()" onclick="this.select()"></textarea>
-    </div>
-    <div id="anchor-container" nowrap></div>
 
-    <script>
-        function createAnchors() {
-            const textArea = document.getElementById('text-input');
-            const anchorContainer = document.getElementById('anchor-container');
-            const lines = textArea.value.split('\n');
-
-            anchorContainer.innerHTML = ''; // Limpa o conteúdo anterior
-
-            lines.forEach((line, index) => {
-            if (line.trim() === '') {
-                // Ignora linhas vazias
-                return;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Links Clicáveis</title>
+        <style>
+            /* Estilo opcional para melhorar a aparência */
+            body {
+                font-family: Verdana, sans-serif;
+                font-size: 5vw;
             }
-            if (line.includes('/')) {
-                // Se a linha contém '/', cria um link
-                const anchor = document.createElement('a');
-                anchor.href = line;
-                anchor.textContent = line;//.substring(8);
-                anchorContainer.appendChild(anchor);
-            } else {
-                // Caso contrário, exibe como título h2
-                const title = document.createElement('h3');
-                title.textContent = line;
-                anchorContainer.appendChild(title);
+
+            .link-list {
+                display: inline-block;
+                padding: 0;
+                border: 1px solid #ccc;
+                background-color: #f9f9f9;
+                height: calc(100vh - 2.5ch);
+                overflow-y: auto;
+                width: calc(100vw - 0.75ch);
             }
-            anchorContainer.appendChild(document.createElement('br')); // Adiciona uma quebra de linha
-        });
-        }
-    </script>
-</body>
+
+            #resultado {
+                height: fit-content;
+                width: 90vw;
+                overflow-x: hidden;
+            }
+
+            #resultado a {
+                font-size: 5vw;
+            }
+
+            #resultado h4 {
+				text-align: center;
+            }
+
+            textarea {
+                width: 97%;
+                height: 20ch;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="link-list">
+            <textarea id="origem" oninput="createAnchors()" onclick="this.select()"></textarea>
+            <div id="resultado" nowrap></div>
+        </div>
+
+        <script>
+            function createAnchors() {
+                const textArea = document.getElementById('origem');
+                const anchorContainer = document.getElementById('resultado');
+                const lines = textArea.value.split('\n');
+
+                anchorContainer.innerHTML = '';
+
+                lines.forEach((line, index) => {
+                    if (line.trim() === '') {
+                        return;
+                    }
+                    if (line.includes('/')) {
+                        const anchor = document.createElement('a');
+                        anchor.href = line;
+                        anchor.textContent = line;
+                        anchorContainer.appendChild(anchor);
+                    	anchorContainer.appendChild(document.createElement('br'))
+                    } else {
+                        const title = document.createElement('h4');
+                        title.textContent = line;
+                        anchorContainer.appendChild(title);
+                    };
+                });
+            }
+
+        </script>
+    </body>
+
 </html>
