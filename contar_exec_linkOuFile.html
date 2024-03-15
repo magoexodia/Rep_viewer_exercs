@@ -9,11 +9,12 @@
 
         <style>
             body {
-                --tam: calc(3vmin + 3vmax);
+                --tam: calc(10vh);
                 font-family: Monospace, sans-serif;
                 font-size: var(--tam);
                 text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-                background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
+                background-color: #fefdff;
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
                 width: 100vw;
                 height: 100vh;
                 margin: 0;
@@ -30,14 +31,27 @@
             }
 
             .screen.active {
-                display: inline-block;
+                display: block;
+
+                margin: auto;
+                width: 100vw;
+                max-height: 100vh;
+                object-fit: contain;
             }
 
-            #screen1,
-            #screen2,
-            #screen3,
-                {
-                transform: translate(20%);
+            #screen1.active {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 99vh;
+            }
+
+            #screen2.centra.active {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 99vh;
+                flex-direction: column;
             }
 
             input[type="number"],
@@ -46,7 +60,7 @@
                 font-size: 1ch;
                 padding: 5px;
                 margin: 5px;
-                text-align: center;
+                text-align: left;
                 width: 30vw;
             }
 
@@ -62,30 +76,12 @@
             }
 
             #counter {
-                font-size: 8ch;
+                font-family: verdana;
+                font-size: 2ch;
                 font-weight: bold;
                 margin: 10px;
-                width: 2ch;
-                text-align: right;
-            }
-
-            #screen3 {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-            }
-
-            #screen3 img,
-            #screen3 video {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                object-fit: contain;
-                width: 100%;
-                max-height: 100%;
+                width: 9ch;
+                text-align: center;
             }
 
             .butao {
@@ -94,24 +90,64 @@
                 border: none;
             }
 
-            .espaco {
-                font-size: 25vw;
+            .megabutao {
+                font-size: 8ch;
+                background: rgba(0, 0, 0, 0);
+                border: none;
             }
 
+            .minibutao {
+                font-size: 1.5ch;
+                background: rgba(0, 0, 0, 0);
+                border: none;
+            }
+
+            .espaco {
+                font-size: 5ch;
+            }
+
+            @media screen and (orientation: portrait) {
+
+                #screen3 {
+                    position: fixed;
+                    transform: rotate(-90deg);
+                    transform-origin: center;
+                }
+
+                #screen3 img,
+                #screen3 video {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100vh;
+                    max-height: 100vw;
+                    object-fit: contain;
+                }
+
+            }
 
             @media screen and (orientation: landscape) {
 
-                #screen1 {
-                    transform: rotate(-90deg) translate(40%);
-                    transform-origin: 50% 50%;
-                }
-
-                #screen2 {
-                    transform: rotate(-90deg) translate(20%);
-                }
-
                 #screen3 {
-                    transform: rotate(-90deg);
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                }
+
+                #screen3 img,
+                #screen3 video {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    width: 100vw;
+                    max-height: 100vh;
+                    object-fit: contain;
                 }
 
                 .paisagem {
@@ -122,7 +158,23 @@
                 .retrato {
                     display: none;
                 }
+
+                #screen2.centra.active {
+                    transform: rotate(-90deg);
+                    width: 100vh;
+                }
+
+                .controle {
+                    transform: scaleX(-1);
+                }
+
+                .minibutao,
+                #counter {
+                    transform: rotate(90deg);
+                }
             }
+
+            /*.arqOpt {display: none;}*/
 
         </style>
     </head>
@@ -135,35 +187,34 @@
                 <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><br><label for="tempo"> ⏳ &nbsp;</label>
                 <input type="number" id="tempo" value="1" min="0" style="width: 4.5ch; text-align: right;">
                 <br>
-            </div>
-            <div id="selecao">
-                <div>
-                    <input type="radio" name="opcao" checked id="inputA" onchange="handleOptionChange()">
-                    <label for="imageFile">📂</label>
-                    <input type="file" id="imageFile" accept="image/*,video/*" class="opA">
-                    <br>
+                <div id="selecao">
+                    <div class="lkOpt">
+                        <input type="radio" name="opcao" checked id="inputB" onchange="handleOptionChange()">
+                        <label for="imageLink">🔗</label>
+                        <input type="text" id="imageLink" class="opB" value="" onclick="this.select()">
+                    </div>
+                    <div class="arqOpt">
+                        <input type="radio" name="opcao" id="inputA" onchange="handleOptionChange()">
+                        <label for="imageFile">📂</label>
+                        <input type="file" id="imageFile" accept="image/*,video/*" disabled class="opA">
+                    </div>
+                    <span class="espaco">&nbsp;</span><button onclick="changeScreen(2)" class="butao" id="ok">✅</button>
                 </div>
-                <div>
-                    <input type="radio" name="opcao" id="inputB" onchange="handleOptionChange()">
-                    <label for="imageLink">🔗</label>
-                    <input type="text" id="imageLink" class="opB" disabled value="" onclick="this.select()">
-                </div>
-                <span class="espaco">&nbsp;</span><button onclick="changeScreen(2)" class="butao" id="ok">✅</button> <span class="espaco">&nbsp;</span>
             </div>
         </div>
 
         <!-- Tela 2 -->
         <div class="screen centra" id="screen2">
-            <div style="display: flex; direction: column;">
+            <div id="counter-view">
                 <div id="counter" onload="load()">0</div>
                 <div style="width: 1ch;">
-                    <button onclick="updateCounter(1)" class="butao">🔼</button>
-                    <button onclick="updateCounter(-1)" class="butao">🔽</button>
+                    <button onclick="updateCounter(1)" class="megabutao">➕</button>
                 </div>
             </div>
             <div class="controle">
-                <button onclick="updateCounter(-parseInt(counter.textContent))" class="butao">🔁</button>
-                <button onclick="changeScreen(1)" class="butao">❌</button>
+                <button onclick="updateCounter(-1)" class="minibutao">➖</button>
+                <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao">🔁</button>
+                <button onclick="changeScreen(1)" class="minibutao">❌</button>
             </div>
         </div>
 
@@ -213,6 +264,24 @@
             });
             document.getElementById("increment").addEventListener("click", () => updateCounter(1));
             document.getElementById("decrement").addEventListener("click", () => updateCounter(-1));
+
+
+
+            function loadImagens() { //capado para imagens
+                const imageLink = document.getElementById("imageLink").value;
+                //const imageFile = document.getElementById("imageFile").files[0];
+                const screen3 = document.getElementById('screen3');
+
+                const fileSrc = imageLink; //inputBChecked ? imageLink : URL.createObjectURL(imageFile);
+
+                if (!fileSrc) {
+                    changeScreen(1);
+                    return;
+                }
+                screen3.innerHTML = `<img src="${fileSrc}" alt="Image">`;
+
+                changeScreen(3);
+            }
 
             function load() {
                 const imageLink = document.getElementById("imageLink").value;
