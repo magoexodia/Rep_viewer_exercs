@@ -1,144 +1,320 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repetecos</title>
-    <style>
-        body, input[type=button], input[type=number], input[type=text], button {
-            font-size: calc(3vmax + 4vmin);
-        }
-        body {
-            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
-        }
-        input[type=number] {
-            width: 4ch;
-        }
-        input[type=text] {
-            width: 7ch;
-        }
-        .centralizado {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100svh;
-            overflow: auto;
-        }
-        .justificado {
-            justify-content: center;
-        }
-        .imagem-emoticon {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        input[type="checkbox"] {
-            appearance: none;
-            width: 9ch;
-            height: 9ch;
-            background-color: #fafafa;
-            border: 1px solid #cacece;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-            border-radius: 3px;
-            display: inline-block;
-            position: relative;
-        }
-        input[type="checkbox"]:checked {
-            background-color: #99a1a7;
-        }
-        input[type="checkbox"]:checked:after {
-            content: '✔'; /* Aqui você pode substituir pelo caractere que preferir */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            color: white;
-        }
-        #emoticon {transform: scale(8);}
-    </style>
-</head>
-<body>
 
-<!-- Primeira Tela -->
-<div id="tela1" class="justificado centralizado">
-  <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
-    🔢 <input type="number" id="valor1" required><br>
-    ⏱️ <input type="number" id="valor2" required><br>
-    📷 <input type="text" id="linkImagem"><br>
-    <input type="submit" value="🆗">
-  </form>
-</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Repetecos</title>
+        <style>
+            body,
+            input[type=button],
+            input[type=number],
+            input[type=text],
+            button {
+                font-size: calc(3vmax + 4vmin);
+            }
 
-<!-- Segunda Tela -->
-<div id="tela2" class="centralizado" style="display: none;">
-  <div id="indices"></div>
-</div>
+            @media screen and (orientation: portrait) {
 
-<!-- Terceira Tela -->
-<div id="tela3" class="centralizado" style="display: none;">
-  <img id="imagem" class="imagem-emoticon">
-  <p id="emoticon" class="imagem-emoticon" style="font-size: 50px; display: none;"></p>
-</div>
+                #checkboxes {
+                    --cdiv: 1.1em;
+                }
+            }
 
-<script>
-function validarForm() {
-  var valor1 = document.getElementById('valor1').value;
-  var valor2 = document.getElementById('valor2').value;
-  if(valor1 == "" || valor2 == "") {
-    alert("Por favor, preencha ambos os valores.");
-    return false;
-  }
-  return true;
-}
+            @media screen and (orientation: landscape) {
+                #checkboxes {
+                    --cdiv: 1em;
+                }
+            }
 
-function criarIndice(i, valor1) {
-  var indice = document.createElement('input');
-  indice.type = 'checkbox';
-  indice.onchange = function() {
-    if (Array.from(document.querySelectorAll('#indices input[type="checkbox"]')).every(x => x.checked)) {
-      abrirTela3();
-    }
-  };
-  return indice;
-}
+            body {
+                --tam: calc(2vw + 4vh);
+                --shadow: 0px 0px 2px black, 0px 0px 3px white, 0px 0px 4px black;
+                text-align: center;
+                font-size: calc(var(--tam) + 10px);
+                font-family: monospace;
+                background-color: #fefdff;
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
 
-function abrirTela2() {
-  document.getElementById('tela1').style.display = 'none';
-  var valor1 = document.getElementById('valor1').value;
-  for (var i = 1; i <= valor1; i++) {
-    document.getElementById('indices').appendChild(criarIndice(i, valor1));
-  }
-  document.getElementById('tela2').style.display = 'flex';
-}
+            body label {
+                text-align: right;
+                background: rgb(0, 0, 0, 0.1);
+            }
 
-function abrirTela3() {
-  document.getElementById('tela2').style.display = 'none';
-  var linkImagem = document.getElementById('linkImagem').value;
-  if (linkImagem != "") {
-    document.getElementById('imagem').src = linkImagem;
-    document.getElementById('imagem').style.display = 'block';
-  } else {
-    document.getElementById('emoticon').style.display = 'block';
-    var emoticons = ['🙂','😁','😄','😯','😉'];
-    var i = 0;
-    setInterval(function() {
-      document.getElementById('emoticon').textContent = emoticons[i];
-      i = (i + 1) % emoticons.length;
-    }, 250);
-  }
-  document.getElementById('tela3').style.display = 'flex';
-  var valor2 = document.getElementById('valor2').value;
-  setTimeout(function() {
-    document.getElementById('tela3').style.display = 'none';
-    document.getElementById('tela1').style.display = 'flex';
-    document.getElementById('indices').innerHTML = '';
-    document.getElementById('meuForm').reset();
-    document.getElementById('imagem').style.display = 'none';
-    document.getElementById('emoticon').style.display = 'none';
-  }, valor2 * 1000);
-}
-</script>
+            #tela3 {
+                width: 100vw;
+                Height: 15ch;
+            }
 
-</body>
+            #tela2,
+            #tela1 {
+                width: 98%;
+                Height: 98%;
+            }
+
+            #tela1 {
+                font-size: calc(12.5vh);
+            }
+
+            #principal {
+                width: calc(100vw);
+                height: calc(100vh);
+            }
+
+            input[type="number"] {
+                text-align: center;
+                width: 4ch;
+            }
+
+            input[type="text"] {
+                text-align: left;
+                width: 45vw;
+            }
+
+            input[type="number"],
+            input[type="text"] {
+
+                margin-left: 10px;
+                background: rgb(255, 255, 255, 0.5);
+                color: black;
+                font-size: calc(10vh);
+            }
+
+            input[type=number] {
+                width: 4ch;
+            }
+
+            input[type=text] {
+                width: 7ch;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            input[type="checkbox"]+label {
+                transition-duration: 2s;
+                color: white;
+            }
+
+            input[type="checkbox"]:checked+label {
+                transition-duration: 2s;
+                color: rgb(0, 253, 21);
+            }
+
+            #checkboxes {
+                display: flexbox;
+                flex-direction: row;
+                height: calc(99vh - 3ch);
+                width: calc(100vw - 1ch);
+                overflow-y: auto;
+                overflow-x: hidden;
+                font-family: verdana;
+            }
+
+            form label {
+                display: inline-block;
+                width: auto;
+                color: white;
+                text-shadow: var(--shadow);
+                margin: 0;
+                z-index: -1;
+            }
+
+            input[type="submit"],
+            button {
+                width: fit-content;
+                font-size: calc(var(--tam) * 1.25);
+                background-color: rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+
+            #resetar {
+                left: 25%;
+            }
+
+            #desistir {
+                right: 25%;
+            }
+
+            #checkboxes div {
+                min-height: 30px;
+                display: inline-block;
+                line-height: 2.5;
+                width: calc(var(--cdiv) * 2);
+                height: auto;
+                transform: rotate(-30deg);
+                color: white;
+                text-shadow: var(--shadow);
+                background: rgb(0, 0, 0, 0.25);
+            }
+
+            #checkboxes div label {
+                font-size: var(--cdiv);
+            }
+
+
+            .centralizado {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100svh;
+                overflow: auto;
+            }
+
+            .justificado {
+                justify-content: center;
+            }
+
+            .imagem-emoticon {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            #emoticon {
+                transform: scale(5);
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+
+            #tela3 {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #tela3 img,
+            #tela3 video {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+                width: 100vw;
+                max-height: 100vh;
+                object-fit: contain;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Primeira Tela -->
+        <div id="tela1" class="justificado centralizado">
+            <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
+                🏋️☝️ <input type="number" id="valor1" min=0 value=3 required><br>
+                ⏱️⏳ <input type="number" id="valor2" min=0 value=3 required><br>
+                📷 <input type="text" id="linkImagem"><br>
+                <input type="submit" value="✔️">
+            </form>
+        </div>
+
+        <!-- Segunda Tela -->
+        <div id="tela2" class="centralizado" style="display: none;">
+            <div id="checkboxes"></div>
+            <div id="controle" display="inline-block;">
+                <button id="desistir" onclick="abrirTela1()">🥱</button></div>
+        </div>
+
+        <!-- Terceira Tela -->
+        <div id="tela3" class="centralizado" style="display: none;">
+            <img id="imagem" class="imagem-emoticon">
+            <video id="vdagem" class="imagem-emoticon" controls play>
+                <p id="emoticon" class="imagem-emoticon" style="font-size: 50px; display: none;"></p>
+        </div>
+
+        <script>
+            function validarForm() {
+                var valor1 = document.getElementById('valor1').value;
+                var valor2 = document.getElementById('valor2').value;
+                if (valor1 == "" || valor2 == "") {
+                    alert("Por favor, preencha ambos os valores.");
+                    return false;
+                }
+                return true;
+            }
+
+            function criarIndice(i, valor) {
+                let checkboxes = document.getElementById("checkboxes");
+                let div = document.createElement("div");
+                div.style.display = "inline-block";
+
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.id = "checkbox" + i;
+
+                checkbox.onchange = function() {
+                    if (Array.from(document.querySelectorAll('#checkboxes input[type="checkbox"]')).every(x => x.checked)) {
+                        abrirTela3();
+                    }
+                };
+
+                let label = document.createElement("label");
+                label.htmlFor = "checkbox" + i;
+                label.textContent = i.toString().padStart(2, "0");
+
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                div.style.backgroundColor = "#2f4934";
+                checkboxes.appendChild(div);
+            }
+
+
+            function abrirTela2() {
+                document.getElementById("checkboxes").innerHTML = "";
+                document.getElementById('tela1').style.display = 'none';
+                var valor1 = document.getElementById('valor1').value;
+                for (var i = 1; i <= valor1; i++) {
+                    criarIndice(i, valor1);
+                }
+                document.getElementById('tela2').style.display = 'flex';
+            }
+
+            function abrirTela3() {
+                document.getElementById('tela2').style.display = 'none';
+                var linkImagem = document.getElementById('linkImagem').value;
+                if (linkImagem) {
+                    if (linkImagem.includes(".mp4")) {
+                        document.getElementById('vdagem').src = linkImagem;
+                        document.getElementById('vdagem').load();
+                        document.getElementById('vdagem').style.display = 'block';
+                    } else {
+                        document.getElementById('imagem').src = linkImagem;
+                        document.getElementById('imagem').style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('emoticon').style.display = 'block';
+                    var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
+                    var i = 0;
+                    setInterval(function() {
+                        document.getElementById('emoticon').textContent = emoticons[i];
+                        i = (i + 1) % emoticons.length;
+                    }, 250);
+                }
+                document.getElementById('tela3').style.display = 'flex';
+                var valor2 = document.getElementById('valor2').value;
+                setTimeout(abrirTela1, valor2 * 1000);
+            }
+
+            function abrirTela1() {
+                document.getElementById('tela3').style.display = 'none';
+                document.getElementById('tela1').style.display = 'flex';
+                document.getElementById('checkboxes').innerHTML = '';
+                document.getElementById('meuForm').reset();
+                document.getElementById('imagem').style.display = 'none';
+                document.getElementById('emoticon').style.display = 'none';
+            }
+
+        </script>
+
+    </body>
+
 </html>
