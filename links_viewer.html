@@ -48,32 +48,56 @@
         }
 
 
+@media (max-aspect-ratio: 1/1) {
 
-        @media screen and (orientation: portrait) {
-
-            #preview1 {
-                height: calc(33vh - 1ch);
-                width: calc(100%);
-            }
-
-            #preview2 { 
-                height: calc(66vh - 1ch);
-                width: calc(50%);
-                margin-left: 25%;
-            }
-        }
-
-        @media screen and (orientation: landscape) {
-
-            #preview1 {
-                height: calc(99vh - 1ch);
-                width: calc((99vh - 1ch) * 1.25);
-                margin-left: 5%;
+            #preview1, #preview2 {
+                max-width: calc(100%);
             }
 
             #preview2 {
+                height: 33vh;
+                width: calc((33vh - 1ch) * 3)
+            }
+
+            #preview1 { 
+                height: calc(66vh - 1ch);
+                min-width: calc((66vh - 1ch) * 0.9);
+                margin: auto;
+            }
+        }
+        
+        @media (min-aspect-ratio: 1516/530) {/*, (orientation: landscape) {*/
+
+            #preview1, #preview2 {
                 height: calc(99vh - 1ch);
-                width: calc((99vh - 1ch) * 0.75);
+            }
+
+            #preview1 {
+                min-width: calc((99vh - 1ch) * 1.05);
+                width: 66%;
+            }
+
+            #preview2 {
+                max-width: calc((99vh - 1ch) * 0.95);
+                width: 33%;
+            }
+
+        }
+
+        @media (max-aspect-ratio: 1516/529) and (min-aspect-ratio: 1/1){
+
+            #preview1, #preview2 {
+                height: calc((60vw * 0.8) - 2ch);
+            }
+
+            #preview1 {
+                max-height: calc(60vw * 3);
+                width: 60%;
+            }
+
+            #preview2 {
+                max-height: calc(33vw * 3);
+                width: 33vw;
             }
         }
 
@@ -214,7 +238,7 @@ function exibirDimensoes(iframe) {
     var doc = iframe.contentDocument || iframe.contentWindow.document;
 
     // Substitui o conteúdo do corpo do documento do iframe
-    doc.body.innerHTML = '<br><br>Largura: ' + largura + '<br> Altura: ' + altura + (largura > altura ? "<br>🖼️" : "<br>🛤️");
+    doc.body.innerHTML = '<br><br>Largura: ' + largura + '<br> Altura: ' + altura + (largura > altura ? "<br>🖼️ " : "<br>🛤️ ") + (largura/altura);
 }
 
 // Função para exibir as dimensões de ambos os iframes
