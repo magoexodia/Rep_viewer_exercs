@@ -1,258 +1,270 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Repetecos</title>
-    <style>
-        @media screen and (orientation: portrait)  {
-          #tela3 {
-            transform: rotate(-90deg);
-            transform-origin: center;
-          }
-          #tela3 img {width: 100%; height:100%; transform: scale(1.8);}
-          body {
-            --tam: calc(4vh + 4vw);
-          }
-          #tela1 {transform: translate(0, 20%); transform-origin: center;}
-          #checkboxes div {
-            height: var(--tam);
-            min-width: 30px;
-            width: var(--tam);
-          }
-        }
-        @media screen and (orientation: landscape)  {
-          body {
-            --tam: 4vw;
-            
-          }
-          #checkboxes div {
-            min-height: 30px;
-            height: var(--tam);
-            width: var(--tam);
-          }
-        }
-        #principal { width: calc(100vw - 10px); height: calc(100vh - 10px);}
-        body {
-            --shadow: 0px 0px 2px black, 0px 0px 3px white, 0px 0px 4px black;
-            text-align: center;
-            font-size: calc(var(--tam) + 10px);
-            font-family: monospace;
-            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, indigo, blue, green, yellow, orange, red);
-        }
-        body label {
-            text-align: right;
-            background: rgb(0,0,0,0.1);
-        }
-        input[type="number"] {
-            text-align: center;
-            width: 4em;
-        }
-        input[type="text"] {
-            text-align: left;
-            width: 45vw;
-        }
-        input[type="number"], input[type="text"] {
 
-            margin-left: 10px;
-            background: rgb(255, 255, 255, 0.25);
-            color: white;
-            text-shadow: var(--shadow);
-            font-size: calc(var(--tam) + 10px);
-        }
-        input[type="checkbox"] {
-            display: none;
-        }
-        input[type="checkbox"] + label {
-            transition-duration: 2s;
-            color: white;
-        }
-        input[type="checkbox"]:checked + label {
-            transition-duration: 2s;
-            color: rgb(0, 253, 21);
-        }
-        #checkboxes {
-            display: flexbox;
-            flex-direction: row;
-            min-height:60%;
-            height: calc(100% - 5em);
-            width: calc(100% - 10px);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        form label {
-            display: inline-block;
-            width: auto;
-            color: white;
-            text-shadow:  var(--shadow);
-            margin: 0;
-            z-index: -1;
-        }
-        input[type="submit"], button {
-            width: fit-content;
-            font-size: calc(var(--tam) * 1.25);
-            background-color: gold;
-            z-index: 99;
-        }
-        #resetar {
-            left: 25%;
-        }
-        #desistir {
-            right: 25%;
-        }
-        img {
-            
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <title>Repetecos</title>
+        <style>
+            @media screen and (orientation: portrait) {
 
-        #checkboxes div {
-            display: inline-block;
-            line-height: 2.5;
-            width: 2em;
-            height: auto;
-            transform: rotate( -30deg );
-            color: white;
-            text-shadow: var(--shadow);
-            background: rgb(0,0,0,0.25);
-        }
-    </style>
-</head>
-<body>
-    
-<div id="principal">
- <div id="tela1">
- <form id="form1">
- <label for="repeticoes">🏋️Repetições:</label>
- <input type="number" id="repeticoes" value="10" name="repeticoes" required><br>
- <label for="tempo">&nbsp;⏱️Descanso:</label>
- <input id="tempo" type="number" value="15"><br><br>
- <label for="entreSeries">📷</label>
- <input id="entreSeries" type="text" value="https://i.pinimg.com/originals/94/1e/0b/941e0b6e6e98f7b8248f4bf73aa868c2.gif"><br><br>
- <input type="submit" value="OK">
- </form>
- </div>
+                #checkboxes {
+                    --cdiv: 1.1em;
+                }
+            }
 
- <div id="tela2" style="display: none;">
- <div id="checkboxes"></div><br>
- <button id="resetar">Resetar</button>
- <button id="desistir">Desistir</button>
- </div>
+            @media screen and (orientation: landscape) {
+                #checkboxes {
+                    --cdiv: 1em;
+                }
+            }
 
- <div id="tela3">
- </div>
- </div>
+            body {
+                --tam: 6vh;
+                --shadow: 0px 0px 2px black, 0px 0px 3px white, 0px 0px 4px black;
+                text-align: center;
+                font-size: calc(var(--tam) + 10px);
+                font-family: monospace;
+                background-color: #fefdff;
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
 
- <script>
- let form1 = document.getElementById("form1");
- let repeticoes = document.getElementById("repeticoes");
- let imagem = document.getElementById("imagem");
- let tela1 = document.getElementById("tela1");
- let tela2 = document.getElementById("tela2");
- let tela3 = document.getElementById("tela3");
- let checkboxes = document.getElementById("checkboxes");
- let resetar = document.getElementById("resetar");
- let desistir = document.getElementById("desistir");
- let gif = document.getElementById("gif");
- let entreSeriesGif = document.getElementById("entreSeriesGif");
- let entreSeries = document.getElementById("entreSeries");
- let tempo = document.getElementById("tempo");
+            body label {
+                text-align: right;
+                background: rgb(0, 0, 0, 0.1);
+            }
 
- entreSeries.value = "https://i.pinimg.com/originals/94/1e/0b/941e0b6e6e98f7b8248f4bf73aa868c2.gif";//"https://64.media.tumblr.com/d1fb1171b80035e171374b72befffba1/tumblr_o5myfsrQ3n1s5rcozo1_500.gif";
- 
- let checkedCount = 0;
+            #tela3 {
+                transform: translate(0, 30%);
+                transform-origin: center;
+                width: 98vw;
+                Height: fit-content;
+                font-family: verdana;
+                font-size: calc(20vh + 20vw);
+                color: #BC13CB;
+                text-shadow: 2px 2px 2px white, 2px 3px 3px silver, 2px 5px 5px gray;
+            }
 
-form1.addEventListener("submit", function(event) {
- event.preventDefault();
- if (form1.checkValidity()) {
- for (let i = 0; i < repeticoes.value; i++) {
- let div = document.createElement("div");
- div.style.display = "inline-block";
+            #tela2,
+            #tela1 {
+                width: 98vw;
+                Height: 96vh;
+            }
 
- let checkbox = document.createElement("input");
- checkbox.type = "checkbox";
- checkbox.id = "checkbox" + i;
-function handleCheckboxChange(checkbox) {
-  if (checkbox.checked) {
-    checkedCount++;
-    displayRandomImage();
-  } else {
-    checkedCount--;
-  }
-  if (checkedCount == repeticoes.value) {
-    //displayRandomImage();
-    setTimeout(function() {
-      desistir.click();
-    }, tempo.value * 1000);
-  }
-}
+            #tela1 {
+                font-size: calc(12.5vh);
+            }
 
-function displayRandomImage() {
-  let images = entreSeries.value.split(", ");
-  //let randomImage = images[Math.floor(Math.random() * images.length)];
-  const img = document.createElement('img');
-  img.src = entreSeries.value; //randomImage;
-  document.getElementById("tela3").appendChild(img);
-  document.getElementById("tela2").style.display = "none";
-  showTela3();
-  setTimeout(function() {
-    document.getElementById("tela3").removeChild(img);
-    document.getElementById("tela2").style.display = "block";
-    document.getElementById("tela3").style.display = "none";
-  }, tempo.value * 1000);
-}
+            #principal {
+                width: calc(100vw - 1em);
+                height: calc(100vh - 1em);
+            }
 
-checkbox.addEventListener("change", function() {
-  handleCheckboxChange(this);
-});
+            input[type="number"] {
+                text-align: center;
+                width: 4ch;
+            }
 
-function showTela3() {
-  const tela3 = document.getElementById("tela3");
-  tela3.style.display = "block";
-  tela3.style.position = "fixed";
-  tela3.style.top = "0";
-  tela3.style.left = "0";
-  tela3.style.width = "100vw";
-  tela3.style.height = "100vh";
-}
+            input[type="text"] {
+                text-align: left;
+                width: 45vw;
+            }
 
- let label = document.createElement("label");
- label.htmlFor = "checkbox" + i;
- label.textContent = (i + 1).toString().padStart(2, "0");
+            input[type="number"],
+            input[type="text"] {
 
- div.appendChild(checkbox);
- div.appendChild(label);
- div.style.backgroundImage = "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
- div.style.backgroundSize = "cover";
- checkboxes.appendChild(div);
- }
- tela1.style.display = "none";
- tela2.style.display = "block";
- tela2.style.height = "90vh";
- }
-});
+                margin-left: 10px;
+                background: rgb(255, 255, 255, 0.5);
+                color: black;
+                font-size: calc(10vh);
+            }
 
- resetar.addEventListener("click", function() {
- checkedCount = 0;
- for (let i = 0; i < repeticoes.value; i++) {
- let checkbox = document.getElementById("checkbox" + i);
- checkbox.checked = false;
- }
-});
+            input[type="checkbox"] {
+                display: none;
+            }
 
+            input[type="checkbox"]+label {
+                transition-duration: 2s;
+                color: white;
+            }
 
+            input[type="checkbox"]:checked+label {
+                transition-duration: 2s;
+                color: rgb(0, 253, 21);
+            }
 
-   desistir.addEventListener("click", function() {
-     checkedCount = 0;
-     //checkboxes.innerHTML = "";
-     while (checkboxes.firstChild) {
-        checkboxes.removeChild(checkboxes.firstChild);
-      }
-     form1.reset();
-     tela1.style.display = "block";
-     tela2.style.display = "none";
-     tela3.style.display = "none";
-   });
- </script>
-</body>
+            #checkboxes {
+                display: flexbox;
+                flex-direction: row;
+                height: calc(99vh - 4ch);
+                width: calc(100vw - 1ch);
+                overflow-y: auto;
+                overflow-x: hidden;
+                font-family: verdana;
+            }
+
+            form label {
+                display: inline-block;
+                width: auto;
+                color: white;
+                text-shadow: var(--shadow);
+                margin: 0;
+                z-index: -1;
+            }
+
+            input[type="submit"],
+            button {
+                width: fit-content;
+                font-size: calc(var(--tam) * 1.25);
+                background-color: rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+
+            #resetar {
+                left: 25%;
+            }
+
+            #desistir {
+                right: 25%;
+            }
+
+            #checkboxes div {
+                min-height: 30px;
+                display: inline-block;
+                line-height: 2.5;
+                width: calc(var(--cdiv) * 2);
+                height: auto;
+                transform: rotate(-30deg);
+                color: white;
+                text-shadow: var(--shadow);
+                background: rgb(0, 0, 0, 0.25);
+            }
+
+            #checkboxes div label {
+                font-size: var(--cdiv);
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <div id="principal">
+            <div id="tela1">
+                <form id="form1"><br>
+                    <label for="repeticoes">🏋️☝️</label>
+                    <input type="number" id="repeticoes" value="10" name="repeticoes" required><br>
+                    <label for="tempo">⏱️⏳</label>
+                    <input id="tempo" type="number" value="15"><br>
+                    <input type="submit" value="✔️">
+                </form>
+            </div>
+
+            <div id="tela2" style="display: none;">
+                <div id="checkboxes"></div>
+                <button id="resetar">➡️0️⃣</button>
+                <button id="desistir">🥱</button>
+            </div>
+
+            <div id="tela3" style="display: none;">
+            </div>
+        </div>
+
+        <script>
+            let form1 = document.getElementById("form1");
+            let repeticoes = document.getElementById("repeticoes");
+            let tela1 = document.getElementById("tela1");
+            let tela2 = document.getElementById("tela2");
+            let tela3 = document.getElementById("tela3");
+            let checkboxes = document.getElementById("checkboxes");
+            let resetar = document.getElementById("resetar");
+            let desistir = document.getElementById("desistir");
+            let tempo = document.getElementById("tempo");
+
+            let checkedCount = 0;
+
+            function handleCheckboxChange(checkbox) {
+                if (checkbox.checked) {
+                    checkedCount++;
+                    let timeLeft = tempo.value;
+                    tela2.style.display = "none";
+                    tela3.style.display = "block";
+                    // Display the countdown timer in tela3
+                    tela3.textContent = timeLeft;
+                    timeLeft--;
+                    let countdown = setInterval(function() {
+                        if (timeLeft <= 0) {
+                            clearInterval(countdown);
+                            tela3.textContent = "";
+                            tela2.style.display = "block";
+                            tela3.style.display = "none";
+                        } else {
+                            // Display the countdown timer in tela3
+                            tela3.textContent = timeLeft;
+                            timeLeft--;
+                        }
+                    }, 1000);
+                } else {
+                    checkedCount--;
+                }
+                if (checkedCount == repeticoes.value) {
+                    setTimeout(function() {
+                        desistir.click();
+                    }, tempo.value * 1000);
+                }
+            }
+
+            form1.addEventListener("submit", function(event) {
+                event.preventDefault();
+                if (form1.checkValidity()) {
+                    for (let i = 0; i < repeticoes.value; i++) {
+                        let div = document.createElement("div");
+                        div.style.display = "inline-block";
+
+                        let checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.id = "checkbox" + i;
+
+                        checkbox.addEventListener("change", function() {
+                            handleCheckboxChange(this);
+                        });
+
+                        let label = document.createElement("label");
+                        label.htmlFor = "checkbox" + i;
+                        label.textContent = (i + 1).toString().padStart(2, "0");
+
+                        div.appendChild(checkbox);
+                        div.appendChild(label);
+                        div.style.backgroundColor = "#2f4934";
+                        /*
+                        div.style.backgroundImage =
+                          "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
+                        div.style.backgroundSize = "cover";*/
+                        checkboxes.appendChild(div);
+                    }
+                    tela1.style.display = "none";
+                    tela2.style.display = "block";
+                }
+            });
+
+            resetar.addEventListener("click", function() {
+                checkedCount = 0;
+                for (let i = 0; i < repeticoes.value; i++) {
+                    let checkbox = document.getElementById("checkbox" + i);
+                    checkbox.checked = false;
+                }
+            });
+
+            desistir.addEventListener("click", function() {
+                checkedCount = 0;
+                while (checkboxes.firstChild) {
+                    checkboxes.removeChild(checkboxes.firstChild);
+                }
+                form1.reset();
+                tela1.style.display = "block";
+                tela2.style.display = "none";
+            });
+
+        </script>
+    </body>
+
 </html>
