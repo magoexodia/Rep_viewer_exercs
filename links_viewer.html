@@ -6,11 +6,17 @@
         <title>Preview de Links do GitHub</title>
     </head>
     <style>
+        :root {
+            --bgimg: url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
+            --bgcolor: rgba(0, 0, 0, 0.164);
+            --bgprev: rgba(255, 255, 255, 0.35);
+        }
+
         body {
             font-family: 'Lucida Sans', sans-serif;
             font-size: calc(1vmin / 2vmax);
-            background: rgba(0, 0, 0, 0.164);
-            background-image: url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
+            background: var(--bgcolor);
+            background-image: var(--bgimg);
             background-size: contain;
             cursor: crosshair;
             overflow: hidden;
@@ -36,11 +42,39 @@
             overflow: auto;
             margin: 3px;
         }
+        
+        #preview1, #preview2 {
+            background: var(--bgprev);
+        }
 
-        #preview {
-            height: calc(99vh - 2ch);
-            width: calc(100vw - 2ch);
-            background: rgba(255, 255, 255, 0.35);
+
+
+        @media screen and (orientation: portrait) {
+
+            #preview1 {
+                height: calc(33vh - 1ch);
+                width: calc(100%);
+            }
+
+            #preview2 { 
+                height: calc(66vh - 1ch);
+                width: calc(50%);
+                margin-left: 25%;
+            }
+        }
+
+        @media screen and (orientation: landscape) {
+
+            #preview1 {
+                height: calc(99vh - 1ch);
+                width: calc((99vh - 1ch) * 1.25);
+                margin-left: 5%;
+            }
+
+            #preview2 {
+                height: calc(99vh - 1ch);
+                width: calc((99vh - 1ch) * 0.75);
+            }
         }
 
         #botoes {
@@ -98,7 +132,8 @@
                     <div id="botoes" class="esconde"></div>
             </div>
             <div id="div-iframe">
-                <iframe id="preview" allowfullscreen></iframe>
+                <iframe id="preview1" allowfullscreen></iframe>
+                <iframe id="preview2" allowfullscreen></iframe>
             </div>
         </div>
         </div>
@@ -122,7 +157,8 @@
 
             function exibirPreview() {
                 if (links.length > 0) {
-                    document.getElementById("preview").src = links[indice];
+                    document.getElementById("preview1").src = links[indice];
+                    document.getElementById("preview2").src = links[indice];
                 }
             }
 
@@ -139,6 +175,8 @@
                 exibirPreview();
                 criarBotoes();
                 esconde("entrada");
+                window.removeEventListener('resize', atualizarDimensoes);
+                window.removeEventListener('load', atualizarDimensoes);
             }
 
             function criarBotoes() {
@@ -167,6 +205,31 @@
                 exibirPreview();
             });
             /*isto link: https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html,*/
+// Função para exibir as dimensões de um iframe dentro dele mesmo
+function exibirDimensoes(iframe) {
+    var largura = iframe.offsetWidth;
+    var altura = iframe.offsetHeight;
+
+    // Acessa o documento dentro do iframe
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Substitui o conteúdo do corpo do documento do iframe
+    doc.body.innerHTML = '<br><br>Largura: ' + largura + '<br> Altura: ' + altura + (largura > altura ? "<br>🖼️" : "<br>🛤️");
+}
+
+// Função para exibir as dimensões de ambos os iframes
+function atualizarDimensoes() {
+    var iframe1 = document.getElementById('preview1');
+    var iframe2 = document.getElementById('preview2');
+    exibirDimensoes(iframe1);
+    exibirDimensoes(iframe2);
+}
+
+// Adiciona o event listener para o evento de redimensionamento da janela
+window.addEventListener('resize', atualizarDimensoes);
+
+// Chama a função quando a página é carregada
+window.addEventListener('load', atualizarDimensoes);
 
         </script>
     </body>
