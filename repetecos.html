@@ -6,14 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Repetecos</title>
         <style>
-            body,
-            input[type=button],
-            input[type=number],
-            input[type=text],
-            button {
-                font-size: calc(3vmax + 4vmin);
-            }
-
             @media screen and (orientation: portrait) {
 
                 #checkboxes {
@@ -28,7 +20,7 @@
             }
 
             body {
-                --tam: calc(2vw + 4vh);
+                --tam: calc(7vh);
                 --shadow: 0px 0px 2px black, 0px 0px 3px white, 0px 0px 4px black;
                 text-align: center;
                 font-size: calc(var(--tam) + 10px);
@@ -40,6 +32,7 @@
             body label {
                 text-align: right;
                 background: rgb(0, 0, 0, 0.1);
+                font-size: var(--tam);
             }
 
             #tela3 {
@@ -78,11 +71,11 @@
                 margin-left: 10px;
                 background: rgb(255, 255, 255, 0.5);
                 color: black;
-                font-size: calc(10vh);
+                font-size: var(--tam);
             }
 
             input[type=number] {
-                width: 4ch;
+                width: 3ch;
             }
 
             input[type=text] {
@@ -210,9 +203,9 @@
         <!-- Primeira Tela -->
         <div id="tela1" class="justificado centralizado">
             <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
-                🏋️☝️ <input type="number" id="valor1" min=0 value=3 required><br>
-                ⏱️⏳ <input type="number" id="valor2" min=0 value=3 required><br>
-                📷 <input type="text" id="linkImagem"><br>
+                <label for="valor1">🏋️☝️</label><input type="number" id="valor1" min=0 value=3 required><br>
+                <label for="valor2">⏱️⏳</label><input type="number" id="valor2" min=0 value=3 required><br>
+                <label for="linkImagem">📷🔗</label><input type="text" id="linkImagem"><br>
                 <input type="submit" value="✔️">
             </form>
         </div>
@@ -221,13 +214,13 @@
         <div id="tela2" class="centralizado" style="display: none;">
             <div id="checkboxes"></div>
             <div id="controle" display="inline-block;">
-                <button id="desistir" onclick="abrirTela1()">🥱</button></div>
+                &nbsp;<button id="desistir" onclick="abrirTela1()">🥱</button></div>
         </div>
 
         <!-- Terceira Tela -->
         <div id="tela3" class="centralizado" style="display: none;">
             <img id="imagem" class="imagem-emoticon">
-            <video id="vdagem" class="imagem-emoticon" style="display: none;" controls play>
+			<video id="vdagem" class="imagem-emoticon" style="display: none;" controls play></video>
                 <p id="emoticon" class="imagem-emoticon" style="font-size: 50px; display: none;"></p>
         </div>
 
@@ -281,10 +274,11 @@
             function abrirTela3() {
                 document.getElementById('tela2').style.display = 'none';
                 var linkImagem = document.getElementById('linkImagem').value;
-                if (linkImagem) {
+                if (linkImagem.includes('//')) {
                     document.getElementById('imagem').src = linkImagem;
                     document.getElementById('imagem').style.display = 'block';
                 } else {
+                    /*abrirTela1();*/
                     document.getElementById('emoticon').style.display = 'block';
                     var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
                     var i = 0;
@@ -301,6 +295,7 @@
             function abrirTela1() {
                 document.getElementById('tela3').style.display = 'none';
                 document.getElementById('tela1').style.display = 'flex';
+                document.getElementById('tela2').style.display = 'none';
                 document.getElementById('checkboxes').innerHTML = '';
                 document.getElementById('meuForm').reset();
                 document.getElementById('imagem').style.display = 'none';
