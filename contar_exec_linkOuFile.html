@@ -1,312 +1,338 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contador de Repetições</title>
-
-
+        <title>Timer</title>
         <style>
+            :root {
+                --bgurl: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
+                --bgbtn: rgb(0, 0, 0, 0.1);
+                --bgipt: rgb(255, 255, 255, 0.25);
+                --sombra1: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+            }
+
+            /* Center elements on screen */
             body {
-                --tam: calc(7vh);
-                font-family: Monospace, sans-serif;
-                font-size: var(--tam);
-                text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-                background-color: #fefdff;
-                background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
-                width: 100vw;
-                height: 100vh;
-                margin: 0;
-                padding: 0;
                 display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .screen {
-                display: none;
-                width: 40ch;
-                height: fit-content;
-            }
-
-            .screen.active {
-                display: block;
-
-                margin: auto;
-                width: 100vw;
-                max-height: 100vh;
-                object-fit: contain;
-            }
-
-            #screen1.active {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 99vh;
-            }
-
-            #screen2.centra.active {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 99vh;
                 flex-direction: column;
-            }
-
-            input[type="number"],
-            input[type="text"],
-            #imageFile {
-                font-size: 1ch;
-                padding: 5px;
-                margin: 5px;
-                text-align: left;
-                width: 30vw;
-            }
-
-            input[type="radio"] {
-                --size: calc(var(--tam) - 2ch);
-                height: var(--size);
-                width: var(--size);
+                align-items: center;
+                color: black;
+                font-family: monospace;
+                justify-content: center;
+                text-shadow: var(--sombra1);
+                background-color: #fefdff;
+                background-image: var(--bgurl);
+                font-size: 6vh;
             }
 
             button {
-                padding: 10px;
-                margin: 5px;
-            }
-
-            #counter {
-                font-family: verdana;
                 font-size: 2ch;
-                font-weight: bold;
-                margin: 10px;
-                width: 9ch;
-                text-align: center;
+                background: var(--bgbtn);
             }
 
-            .butao {
-                font-size: 3ch;
-                background: rgba(0, 0, 0, 0);
-                border: none;
+            #screen2 {
+                font-family: Verdana;
+                align-items: center;
+                justify-content: center;
             }
 
-            .megabutao {
-                font-size: 8ch;
-                background: rgba(0, 0, 0, 0);
-                border: none;
+            input[type="number"],
+            input[type="text"] {
+                margin-left: 2px;
+                background: var(--bgipt);
+                font-size: 2ch;
+                text-align: right;
             }
 
-            .minibutao {
-                font-size: 1.5ch;
-                background: rgba(0, 0, 0, 0);
-                border: none;
+            input[type="radio"] {
+                --tradio: 1ch;
+                height: var(--tradio);
+                width: var(--tradio);
+                margin-left: 2px;
+                font-size: var(--tradio);
+                text-shadow: var(--sombra1);
             }
 
-            .espaco {
-                font-size: 5ch;
+            input[type="radio"]:checked + label {
+                color: purple;
+                background: white;
             }
 
-            @media screen and (orientation: portrait) {
+            input[type="number"] {
+                width: 4ch;
+            }
 
-                #screen3 {
-                    position: fixed;
-                    transform: rotate(-90deg);
+            input[type="text"] {
+                width: 10ch;
+            }
+
+            #screen3 {
+                width: calc(100vw - 2ch);
+                height: calc(100vh - 2ch);
+            }
+
+            #timer {
+                font-size: calc(10vmax);
+            }
+
+            #timer-control {
+                font-size: calc(4vmax);
+            }
+
+            img {
+                object-fit: contain;
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+            }
+
+
+            @media (min-aspect-ratio: 1/3) and (max-aspect-ratio: 1001/1000) {
+
+                .retrato {
+                    display: block;
+                    font-size: 3ch;
+                }
+
+                .paisagem {
+                    display: none;
+                }
+
+                #horas-in input[type=number],
+                #rest-in input[type=number] {
+                    width: 3.3ch;
+                }
+
+                #horas-in label {
+                    width: 2ch;
+                }
+
+                #timer {}
+
+                #screen2 {
+                    height: auto;
+                    transform: rotate(-90deg) translateX(-50%);
                     transform-origin: center;
+                    width: 100vmin;
                 }
-
-                #screen3 img,
-                #screen3 video {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 100vh;
-                    max-height: 100vw;
-                    object-fit: contain;
-                }
-
-            }
-
-            @media screen and (orientation: landscape) {
 
                 #screen3 {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100vw;
-                    height: 100vh;
+                    height: 95vmin;
+                    width: 95vmax;
                 }
 
-                #screen3 img,
-                #screen3 video {
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    margin: auto;
-                    width: 100vw;
-                    max-height: 100vh;
-                    object-fit: contain;
+                transform: rotate(-90deg);
+                transform-origin: center;
+
+                img {
+                    min-width: calc(95vh);
+                    max-height: calc(95vw);
+                }
+            }
+
+            @media (min-aspect-ratio: 1001/1000) {
+
+                /*paisagem*/
+                #screen2 {
+                    height: calc(96vmin - 1ch);
+                }
+
+                img {
+                    min-width: calc(100vw);
+                    max-height: calc(100vh);
                 }
 
                 .paisagem {
                     display: block;
-                    font-size: 2ch;
+                    font-size: 3ch;
                 }
 
                 .retrato {
                     display: none;
                 }
 
-                #screen2.centra.active {
-                    transform: rotate(-90deg);
-                    width: 100vh;
+                #horas-in,
+                #rest-in {
+                    display: inline-block;
+                    width: fit-content;
                 }
 
-                .controle {
-                    transform: scaleX(-1);
+                #horas-in input[type=number] {
+                    width: 3.3ch;
                 }
 
-                .minibutao,
-                #counter {
-                    transform: rotate(90deg);
+                #horas-in label {
+                    width: 2ch;
+                }
+
+                #rest-in {
+                    margin-left: 34%;
                 }
             }
 
-            /*.arqOpt {display: none;}*/
+            #ok {
+                margin-left: 40%;
+            }
+
+            /*
+            @media (max-width 767) {
+                #principal {
+                    transform: scale(0.5);
+                }
+            }*/
 
         </style>
     </head>
 
     <body>
-        <!-- Tela 1 -->
-        <div class="screen active" id="screen1">
-            <div>
-                <label for="repetitions">0️⃣ a </label>
-                <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><br><label for="tempo"> ⏳ &nbsp;</label>
-                <input type="number" id="tempo" value="1" min="0" style="width: 4.5ch; text-align: right;">
-                <br>
-                <div id="selecao">
-                    <div class="lkOpt">
-                        <input type="radio" name="opcao" checked id="inputB" onchange="handleOptionChange()">
-                        <label for="imageLink">🔗</label>
-                        <input type="text" id="imageLink" class="opB" value="https://64.media.tumblr.com/7df4956b8721b9125d60e986ac1fd95d/tumblr_owqm6ja0Bt1uwg439o1_540.gifv" onclick="this.select()">
-                    </div>
-                    <div class="arqOpt">
-                        <input type="radio" name="opcao" id="inputA" onchange="handleOptionChange()">
-                        <label for="imageFile">📂</label>
-                        <input type="file" id="imageFile" accept="image/*,video/*" disabled class="opA">
-                    </div>
-                    <span class="espaco">&nbsp;</span><button onclick="changeScreen(2)" class="butao" id="ok">✅</button>
+
+        <div id="principal">
+            <!-- Screen 1: Form -->
+            <div id="screen1">
+                <div style="display: flex; flex-direction: column; ">
+                    <form>
+                        <div id="horas-in"><br class="paisagem">
+                            <label for="hours">⏱️H</label>
+                            <input type="number" id="hours" min="0" max="23" value="0" required>
+
+                            <br class="retrato"><label for="minutes">⏱️M</label>
+                            <input type="number" id="minutes" min="0" max="59" value="0" required>
+
+                            <br class="retrato"><label for="seconds">⏱️S</label>
+                            <input type="number" id="seconds" min="0" max="59" value="1" required>
+                        </div><br class="paisagem">
+                        <div id="rest-in">
+                            <br class="retrato">
+                            <label for="rest">⌛</label>
+                            <input type="number" id="rest" min="0" max="3600" value="3" required>
+                            <br class="retrato">
+                            <input type="radio" name="topt" checked id="sec"><label for="sec">Secs</label>
+                            <input type="radio" name="topt" id="min"><label for="min">Mins</label>
+                        </div>
+                        <br>
+                        <label for="image">📷Imagem:</label><br class="retrato">
+                        <input type="text" id="image" value="https://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv" required>
+                        <br><br>
+                        <button type="submit" id="ok">✅</button>
+                    </form>
                 </div>
             </div>
-        </div>
 
-        <!-- Tela 2 -->
-        <div class="screen centra" id="screen2">
-            <div id="counter-view">
-                <div id="counter" onload="load()">0</div>
-                <div style="width: 1ch;">
-                    <button onclick="updateCounter(1)" class="megabutao">➕</button>
+            <!-- Screen 2: Timer -->
+            <div id="screen2" style="display:none; direction: column;">
+                <div id="timer"></div><br>
+                <div id="timer-control" style="width: 2ch">
+                    <button id="repeat">🔁</button>
+                    <button id="cancel">❌</button>
                 </div>
             </div>
-            <div class="controle">
-                <button onclick="updateCounter(-1)" class="minibutao">➖</button>
-                <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao">🔁</button>
-                <button onclick="changeScreen(1)" class="minibutao">❌</button>
+
+            <!-- Screen 3: Image -->
+            <div id="screen3" style="display:none;">
+                <img src="" alt="">
             </div>
-        </div>
 
-        <!-- Tela 3 -->
-        <div class="screen" id="screen3">
-            <img id="image" src="">
         </div>
-
 
         <script>
-            let repetitions = document.getElementById("repetitions");
-            let counter = document.getElementById("counter");
-            let image = document.getElementById("image");
+            // Get references to elements
+            const screen1 = document.getElementById("screen1");
+            const screen2 = document.getElementById("screen2");
+            const screen3 = document.getElementById("screen3");
+            const hoursInput = document.getElementById("hours");
+            const minutesInput = document.getElementById("minutes");
+            const secondsInput = document.getElementById("seconds");
+            const restInput = document.getElementById("rest");
+            const imageInput = document.getElementById("image");
+            const timerDisplay = document.getElementById("timer");
+            const repeatButton = document.getElementById("repeat");
+            const cancelButton = document.getElementById("cancel");
+            const imageDisplay = screen3.querySelector("img");
 
-            function changeScreen(screen) {
-                Array.from(document.getElementsByClassName("screen")).forEach(s => s.classList.remove("active"));
-                document.getElementById("screen" + screen).classList.add("active");
-                if (screen === 1) {
-                    updateCounter(-parseInt(counter.textContent));
-                }
-                if (screen === 3) {
-                    displayImage();
-                }
-            }
+            // Initialize variables
+            let duration = 0;
+            let rest = 0;
+            let image = "";
+            let timer = null;
 
-            function displayImage() { //dá um tempo e volta pra screen1
-                setTimeout(() => changeScreen(1), document.getElementById('tempo').value * 1000);
-            }
-
-            function updateCounter(delta) {
-                let value = parseInt(counter.textContent) + delta;
-                counter.textContent = Math.max(value, 0);
-                if (value == parseInt(repetitions.value)) {
-                    load();
-                }
-            }
-
-            function handleOptionChange() {
-                document.getElementById('imageLink').disabled = document.getElementById('inputA').checked;
-                document.getElementById('imageFile').disabled = document.getElementById('inputB').checked;
-            }
-
-            document.getElementById("goToScreen1").addEventListener("click", () => changeScreen(1));
-            document.getElementById("goToScreen2").addEventListener("click", () => {
-                changeScreen(2);
-                updateCounter(-parseInt(counter.textContent));
+            // Handle form submission
+            screen1.querySelector("form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                let hours = parseInt(hoursInput.value);
+                let minutes = parseInt(minutesInput.value);
+                let seconds = parseInt(secondsInput.value);
+                duration = hours * 3600 + minutes * 60 + seconds;
+                rest = parseInt(restInput.value);
+                image = imageInput.value;
+                startTimer();
             });
-            document.getElementById("increment").addEventListener("click", () => updateCounter(1));
-            document.getElementById("decrement").addEventListener("click", () => updateCounter(-1));
 
-
-
-            function loadImagens() { //capado para imagens
-                const imageLink = document.getElementById("imageLink").value;
-                //const imageFile = document.getElementById("imageFile").files[0];
-                const screen3 = document.getElementById('screen3');
-
-                const fileSrc = imageLink; //inputBChecked ? imageLink : URL.createObjectURL(imageFile);
-
-                if (!fileSrc) {
-                    changeScreen(1);
-                    return;
-                }
-                screen3.innerHTML = `<img src="${fileSrc}" alt="Image">`;
-
-                changeScreen(3);
+            // Start timer
+            function startTimer() {
+                screen1.style.display = "none";
+                screen2.style.display = "flex";
+                screen3.style.display = "none";
+                let timeRemaining = duration;
+                updateTimerDisplay(timeRemaining);
+                timer = setInterval(function() {
+                    timeRemaining--;
+                    updateTimerDisplay(timeRemaining);
+                    if (timeRemaining == 0) {
+                        clearInterval(timer);
+                        showImage();
+                        repeatButton.disabled = false;
+                    }
+                }, 1000);
             }
 
-            function load() {
-                const imageLink = document.getElementById("imageLink").value;
-                const imageFile = document.getElementById("imageFile").files[0];
-                const inputBChecked = document.getElementById('inputB').checked;
-                const screen3 = document.getElementById('screen3');
-                const fileSrc = inputBChecked ? imageLink : (imageFile ? URL.createObjectURL(imageFile) : null);
-                const isVideo = (inputBChecked ? imageLink.includes(".mp4") : (imageFile ? imageFile.type.includes("video") : false));
+            // Update timer display
+            function updateTimerDisplay(timeRemaining) {
+                let hours = Math.floor(timeRemaining / 3600);
+                let minutes = Math.floor((timeRemaining % 3600) / 60);
+                let seconds = timeRemaining % 60;
+                let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+                timerDisplay.textContent = formattedTime;
+            }
 
-                if (!fileSrc) {
-                    changeScreen(1);
-                    return;
-                }
+            // Show image
+            function showImage() {
+                screen1.style.display = "none";
+                screen2.style.display = "none";
+                screen3.style.display = "block";
+                let delta = (document.querySelector('input[name="topt"]:checked').value === "mins" ? rest * 60000 : rest * 1000);
+                imageDisplay.src = image;
+                setTimeout(function() {
+                    screen1.style.display = "none";
+                    screen2.style.display = "flex";
+                    screen3.style.display = "none";
+                    repeatButton.disabled = false;
+                }, delta);
+            }
 
-                if (isVideo) {
-                    screen3.innerHTML = `<video style="width: 100%; height: 100%; object-fit: contain;" controls><source src="${fileSrc}" type="video/mp4">Your browser does not support the video tag.</video>`;
-                } else {
-                    screen3.innerHTML = `<img src="${fileSrc}" alt="Image">`;
-                }
+            // Handle repeat button click
+            repeatButton.addEventListener("click", function() {
+                if (this.disabled) return;
+                startTimer();
+            });
 
-                changeScreen(3);
+            // Handle cancel button click
+            cancelButton.addEventListener("click", function() {
+                clearInterval(timer);
+                hideImage();
+            });
+
+            // Hide image
+            function hideImage() {
+                screen1.style.display = "block";
+                screen2.style.display = "none";
+                screen3.style.display = "none";
             }
 
         </script>
-
     </body>
 
 </html>
