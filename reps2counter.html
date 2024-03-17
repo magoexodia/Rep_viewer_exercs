@@ -17,9 +17,20 @@
                 #checkboxes {
                     --cdiv: 1.1em;
                 }
+
+                #tela3 {
+                    writing-mode: vertical-lr;
+                    transform: translate(30%, 30%);
+                }
             }
 
             @media screen and (orientation: landscape) {
+
+                #tela3 {
+                    transform: translate(30%, 30%);
+                    transform-origin: center;
+                }
+
                 #checkboxes {
                     --cdiv: 1em;
                 }
@@ -41,8 +52,6 @@
             }
 
             #tela3 {
-                transform: rotate(-90deg) translate(-100%, 50%);
-                transform-origin: center;
                 width: 50%;
                 Height: 50%;
                 font-family: verdana;
