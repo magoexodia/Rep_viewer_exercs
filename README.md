@@ -34,16 +34,12 @@
 
 
 
-<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html">repetecos.html</a></h2> 
-<li> Algo para contar repetições e dar um descanso entre elas. Bom para contar séries de exercício. Ou ações a contagem é rapida demais mas em série.
-<li> A reps counter. Good for quicly actions between series that needs some rest.
+<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html">repetecos.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html">reps2counter.html</a></h2> 
+<li> Contagem visual de repetições. uma tablea com a quantidade para marcar. O 2º link tem opção com intervalo entre as marcações.
+<li> Visual counting of repetitions. A table with a defined quantity to check. The 2nd link is for rest between checks.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html">repetecos.html</a>
-
-
-<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html">reps2counter.html</a></h2> 
-<li> O mesmo anterior, substitui o descanso por um contador regressivo.
-<li> Same as before with a regressive counter as rest.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html">reps2counter.html</a>
+
 
 
 <h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html">timer_exerc_gif.html</a></h2> 
@@ -54,8 +50,8 @@
 
 
 <h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a></h2>
-<li> Um contador simples pra fazer o mesmo que o repetecos, mas sem descanso entre as repetições. Bom para repetições demoradas e chatas.
-<li> The same as repetecos, but to slower repetitions.
+<li> Um contador de repetições minimalista para repetições rápidas. Para facilitar contar unidades.
+<li> A minimalist repetitions counter to quick repetitions. To help you count unities.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a>
 
