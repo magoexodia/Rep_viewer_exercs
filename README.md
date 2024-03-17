@@ -6,6 +6,9 @@
 <li>To show for a friend as curious as me. <ul> I wish you like this job. I've put to much effort into this just to get those files viewable in web. </ul><ul>It's a group of random jobs for consultation. And to show how it's going.</ul></li>
 
 <div>
+<h3>
+🔤
+</h3>
 <h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html">links_viewer.html</a></h2>
 <li> Um misto de todos, mas com visualização dos links abaixo.
 <li> A mix of all those files with buttons to cicle between them. 
@@ -13,12 +16,16 @@
 
 
 
-<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html">limpador_de_arquivo.html</a></h2>
-<li> Uma coisa pra facilitar sua vida ao selecionar links, não links, imagens, videos de uma vez só em um arquivo de texto.
-<li> To clean a textfile too big with so many links and etc. 
+<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html">limpador_de_arquivo.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a></h2>
+<li> o 1º é pra facilitar pegar somente links num texto cheio de linhas, o 2º é tornar um arquivo cheio de linhas mistas em uma lista de links clicáveis.
+<li> The 1st is to help get only the links from a text with link in most lines. The 2nd is for mixed lines, to have clicable links in a list easy to see.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html">limpador_de_arquivo.html</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a>
 
 
+<h3>
+📷&🎥
+</h3>
 
 
 <h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visuarificador.html">visuarificador.html</a></h2>
@@ -32,7 +39,9 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html">offline_image_loader.html</a>
 </p>
 
-
+<h3>
+🔢
+</h3>
 
 <h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html">repetecos.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html">reps2counter.html</a></h2> 
 <li> Contagem visual de repetições. uma tablea com a quantidade para marcar. O 2º link tem opção com intervalo entre as marcações.
@@ -54,12 +63,10 @@
 <li> A minimalist repetitions counter to quick repetitions. To help you count unities.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a>
-
-<h2><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a></h2>
-<li> Ver sua lista links como uma lista links clicáveis. Agiliza muito poder viajar sem ter que selecionar copiar e colar. Cola uma vez, depois é só clicar no que quiser.
-<li> View your list of links as a clickable list. Speeds up see every line withou copy and paste every line. You need paste once then you just click whaterer link you want.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html">texto_2_links.html</a>
   
+  <h3>
+  💸💹
+  </h3>
 <h2>Doações<br>Donations</h2>
 <li>PayPal: Marinaldo-barbosa@hotmail.com</li>
 <li>pix 🔗<a href="https://nubank.com.br/pagar/tq1wa/9hDxPeWoNB">doar pix</a></li>
