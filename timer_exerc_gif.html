@@ -123,13 +123,19 @@
                 }
 
                 #screen3 {
-                    transform: rotate(-90deg) translate(-1.5ch);
-                    transform-origin: center;
+                    height: 100vmax;
+                    width: 10vmin;
                 }
 
                 img {
+                    transform: rotate(-90deg);
+                    transform-origin: center;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
                     width: 100vw;
-                    height: 90vh;
+                    max-height: 100vmax;
+                    margin: auto;
                 }
             }
 
@@ -335,7 +341,6 @@
                 screen2.style.display = "none";
                 screen3.style.display = "block";
             }
-
         </script>
     </body>
 
