@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Gamepad</title>
+</head>
+<body>
+    <h1>Teste de Gamepad</h1>
+    <p>Pressione os botões do gamepad para ver os resultados abaixo:</p>
+
+    <!-- Div para exibir informações do gamepad -->
+    <div id="gamepadInfo"></div>
+
+    <script>
+        // Global gamepad object
+        let gamepadIndex;
+
+        // Event listener para gamepad conectado
+        window.addEventListener('gamepadconnected', (event) => {
+            gamepadIndex = event.gamepad.index;
+            const gp = navigator.getGamepads()[gamepadIndex];
+            document.getElementById('gamepadInfo').innerHTML = `
+                <p>Gamepad conectado no índice ${gp.index}: ${gp.id}.</p>
+                <p>Possui ${gp.buttons.length} botões e ${gp.axes.length} eixos.</p>
+            `;
+        });
+
+        // Event listener para botões do gamepad
+        window.addEventListener('gamepadbuttondown', (e) => {
+            if (e.gamepad.index === gamepadIndex) {
+                document.getElementById('gamepadInfo').innerHTML += `<p>Botão ${e.button} pressionado.</p>`;
+            }
+        });
+
+        // Event listener para gamepad desconectado
+        window.addEventListener('gamepaddisconnected', (event) => {
+            document.getElementById('gamepadInfo').innerHTML = `<p>Gamepad desconectado do índice ${event.gamepad.index}: ${event.gamepad.id}.</p>`;
+        });
+    </script>
+</body>
+</html>
