@@ -10,33 +10,62 @@
     <p>Pressione os botões do gamepad para ver os resultados abaixo:</p>
 
     <!-- Div para exibir informações do gamepad -->
-    <div id="gamepadInfo"></div>
+    <div id="ball" class="bgd">🎮</div>
 
     <script>
-        // Global gamepad object
-        let gamepadIndex;
+        const ball = document.getElementById('ball');
+        let x = 0;
+        let y = 0;
+        let r = 0;
 
-        // Event listener para gamepad conectado
-        window.addEventListener('gamepadconnected', (event) => {
-            gamepadIndex = event.gamepad.index;
-            const gp = navigator.getGamepads()[gamepadIndex];
-            document.getElementById('gamepadInfo').innerHTML = `
-                <p>Gamepad conectado no índice ${gp.index}: ${gp.id}.</p>
-                <p>Possui ${gp.buttons.length} botões e ${gp.axes.length} eixos.</p>
-            `;
-        });
+        // Function to update ball position based on gamepad input
+        function updateBallPosition(gamepad) {
+            const axes = gamepad.axes;
+            x += axes[0] * 10;
+            y += axes[1] * 10;
+            r += axes[3] | axes[2] * 10;
+            ball.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+        }
 
-        // Event listener para botões do gamepad
-        window.addEventListener('gamepadbuttondown', (e) => {
-            if (e.gamepad.index === gamepadIndex) {
-                document.getElementById('gamepadInfo').innerHTML += `<p>Botão ${e.button} pressionado.</p>`;
+        // Function to handle gamepad input
+        function handleGamepadInput() {
+            const gamepads = navigator.getGamepads();
+            for (const gamepad of gamepads) {
+                if (gamepad) {
+                    updateBallPosition(gamepad);
+
+                    // Check button presses
+                    for (let i = 0; i < gamepad.buttons.length; i++) {
+                        if (gamepad.buttons[i].pressed) {
+                            const buttonMap = {
+                                0: 'A', 
+                                1: 'B', 
+                                2: 'X', 
+                                3: 'Y', 
+                                4: 'LT', 
+                                5: 'RT', 
+                                6: 'LB', 
+                                7: 'LT', 
+                                8: 'Back', 
+                                9: 'Start', 
+                                10: 'R-click', 
+                                11: 'L-click',
+                                12: 'D-up', 
+                                13: 'D-Down', 
+                                14: 'D-Left', 
+                                15: 'D-Right', 
+                                16: '❌-box', 
+                            };
+                            ball.textContent = buttonMap[i] || '🏀';
+                        }
+                    }
+                }
             }
-        });
+            requestAnimationFrame(handleGamepadInput);
+        }
 
-        // Event listener para gamepad desconectado
-        window.addEventListener('gamepaddisconnected', (event) => {
-            document.getElementById('gamepadInfo').innerHTML = `<p>Gamepad desconectado do índice ${event.gamepad.index}: ${event.gamepad.id}.</p>`;
-        });
+        // Start handling gamepad input
+        handleGamepadInput();
     </script>
 </body>
 </html>
