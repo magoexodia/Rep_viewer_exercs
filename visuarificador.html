@@ -22,8 +22,8 @@
         }
 
         .lista img {
-            height: 15vh;
-            width: auto;
+            height: auto;
+            width: 15vw;
         }
 
         .grande {
@@ -74,7 +74,7 @@
 
         #imagemGrande {
             width: 100%;
-            max-height: 100%;
+            height: 100%;
             margin: auto;
             transform-origin: top left;
             object-fit: contain;
@@ -94,8 +94,19 @@
 
         .lista {
             width: 99vw;
-            height: 99vw;
+            height: 96%;
             display: flex-row;
+        }
+
+        .lista img:hover {
+            /*transform: scale(1.3);*/
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+        }
+
+        .lista img:not(:hover) {
+            opacity: 0.5;
         }
 
         #vd-container {
@@ -124,12 +135,16 @@
             display: none;
         }
 
+        #imgGrande {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
     </style>
 
     <body>
         <div id="im-container">
             <div id="p1">
-                <input type="text" id="links" placeholder="🔗📷, 🔗📷, 🔗📷,">
+                <input type="text" id="links" placeholder="🔗🎆, 🔗🖼️, 🔗🎥,">
                 <input type="number" id="quanto">
                 <button onclick="adicionarLinks()">➕</button>
             </div>
@@ -139,8 +154,8 @@
                 <button id="proximo">🔜</button>
                 <button onclick="reseta()">🔁</button>
             </div>
-            <div class="lista" style="height: fit-content; width: fit-content;"></div>
-            <div class="grande some">
+            <div class="lista" style="height: 100%; width: 10%;"></div>
+            <div class="grande some" id="imgGrande">
                 <img id="imagemGrande" src="">
             </div>
         </div>
@@ -151,7 +166,7 @@
 
         <script>
             let indice = 0;
-            let tamanho = 20; //document.getElementById('quanto').value;//<= a quantidade a ser exibida
+            let tamanho = 20;
             let imagens = [];
             let videos = [];
 
@@ -159,15 +174,18 @@
                 let botaoFechar = document.createElement('span');
                 botaoFechar.id = 'fechar';
                 botaoFechar.textContent = 'X';
-                botaoFechar.onclick = function() {
-                    let divGrande = document.querySelector('.grande');
-                    divGrande.classList.remove('visivel');
-                    let imagemGrande = document.getElementById('imagemGrande');
-                    imagemGrande.style.transform = 'scale(1)';
-                    imagemGrande.src = '';
-                };
+                botaoFechar.onclick = fecharImagem;
                 return botaoFechar;
             }
+
+            function fecharImagem() {
+                document.querySelector('.grande').classList.remove('visivel');
+                document.getElementById('imagemGrande').style.transform = 'scale(1)';
+            }
+
+            document.onkeydown = function(event) {
+                if (event.key === 'Escape') fecharImagem();
+            };
 
             function exibirImagens(imagens) {
                 let lista = document.querySelector(".lista");
@@ -194,6 +212,8 @@
             }
 
             function adicionarLinks() {
+                tamanho = document.getElementById("quanto").value;
+
                 let links = document.getElementById("links").value.split(",");
                 links.forEach(link => {
                     link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
@@ -211,14 +231,13 @@
 
                 videos.forEach((video, i) => {
                     let videoButton = document.createElement("button");
-                    videoButton.textContent = "🎥 " + (i + 1);
+                    videoButton.textContent = "🎥" + (i + 1);
                     videoButton.onclick = () => videoPlayer.src = video;
                     videoDiv.appendChild(videoButton);
                 });
             }
 
-            let anterior = document.getElementById("anterior");
-            anterior.addEventListener("click", function() {
+            document.getElementById("anterior").addEventListener("click", function() {
                 indice -= tamanho;
                 if (indice < 0) {
                     indice = imagens.length - tamanho;
@@ -226,10 +245,9 @@
                 exibirImagens(imagens);
             });
 
-            let proximo = document.getElementById("proximo");
-            proximo.addEventListener("click", function() {
+            document.getElementById("proximo").addEventListener("click", function() {
                 indice += tamanho;
-                if (indice >= imagens.length) {
+                if (indice + tamanho >= imagens.length) {
                     indice = 0;
                 }
                 exibirImagens(imagens);
@@ -262,8 +280,8 @@
                 document.getElementById("videos").innerHTML = "";
                 muda();
                 document.getElementById("videoPlayer").src = "";
-				imagens = [];
-				videos = [];
+                imagens = [];
+                videos = [];
             }
 
         </script>
