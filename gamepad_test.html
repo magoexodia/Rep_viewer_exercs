@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Gamepad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Teste de Gamepad - Xbox 🎮</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #ball {
+            font-size: 48px;
+            transition: transform 0.1s;
+        }
+        body {
+            --bga: #AAFF00;
+            --bgb: #000000;
+            --bgc: #AFAFAF;
+            --bgd: #FCAB00;
+        }
+        .bga { background: var(--bga);}
+        .bgb { background: var(--bgb);}
+        .bgc { background: var(--bgc);}
+        .bgd { background: var(--bgd);}
+    </style>
 </head>
 <body>
-    <h1>Teste de Gamepad</h1>
-    <p>Pressione os botões do gamepad para ver os resultados abaixo:</p>
-
-    <!-- Div para exibir informações do gamepad -->
     <div id="ball" class="bgd">🎮</div>
 
     <script>
