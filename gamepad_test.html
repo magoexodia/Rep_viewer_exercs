@@ -22,6 +22,14 @@
             --bgc: #AFAFAF;
             --bgd: #FCAB00;
         }
+        
+        #gamePadInfo {
+            position: fixed;
+            bottom: 10px;
+            left: 20px;
+            font-size: 14px;
+            color: #333;
+        }
         .bga { background: var(--bga);}
         .bgb { background: var(--bgb);}
         .bgc { background: var(--bgc);}
@@ -30,6 +38,8 @@
 </head>
 <body>
     <div id="ball" class="bgd">🎮</div>
+    <div id="gamePadInfo">   
+    </div>
 
     <script>
         const ball = document.getElementById('ball');
@@ -44,6 +54,9 @@
             y += axes[1] * 10;
             r += axes[3] | axes[2] * 10;
             ball.style.transform = `translate(${x}px, ${y}px) rotate(${r}deg)`;
+
+            // Display gamepad information
+            gamePadInfo.textContent = `Gamepad connected: ${gamepad.id}`;
         }
 
         // Function to handle gamepad input
