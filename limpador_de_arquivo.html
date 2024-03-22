@@ -1,157 +1,194 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-    body, button, div {
-        cursor: crosshair;
-        font-size: calc(4vh + 4vw);
-        background: rgba(0, 0, 0, 0.10);
-    }
-    label {font-size: calc(10vw * 0.7);}
 
-    button {
-        position: fixed;
-        bottom: 5px;
-        left: 30%;
-        right: 30%;
-        width: fit-content;
-        text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-    }
-
-    button:hover, p:hover, h1:hover, h2:hover, h3:hover {
-        background: purple;
-        color: white;
-        text-shadow: 0px 0px 2px black, 0px 0px 3px white;
-    }
-
-    p, h1, h2, h3 {
-        color: rgba(255, 0, 0, 0.65);
-        writing-mode: vertical-rl;
-        width: 0.2ch;
-        height: 5ch;
-        white-space: nowrap;
-    }
-
-    .flex {
-        display: flex;
-    }
-
-    textarea {
-        width: 85%;
-        height: 87svh;
-        font-size: 0.5ch;
-    }
-    #input { width: 100%; height: calc(90vh - 4ch);}
-
-    .escondido, input[type=checkbox] {
-        display: none;
-    }
-
-    input[type=checkbox]:checked + label {
-        background: green;
-    }
-
-    input[type=checkbox] + label:hover {
-        background: white;
-    }
-
-    #opcoes {
-        display: absolute;
-        top: -2ch;
-        right: 50%;
-        left: 50%;
-        height: 2.5ch;
-        width: 100%;
-    }
-    </style>
-</head>
-<body>
-    <div id="principal">
-        <div id="entrada">
-            <textarea id="input" ondblclick="selectText(this)"></textarea>
-            <button onclick="filterLines()">Filtrar♻️</button>
-        </div>
-        <div id="opcoes" class="escondido">
-            <input type="checkbox" id="cb0" onchange="esconde(this.value)" value="0">
-            <label for="cb0">📷</label>
-            <input type="checkbox" id="cb1" onchange="esconde(this.value)" value="1">
-            <label for="cb1">🔗</label>
-            <input type="checkbox" id="cb2" onchange="esconde(this.value)" value="2">
-            <label for="cb2">🎆</label>
-            <input type="checkbox" id="cb3" onchange="esconde(this.value)" value="3">
-            <label for="cb3">🖼️</label>
-            <input type="checkbox" id="cb4" onchange="esconde(this.value)" value="4">
-            <label for="cb4">🔤</label>
-            <input type="checkbox" id="cb5" onchange="esconde(this.value)" value="5">
-            <label for="cb5">🎥</label>
-            <button id="cb6" onclick="reset()" value="6" style="z-index: -1;">🔄</button>
-            <label for="cb6"></label>
-        </div>
-        <div class="flex escondido" id="div0">
-            <textarea id="0" readonly onclick="this.select()"></textarea>
-            <h3> IMAGENS</h3>
-        </div>
-        <div class="flex escondido" id="div1">
-            <textarea id="1" readonly onclick="this.select()"></textarea>
-            <h3> LINKS HTTP</h3>
-        </div>
-        <div class="flex escondido" id="div2">
-            <textarea id="2" readonly onclick="this.select()"></textarea>
-            <h3> GIFS</h3>
-        </div>
-        <div class="flex escondido" id="div3">
-            <textarea id="3" readonly onclick="this.select()"></textarea>
-            <h3> ESTÁTICAS</h3>
-        </div>
-        <div class="flex escondido" id="div4">
-            <textarea id="4" readonly onclick="this.select()"></textarea>
-            <h3> TEXTO</h3>
-        </div>
-        <div class="flex escondido" id="div5">
-            <textarea id="5" readonly onclick="this.select()"></textarea>
-            <h3> VIDEO</h3>
-        </div>
-    </div>
-    <script>
-    function filterLines() {
-        filter("http", null, ".mp4", null, false, "0");
-        filter("http", null, null, null, false, "1");
-        filter("http", ".gif", null, null, false, "2");
-        filter("http", null, ".gif", null, false, "3");
-        filter("http", null, null, null, true, "4");
-        filter(".mp4", null, null, null, false, "5");
-        troca("entrada");
-        troca("opcoes");
-    }
-    
-    function filter(include1, include2, exclude1, exclude2, invert, outputId) {
-        var input = document.getElementById("input").value;
-        var lines = input.split("\n");
-        var output = "";
-        for (var i = 0; i < lines.length; i++) {
-            if (invert ? !(lines[i].includes(include1) || lines[i].includes(include2)) : 
-                (lines[i].includes(include1) || lines[i].includes(include2)) && 
-                (!exclude1 || !lines[i].includes(exclude1)) && 
-                (!exclude2 || !lines[i].includes(exclude2))) {
-                output += lines[i] + "\n";
+    <head>
+        <style>
+            :root {
+                --tam: calc(3vw + 4vh);
             }
-        }
-        document.getElementById(outputId).value = output;
-    }
-    
-    function troca(quem = "botoes") {
-        document.getElementById(quem).classList.toggle("escondido");
-    }
-    
-    function esconde(value) {
-        troca("div" + value);
-    }
-    
-    function reset() {
-        document.getElementById("entrada").classList.remove("escondido");
-        document.getElementById("opcoes").classList.add("escondido");
-    }
 
-    </script>
-</body>
+            body,
+            button,
+            div {
+                cursor: crosshair;
+                font-size: var(--tam);
+                background: rgba(0, 0, 0, 0.10);
+                font-family: verdana;
+            }
+
+            label {
+                font-size: calc(10vw * 0.7);
+                border-radius: 0.5ch;
+            }
+
+            button {
+                position: fixed;
+                bottom: 5px;
+                left: 30%;
+                right: 30%;
+                width: fit-content;
+                text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+            }
+
+            button:hover,
+            p:hover,
+            h1:hover,
+            h2:hover,
+            h3:hover {
+                background: purple;
+                color: white;
+                text-shadow: 0px 0px 2px black, 0px 0px 3px white;
+            }
+
+            p,
+            h1,
+            h2,
+            h3 {
+                color: rgba(255, 0, 0, 0.65);
+                writing-mode: vertical-rl;
+                width: 0.2ch;
+                height: 5ch;
+                white-space: nowrap;
+            }
+
+            .flex {
+                display: flex;
+            }
+
+            textarea {
+                width: 85%;
+                height: 77svh;
+                font-size: 0.5ch;
+                margin: 5px;
+            }
+
+            #input {
+                width: 90%;
+                height: calc(75vh);
+                margin: auto;
+            }
+
+            .escondido,
+            input[type=checkbox] {
+                display: none;
+            }
+
+            input[type=checkbox]:checked+label {
+                background: #000000;
+            }
+
+            input[type=checkbox]:checked+label:hover {
+                text-shadow: none;
+                background: #FFFFFFA1;
+            }
+
+            input[type=checkbox]+label:hover {
+                /*background: black;*/
+                text-shadow: 0 0 0.4ch rgba(0, 0, 0, 1), 0 0 0.6ch rgba(255, 255, 255, 0.8), 0 0 0.8ch gold;
+            }
+
+            #opcoes {
+                display: absolute;
+                top: -2ch;
+                right: 50%;
+                left: 50%;
+                height: 2.5ch;
+                width: 100%;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="principal">
+            <div id="entrada">
+                <textarea id="input" ondblclick="selectText(this)"></textarea>
+                <button onclick="filterLines()">Filtrar♻️</button>
+            </div>
+            <div id="opcoes" class="escondido">
+                <input type="checkbox" id="cb1" onchange="esconde(this.value)" value="1">
+                <label for="cb1">🔗</label>
+                <input type="checkbox" id="cb0" onchange="esconde(this.value)" value="0">
+                <label for="cb0">📷</label>
+                <input type="checkbox" id="cb2" onchange="esconde(this.value)" value="2">
+                <label for="cb2">🎆</label>
+                <input type="checkbox" id="cb3" onchange="esconde(this.value)" value="3">
+                <label for="cb3">🖼️</label>
+                <input type="checkbox" id="cb4" onchange="esconde(this.value)" value="4">
+                <label for="cb4">🔤</label>
+                <input type="checkbox" id="cb5" onchange="esconde(this.value)" value="5">
+                <label for="cb5">🎥</label>
+                <button id="cb6" onclick="reset()" value="6" style="z-index: -1;">🔄</button>
+                <label for="cb6"></label>
+            </div>
+            <div class="flex escondido" id="div0">
+                <textarea id="0" readonly onclick="this.select()"></textarea>
+                <h3> IMAGENS</h3>
+            </div>
+            <div class="flex escondido" id="div1">
+                <textarea id="1" readonly onclick="this.select()"></textarea>
+                <h3> LINKS HTTP</h3>
+            </div>
+            <div class="flex escondido" id="div2">
+                <textarea id="2" readonly onclick="this.select()"></textarea>
+                <h3> GIFS</h3>
+            </div>
+            <div class="flex escondido" id="div3">
+                <textarea id="3" readonly onclick="this.select()"></textarea>
+                <h3> ESTÁTICAS</h3>
+            </div>
+            <div class="flex escondido" id="div4">
+                <textarea id="4" readonly onclick="this.select()"></textarea>
+                <h3> TEXTO</h3>
+            </div>
+            <div class="flex escondido" id="div5">
+                <textarea id="5" readonly onclick="this.select()"></textarea>
+                <h3> VIDEO</h3>
+            </div>
+        </div>
+        <script>
+            function filterLines() {
+                filter("://", ".mp4", false, "0");
+                filter("://", "", false, "1");
+                filter("://", ".mp4,.jp,.pn", false, "2");
+                filter("://", ".gif,.webp,.mp4", false, "3");
+                filter("://", "", true, "4");
+                filter(".mp4", "", false, "5");
+                troca("entrada");
+                troca("opcoes");
+            }
+
+            function filter(include, exclude, invert, outputId) {
+                var input = document.getElementById("input").value;
+                var lines = input.split("\n");
+                var output = "";
+                var includes = include.split(",");
+                var excludes = exclude ? exclude.split(",") : [];
+                for (var i = 0; i < lines.length; i++) {
+                    var includeCondition = includes.some(term => lines[i].includes(term.trim()));
+                    var excludeCondition = excludes.some(term => lines[i].includes(term.trim()));
+                    if (invert ? !includeCondition : includeCondition && !excludeCondition) {
+                        if (outputId === "4") output += lines[i] + "\n";
+                        else output += lines[i].replace(/,/, "") + ",\n";
+                    }
+                }
+                document.getElementById(outputId).value = output.trim();
+            }
+
+            function troca(quem = "botoes") {
+                document.getElementById(quem).classList.toggle("escondido");
+            }
+
+            function esconde(value) {
+                troca("div" + value);
+            }
+
+            function reset() {
+                document.getElementById("entrada").classList.remove("escondido");
+                document.getElementById("opcoes").classList.add("escondido");
+            }
+
+        </script>
+    </body>
+
 </html>
