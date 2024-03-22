@@ -9,7 +9,7 @@
             /* Estilo opcional para melhorar a aparência */
             body {
                 font-family: Verdana, sans-serif;
-                font-size: 5vw;
+                font-size: 4vw;
             }
 
             .link-list {
@@ -17,19 +17,19 @@
                 padding: 0;
                 border: 1px solid #ccc;
                 background-color: #f9f9f9;
-                height: calc(100vh - 2.5ch);
+                height: calc(100vh - 2ch);
                 overflow-y: auto;
-                width: calc(100vw - 0.75ch);
+                width: calc(100vw - 1ch);
             }
 
             #resultado {
-                height: fit-content;
-                width: 90vw;
+                height: calc(80% - 2ch);
+                width: 100%;
                 overflow-x: hidden;
             }
 
             #resultado a {
-                font-size: 5vw;
+                font-size: 4vw;
             }
 
             #resultado h4 {
@@ -37,8 +37,8 @@
             }
 
             textarea {
-                width: 97%;
-                height: 20ch;
+                width: 99%;
+                height: 20%;
             }
 
         </style>
@@ -64,8 +64,9 @@
                     }
                     if (line.includes('/')) {
                         const anchor = document.createElement('a');
-                        anchor.href = line;
-                        anchor.textContent = line;
+                        anchor.href = line.replace(/['",]/g, '');
+                        anchor.textContent = line.slice(-35);
+                        anchor.target="_blank";
                         anchorContainer.appendChild(anchor);
                     	anchorContainer.appendChild(document.createElement('br'))
                     } else {
