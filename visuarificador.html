@@ -7,133 +7,127 @@
     </head>
     <style>
         body {
-            background: rgba(255, 129, 129, 0.836);
-            font-size: 3vmax;
-        }
+    background: rgba(255, 129, 129, 0.836);
+    font-size: 3vmax;
+}
 
-        button,
-        input[type=text],
-        input[type=number] {
-            font-size: 4vmax;
-        }
+button, input[type=text], input[type=number] {
+    font-size: 4vmax;
+}
 
-        input[type=number] {
-            width: 3ch;
-        }
+input[type=number] {
+    width: 3ch;
+}
 
-        .lista img {
-            height: 100%;
-            width: auto;
-        }
+.lista img {
+    height: 100%;
+    width: auto;
+}
 
-        .grande {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            z-index: 9999;
-            display: none;
-            /* Esconda por padrão */
-        }
+.grande {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 9999;
+    display: none;
+}
 
-        .grande.visivel {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.grande.visivel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        #fechar {
-            background-color: white;
-            padding: 5px;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-            position: fixed;
-            right: 2ch;
-            top: 2ch;
-            cursor: pointer;
-        }
+#fechar {
+    background-color: white;
+    padding: 5px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    position: fixed;
+    right: 2ch;
+    top: 2ch;
+    cursor: pointer;
+}
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
 
-            50% {
-                transform: scale(1.1);
-            }
+    50% {
+        transform: scale(1.1);
+    }
 
-            100% {
-                transform: scale(1);
-            }
-        }
+    100% {
+        transform: scale(1);
+    }
+}
 
-        #imagemGrande {
-            width: 100%;
-            height: 100%;
-            margin: auto;
-            transform-origin: top left;
-            object-fit: contain;
-        }
+#imagemGrande {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    transform-origin: top left;
+    object-fit: contain;
+}
 
-        .enlarged {
-            max-width: 100%;
-            min-height: 100%;
-            object-fit: contain;
-            position: fixed;
-            top: 50%;
-            bottom: 50%;
-            left: 50%;
-            right: 50%;
-            transform: translate(-50%, -50%);
-        }
+.enlarged {
+    max-width: 100%;
+    min-height: 100%;
+    object-fit: contain;
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+}
 
-        .lista {
-            width: 100%;
-            height: 15vh;
-            display: flex;
-            overflow-y: none;
-            overflow-x: scroll;
-        }
+.lista {
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    overflow-y: none;
+    overflow-x: scroll;
+}
 
-        .lista img:hover {
-            opacity: 1;
-        }
+.lista img:hover {
+    opacity: 1;
+}
 
-        .lista img:not(:hover) {
-            opacity: 0.5;
-        }
+.lista img:not(:hover) {
+    opacity: 0.5;
+}
 
-        #vd-container {
-            display: flex;
-            width: 100vw;
-            height: 95vh;
-        }
+#vd-container {
+    display: flex;
+    width: 100vw;
+    height: 95vh;
+}
 
+#videoPlayer {
+    width: 80%;
+    height: calc(90vh - 2ch);
+    object-fit: contain;
+}
 
-        #videoPlayer {
-            width: 80%;
-            height: calc(90vh - 2ch);
-            object-fit: contain;
-        }
+#videos {
+    width: 18%;
+    height: calc(90vh - 2ch);
+    overflow-y: scroll;
+}
 
-        #videos {
-            width: 18%;
-            height: calc(90vh - 2ch);
-            overflow-y: scroll;
-        }
+.some, .some #p2, .some #videoPlayer, .some #videos {
+    display: none;
+}
 
-        .some,
-        .some #p2,
-        .some #videoPlayer,
-        .some #videos {
-            display: none;
-        }
+#imgGrande {
+    background: rgba(0, 0, 0, 0.5);
+}
 
-        #imgGrande {
-            background: rgba(0, 0, 0, 0.5);
-        }
 
     </style>
 
@@ -141,11 +135,11 @@
         <div id="im-container">
             <div id="p1">
                 <input type="text" id="links" placeholder="🔗🎆, 🔗🖼️, 🔗🎥,">
-                <input type="number" id="quanto">
-                <button onclick="adicionarLinks()">➕</button>
+                <input type="number" id="quanto" min=2>
+                <button onclick="start()">➕</button>
             </div>
             <div id="p2" class="some">
-                <button onclick="alternarVisibilidade()">🎥↔️📷</button>
+                <button onclick="aV()">🎥↔️📷</button>
                 <button id="anterior">🔙</button>
                 <button id="proximo">🔜</button>
                 <button onclick="reseta()">🔁</button>
@@ -162,131 +156,120 @@
         </div>
 
         <script>
-            let indice = 0;
-            let tamanho = 20;
-            let imagens = [];
-            let videos = [];
+            let i = 0, t = 20, imgs = [], vids = [];
 
-            function criarBotaoFechar() {
-                let botaoFechar = document.createElement('span');
-                botaoFechar.id = 'fechar';
-                botaoFechar.textContent = 'X';
-                botaoFechar.onclick = fecharImagem;
-                return botaoFechar;
-            }
+function cBF() {
+    let bF = document.createElement('span');
+    bF.id = 'fechar'; bF.textContent = 'X'; bF.onclick = fI;
+    return bF;
+}
 
-            function fecharImagem() {
-                document.querySelector('.grande').classList.remove('visivel');
-                document.getElementById('imagemGrande').style.transform = 'scale(1)';
-            }
+function fI() {
+    document.querySelector('.grande').classList.remove('visivel');
+    document.getElementById('imagemGrande').style.transform = 'scale(1)';
+}
 
-            document.onkeydown = function(event) {
-                if (event.key === 'Escape') fecharImagem();
+document.onkeydown = function(e) { if (e.key === 'Escape') fI(); };
+
+function eI(imgs) {
+    let lista = document.querySelector(".lista");
+    lista.innerHTML = '';
+    for (let j = 0; j < t; j++) {
+        let img = document.createElement("img"), imgI = (i + j) % imgs.length;
+        img.src = imgs[imgI];
+        img.onmouseover = function() {
+            let viewer = document.getElementById('viewer');
+            viewer.src = img.src; viewer.focus();
+            viewer.onclick = function() {
+                document.getElementById('imagemGrande').src = img.src;
+                document.querySelector('.grande').classList.add('visivel');
             };
-
-            function exibirImagens(imagens) {
-                let lista = document.querySelector(".lista");
-                lista.innerHTML = "";
-                for (let i = 0; i < tamanho; i++) {
-                    if (i < imagens.length) {
-                        let img = document.createElement("img");
-                        img.src = imagens[i + indice];
-                        img.onmouseover = function() { //onclick
-                            document.getElementById('viewer').src = img.src;
-                            document.getElementById('viewer').focus();
-                        document.getElementById('viewer').onclick = function() { //onclick
-                            document.getElementById('imagemGrande').src = img.src;
-                            document.querySelector('.grande').classList.add('visivel');
-                        };
-                        };
-                        lista.appendChild(img);
-                    }
-                }
-
-                let divGrande = document.querySelector('.grande');
-                divGrande.appendChild(criarBotaoFechar());
-
-                let imagemGrande = document.getElementById('imagemGrande');
-                imagemGrande.onclick = function() {
-                    imagemGrande.style.transform = imagemGrande.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
-                };
-            }
-
-            function adicionarLinks() {
-                tamanho = document.getElementById("quanto").value ? document.getElementById("quanto").value : 20;
-
-                let links = document.getElementById("links").value.split(",");
-                links.forEach(link => {
-                    link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
-                    link.endsWith(".mp4") ? videos.push(link) : imagens.push(link);
-                });
-                exibirImagens(imagens);
-                exibirVideos(videos);
-                muda();
-            }
-
-            function exibirVideos(videos) {
-                let videoPlayer = document.getElementById("videoPlayer");
-                let videoDiv = document.getElementById("videos");
-                videoDiv.innerHTML = ""; // Clear the video div
-
-                videos.forEach((video, i) => {
-                    let videoButton = document.createElement("button");
-                    videoButton.textContent = "🎥" + (i + 1);
-                    videoButton.onclick = () => videoPlayer.src = video;
-                    videoDiv.appendChild(videoButton);
-                });
-            }
-
-            document.getElementById("anterior").addEventListener("click", function() {
-                indice -= tamanho;
-                if (indice < 0) {
-                    indice = imagens.length - tamanho;
-                }
-                exibirImagens(imagens);
-            });
-
-            document.getElementById("proximo").addEventListener("click", function() {
-    indice += tamanho;
-    if (indice >= imagens.length) {
-        indice = 0;
-    } else if (indice + tamanho > imagens.length) {
-        indice = Math.floor((imagens.length - 1) / tamanho) * tamanho;
+        };
+        lista.appendChild(img);
     }
-    exibirImagens(imagens);
+}
+
+function start() {
+    let q = document.getElementById("quanto").value;
+    t = q ? q : 20;
+    if (document.getElementById("links").value != "")  aL();
+    let divG = document.querySelector('.grande');
+    divG.appendChild(cBF());
+
+    let imgG = document.getElementById('imagemGrande');
+    imgG.onclick = function() {
+        imgG.style.transform = imgG.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
+    };
+}
+
+function aL() {
+    let links = document.getElementById("links").value.split(",");
+    links.forEach(link => {
+        link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
+        if (link) { 
+            link.endsWith(".mp4") ? vids.push(link) : imgs.push(link);
+        }
+    });
+    eI(imgs); eV(vids); muda();
+}
+
+function eV(vids) {
+    let vP = document.getElementById("videoPlayer");
+    let vD = document.getElementById("videos");
+    vD.innerHTML = "";
+
+    vids.forEach((v, k) => {
+        let vB = document.createElement("button");
+        vB.textContent = "🎥" + (k + 1);
+        vB.onclick = () => vP.src = v;
+        vD.appendChild(vB);
+    });
+}
+
+let a = document.getElementById("anterior"), p = document.getElementById("proximo"), v = document.getElementById("viewer");
+
+a.addEventListener("click", function() {
+    i = (i - t < 0) ? imgs.length - t : i - t;
+    eI(imgs);
 });
 
-            document.addEventListener("keydown", function(event) {
-                if (event.key === "ArrowLeft") {
-                    document.getElementById("anterior").click();
-                } else if (event.key === "ArrowRight") {
-                    document.getElementById("proximo").click();
-                }
-            });
+p.addEventListener("click", function() {
+    let nextMultiple = Math.ceil((i + 1) / t) * t;
+    i = (nextMultiple >= imgs.length) ? 0 : nextMultiple;
+    eI(imgs);
+});
 
-            function alternarVisibilidade() {
-                document.getElementById("vd-container").classList.toggle("some");
-                document.querySelector(".lista").classList.toggle("some");
-                document.getElementById("viewer").classList.toggle("some");
-            }
+document.addEventListener("keydown", function(e) {
+    if (e.key === "ArrowLeft") a.click();
+    else if (e.key === "ArrowRight") p.click();
+});
 
-            function muda() {
-                document.getElementById("p1").classList.toggle("some");
-                document.getElementById("p2").classList.toggle("some");
-            }
+function aV() {
+    document.getElementById("vd-container").classList.toggle("some");
+    document.querySelector(".lista").classList.toggle("some");
+    v.classList.toggle("some");
+}
 
-            function mostra(texto) {
-                document.getElementById("videos").innerHTML += texto;
-            }
+function muda() {
+    document.getElementById("p1").classList.toggle("some");
+    document.getElementById("p2").classList.toggle("some");
+}
 
-            function reseta() {
-                document.querySelector(".lista").innerHTML = "";
-                document.getElementById("videos").innerHTML = "";
-                muda();
-                document.getElementById("videoPlayer").src = "";
-                imagens = [];
-                videos = [];
-            }
+function mostra(txt) {
+    document.getElementById("videos").innerHTML += txt;
+}
+
+function reseta() {
+    document.querySelector(".lista").innerHTML = "";
+    document.getElementById("videos").innerHTML = "";
+    muda();
+    document.getElementById("videoPlayer").src = "";
+    imgs = [];
+    vids = [];
+    t = 20;
+}
+
+
 
         </script>
     </body>
