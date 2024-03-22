@@ -3,95 +3,346 @@
 
     <head>
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-        <title>Lista de Imagens e videos offline</title>
+        <title>Lista de Imagens e Videos</title>
     </head>
+    <style>
+        body {
+            background: rgba(255, 129, 129, 0.836);
+            font-size: 3vmax;
+        }
 
-    <body>
-        <style>
-            body {
-                background: rgba(248, 98, 211, 0.726);
-                font-size: 20px;
+        button,
+        input[type=text],
+        input[type=number],
+        input[type=file] {
+            font-size: 3vmax;
+        }
+
+        input[type=number] {
+            width: 3ch;
+        }
+
+        input[type=text] {
+            width: 12ch;
+        }
+
+        .lista img {
+            height: 100%;
+            width: auto;
+        }
+
+        .grande {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            z-index: 9999;
+            display: none;
+        }
+
+        .grande.visivel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fechar {
+            background-color: white;
+            padding: 5px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            position: fixed;
+            right: 2ch;
+            top: 2ch;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
             }
 
-            button {
-                font-size: 1em;
+            50% {
+                transform: scale(1.1);
             }
 
-            img {
-                height: calc(20vh + 2vw);
-                margin: 10px;
-                z-index: 0;
+            100% {
+                transform: scale(1);
             }
+        }
 
-            video {
-                width: 33vw;
-                margin: 10px;
-                z-index: 99;
-            }
-
-            .enlarged {
-                max-width: 100%;
-                height: 99vh;
-                object-fit: contain;
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                left: 50%;
-                right: 50%;
-                transform: translate(-50%, 0);
-            }
-
-            .esconde {
-                display: none;
-            }
-            
-
-        img:hover {
-            /*transform: scale(1.3);*/
-            width: 100vw;
-            height: 100vh;
+        #imagemGrande {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            transform-origin: top left;
             object-fit: contain;
         }
 
-        </style>
-        <input type="file" id="file-input" multiple onchange="handleFileSelect(event)">
-        <button onclick="troca()">
-            📷↔️🎥
-        </button>
-        <div id="im-container"></div>
-        <div class="esconde" id="vd-container"></div>
+        .enlarged {
+            max-width: 100%;
+            min-height: 100%;
+            object-fit: contain;
+            position: fixed;
+            top: 50%;
+            bottom: 50%;
+            left: 50%;
+            right: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .lista {
+            width: 100%;
+            height: 15vh;
+            display: flex;
+            overflow-y: none;
+            overflow-x: scroll;
+        }
+
+        .lista img:hover {
+            opacity: 1;
+        }
+
+        .lista img:not(:hover) {
+            opacity: 0.5;
+        }
+
+        #vd-container {
+            display: flex;
+            width: 100vw;
+            height: 95vh;
+        }
+
+        #videoPlayer {
+            width: 80%;
+            height: calc(90vh - 2ch);
+            object-fit: contain;
+        }
+
+        #videos {
+            width: 18%;
+            height: calc(90vh - 2ch);
+            overflow-y: scroll;
+        }
+
+        .some,
+        .some #p2,
+        .some #videoPlayer,
+        .some #videos {
+            display: none;
+        }
+
+        #imgGrande {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
+
+    <body>
+        <div id="im-container">
+            <div id="p1">
+                <label for="file-input" id="file-label">🔗</label>
+                <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,">
+                <input type="number" id="quanto" min=2 value=10> ou
+                <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;">
+                <label for="file-input" id="file-label">📂</label>
+                <button onclick="start()">➕</button>
+            </div>
+            <div id="p2" class="some">
+                <button onclick="aV()">🎥↔️📷</button>
+                <button id="anterior">🔙</button>
+                <button id="proximo">🔜</button>
+                <button onclick="reseta()">🔁</button>
+            </div>
+            <div class="lista"></div>
+            <div tabindex="0"> <img id="viewer" src="" style="width: calc(99vw - 2ch); height: 80vh; object-fit: contain;"></div>
+            <div class="grande some" id="imgGrande">
+                <img id="imagemGrande" src="">
+            </div>
+        </div>
+        <div class="some" id="vd-container">
+            <video id="videoPlayer" controls></video>
+            <div id="videos"></div>
+        </div>
+
         <script>
-            function handleFileSelect(event) {
-                const files = event.target.files;
-                let imHtml = '';
-                let vdHtml = '';
-                for (const file of files) {
-                    const objectURL = URL.createObjectURL(file);
-                    if (file.type.startsWith('image/')) {
-                        imHtml += '<img src="' + objectURL + '" onclick="enlarge(this)">';
-                    } else if (file.type.startsWith('video/')) {
-                        vdHtml += '<video src="' + objectURL + '" onclick="toca(this.src)"></video>';
-                    }
+            let i = 0,
+                t = 20,
+                imgs = [],
+                vids = [];
+
+            function cBF() {
+                let bF = document.createElement('span');
+                bF.id = 'fechar';
+                bF.textContent = 'X';
+                bF.onclick = fI;
+                return bF;
+            }
+
+            function fI() {
+                document.querySelector('.grande').classList.remove('visivel');
+                document.getElementById('imagemGrande').style.transform = 'scale(1)';
+            }
+
+            document.onkeydown = function(e) {
+                if (e.key === 'Escape') fI();
+            };
+
+            function eI(imgs) {
+                let lista = document.querySelector(".lista");
+                lista.innerHTML = '';
+                for (let j = 0; j < t; j++) {
+                    let img = document.createElement("img"),
+                        imgI = (i + j) % imgs.length;
+                    img.src = imgs[imgI];
+                    img.onmouseover = function() {
+                        let viewer = document.getElementById('viewer');
+                        viewer.src = img.src;
+                        viewer.focus();
+                        viewer.onclick = function() {
+                            document.getElementById('imagemGrande').src = img.src;
+                            document.querySelector('.grande').classList.add('visivel');
+                        };
+                    };
+                    lista.appendChild(img);
                 }
-                document.getElementById('im-container').innerHTML = imHtml;
-                document.getElementById('vd-container').innerHTML = `<video id="main" src="" controls style="width: 80%; height: 90%;"></video>` + vdHtml;
             }
 
-            function enlarge(element) {
-                element.classList.toggle('enlarged');
+            function start() {
+                let q = document.getElementById("quanto").value;
+                t = q ? q : 20;
+                if (document.getElementById("links").value != "") aL();
+                let divG = document.querySelector('.grande');
+                divG.appendChild(cBF());
+
+                let imgG = document.getElementById('imagemGrande');
+                imgG.onclick = function() {
+                    imgG.style.transform = imgG.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
+                };
             }
 
-            function videoFull(element) {
-                this.classList.toggle('full-screen');
+            function aL() {
+                let links = document.getElementById("links").value.split(",");
+                links.forEach(link => {
+                    link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
+                    if (link) {
+                        link.endsWith(".mp4") ? vids.push(link) : imgs.push(link);
+                    }
+                });
+                eI(imgs);
+                eV(vids);
+                muda();
             }
 
-            function troca() {
-                document.getElementById('im-container').classList.toggle('esconde');
-                document.getElementById('vd-container').classList.toggle('esconde');
+            function eV(vids) {
+                let vP = document.getElementById("videoPlayer");
+                let vD = document.getElementById("videos");
+                vD.innerHTML = "";
+
+                vids.forEach((v, k) => {
+                    let vB = document.createElement("button");
+                    vB.textContent = "🎥" + (k + 1);
+                    vB.onclick = () => vP.src = v;
+                    vD.appendChild(vB);
+                });
             }
 
-            function toca(src) {
-                document.getElementById('main').src = src;
+            function handleFiles() {
+                let fileInput = document.getElementById("file-input");
+                let files = fileInput.files;
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+                    let url = URL.createObjectURL(file);
+                    file.type.startsWith("video/") ? vids.push(url) : imgs.push(url);
+                }
+                eI2(imgs);
+                eV2(vids);
+                muda();
+            }
+
+            function eI2(imgs) {
+                let lista = document.querySelector(".lista");
+                lista.innerHTML = '';
+                for (let j = 0; j < t; j++) {
+                    let img = document.createElement("img"),
+                        imgI = (i + j) % imgs.length;
+                    img.src = imgs[imgI];
+                    img.onmouseover = function() {
+                        let viewer = document.getElementById('viewer');
+                        viewer.src = img.src;
+                        viewer.focus();
+                        viewer.onclick = function() {
+                            document.getElementById('imagemGrande').src = img.src;
+                            document.querySelector('.grande').classList.add('visivel');
+                        };
+                    };
+                    lista.appendChild(img);
+                }
+            }
+
+            function eV2(vids) {
+                let vP = document.getElementById("videoPlayer");
+                let vD = document.getElementById("videos");
+                vD.innerHTML = "";
+                vids.forEach((v, k) => {
+                    let vB = document.createElement("button");
+                    vB.textContent = "🎥" + (k + 1);
+                    vB.onclick = () => vP.src = v;
+                    vD.appendChild(vB);
+                });
+            }
+
+            function start2() {
+                let q = document.getElementById("quanto").value;
+                t = q ? q : 20;
+                handleFiles();
+            }
+
+            let a = document.getElementById("anterior"),
+                p = document.getElementById("proximo"),
+                v = document.getElementById("viewer");
+
+            a.addEventListener("click", function() {
+                i = (i - t < 0) ? imgs.length - t : i - t;
+                eI(imgs);
+            });
+
+            p.addEventListener("click", function() {
+                let nextMultiple = Math.ceil((i + 1) / t) * t;
+                i = (nextMultiple >= imgs.length) ? 0 : nextMultiple;
+                eI(imgs);
+            });
+
+            document.addEventListener("keydown", function(e) {
+                if (e.key === "ArrowLeft") a.click();
+                else if (e.key === "ArrowRight") p.click();
+            });
+
+            function aV() {
+                document.getElementById("vd-container").classList.toggle("some");
+                document.querySelector(".lista").classList.toggle("some");
+                v.classList.toggle("some");
+            }
+
+            function muda() {
+                document.getElementById("p1").classList.toggle("some");
+                document.getElementById("p2").classList.toggle("some");
+            }
+
+            function mostra(txt) {
+                document.getElementById("videos").innerHTML += txt;
+            }
+
+            function reseta() {
+                document.querySelector(".lista").innerHTML = "";
+                document.getElementById("videos").innerHTML = "";
+                muda();
+                document.getElementById("videoPlayer").src = "";
+                imgs = [];
+                vids = [];
+                t = 20;
             }
 
         </script>
