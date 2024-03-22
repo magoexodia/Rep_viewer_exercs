@@ -13,40 +13,99 @@
                 --bgyugi: "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
             }
 
+            body,
+            input {
+                font-size: calc(5vh + 3vw);
+            }
 
-            .butao,
-            .megabutao,
-            .minibutao {
-                font-size: 3ch;
-                background: var(--bgbutao);
+            body {
+            	background-image: var(--bgurl);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                font-family: verdana;
+            }
+
+            #tela1 {
+                text-align: center;
+				--bg1borda: 2px solid rgba(0,0,0,0.3);
+            }
+
+            #tela1 input[type=number] {
+                width: 4ch;
+				background: rgba(255,255,255,0.3);
+				border: var(--bg1borda);
+            }
+
+            #tela1 form>label {
+				border: var(--bg1borda);
+				text-shadow: 0 0 3px white, 0 0 5px white, 0 0 10px white, 0 0 1ch white;
+            }
+
+            #tela1 input[type=radio] {
+                display: none;
+            }
+
+            #tela1 input[type=radio]:checked+label {
+                text-shadow: 0 0 3px black, 0 0 0.5ch black, 0 0 1ch black, 0 0 2ch silver;
+                color: white;
+                opacity: 1;
+            }
+
+            #tela1 input[type=radio]+label {
+				margin: auto;
+                opacity: 0.6;
+            }
+
+            #tela2 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .controle button {
                 border: none;
+                border-radius: 1ch;
+                font-size: 1.5ch;
+                margin: 0.3ch;
+                background: silver;
             }
 
-            .megabutao {
-                font-size: 8ch;
+            .controle button:hover {
+                transform: scale(1.3);
+                border-radius: 0;
+                background: none;
+                filter: hue-rotate(180deg);
             }
 
-            .minibutao {
-                font-size: 2ch;
+            #mais {
+                font-size: 6ch;
+                border: none;
+                border-radius: 1ch;
+                filter: hue-rotate(60deg);
+            }
+
+            #mais:hover {
+                transform: scale(1.3);
+                border-radius: 1ch;
+                filter: hue-rotate(180deg);
+                background: none;
             }
 
             #counter {
-                font-size: 2ch;
-                font-family: verdana;
-                font-weight: bold;
-                margin: 10px;
-                width: 9ch;
                 text-align: center;
-                color: white;
-                transform: scale(2);
-                text-shadow: 0 0 0.5ch pink, 0 0 0.8ch red,  0 0 1ch purple;
+                background: none;
+                font-size: 2ch;
             }
 
-            @media screen and (orientation: portrait) {
-                #tela3 {
-                    writing-mode: vertical-lr;
-                    transform: translate(30%, 30%);
-                }
+            #tela3 {
+                text-align: center;
+                font-size: 4ch;
+                transform: rotate(90deg);
+                color: purple;
+                text-shadow: 0 0 3px white, 0 0 5px silver, 0 0 10px gray, 0 0 0.3ch black, 0 0 0.5ch pink, 0 0 0.7ch purple, 0 0 1ch red;
             }
 
             @media screen and (orientation: landscape) {
@@ -54,122 +113,21 @@
                     transform: rotate(-90deg);
                 }
 
-                .controle {
-                    transform: scaleX(-1);
-                }
-
-                .minibutao,
-                .megabutao {
+                #tela2 button {
                     transform: rotate(90deg);
                 }
 
-                #tela3 {
-                    transform: translate(30%, 30%);
-                    transform-origin: center;
+                #tela2 button:hover {
+                    transform: rotate(90deg) scale(1.3);
                 }
-            }
 
-            body {
-                --tam: 6vh;
-                --shadow: 0px 0px 2px black, 0px 0px 3px white, 0px 0px 4px black;
-                text-align: center;
-                font-size: calc(var(--tam) + 10px);
-                font-family: monospace;
-                background-color: #fefdff;
-                background-image: var(--bgurl);
-            }
+                .controle {
+                    transform: scale(-1);
+                }
 
-            body label {
-                text-align: right;
-                background: rgb(0, 0, 0, 0.1);
-            }
-
-            #tela3 {
-                width: 50%;
-                Height: 50%;
-                font-family: verdana;
-                font-size: 25vmax;
-                color: #BC13CB;
-                text-shadow: 2px 2px 2px white, 2px 3px 3px silver, 2px 5px 5px gray;
-                text-align: center;
-            }
-
-            #tela2,
-            #tela1 {
-                width: calc(98vw - 1ch);
-                Height: fit-content;
-            }
-
-            #tela2 {
-                Height: calc(100vh - 2ch);
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-                height: 100svh;
-                overflow: auto;
-                background-size: cover;
-            }
-
-            #tela1 {
-                font-size: calc(11vh);
-            }
-
-            #principal {
-                width: calc(100vw - 1em);
-                height: calc(100vh - 1em);
-            }
-
-            input[type="number"] {
-                text-align: center;
-                width: 4ch;
-            }
-
-            input[type="text"] {
-                text-align: left;
-                width: 45vw;
-            }
-
-            ,
-            input[type="radio"]:checked+label {
-                color: black;
-            }
-
-            input[type="number"],
-            input[type="text"] {
-
-                margin-left: 10px;
-                background: rgb(255, 255, 255, 0.5);
-                color: black;
-                font-size: calc(10vh);
-            }
-
-            form label {
-                display: inline-block;
-                width: auto;
-                color: white;
-                text-shadow: var(--shadow);
-                margin: 0;
-                z-index: -1;
-            }
-
-            input[type="submit"],
-            button {
-                width: fit-content;
-                font-size: calc(var(--tam) * 1.25);
-                background-color: rgba(0, 0, 0, 0.1);
-                z-index: 99;
-            }
-
-            #radios input {
-                display: none;
-            }
-
-            #radios label {
-                font-size: 1ch;
-            }
-
-            input[type="radio"]:checked+label {
-                background-color: #144E39;
+                #tela3 {
+                    transform: none;
+                }
             }
 
         </style>
@@ -191,10 +149,10 @@
                 </form>
             </div>
 
-            <div id="tela2" tabindex="0" class="centralizado justificado" style="display: none;">
+            <div id="tela2" tabindex="0" style="display: none;">
                 <div id="counter-view">
                     <div id="counter">0</div>
-                    <div style="width: 1ch;">
+                    <div id="megabutao">
                         <button onclick="updateCounter(1)" class="megabutao" id="mais">🆙</button>
                     </div>
                 </div>
@@ -212,79 +170,79 @@
 
         <script>
             let form1 = document.getElementById("form1");
-let repeticoes = document.getElementById("repeticoes");
-let tela1 = document.getElementById("tela1");
-let tela2 = document.getElementById("tela2");
-let tela3 = document.getElementById("tela3");
-let resetar = document.getElementById("resetar");
-let desistir = document.getElementById("desistir");
-let tempo = document.getElementById("tempo");
+            let repeticoes = document.getElementById("repeticoes");
+            let tela1 = document.getElementById("tela1");
+            let tela2 = document.getElementById("tela2");
+            let tela3 = document.getElementById("tela3");
+            let resetar = document.getElementById("resetar");
+            let desistir = document.getElementById("desistir");
+            let tempo = document.getElementById("tempo");
 
-function updateCounter(delta) {
-    let counter = document.getElementById("counter");
-    let value = parseInt(counter.textContent) + delta;
-    let reps = parseInt(document.getElementById('reps').value);
-    counter.textContent = Math.max(value, 0);
-    if (value <= reps && delta > 0) {
-        if (tempo.value > 0) contagem();
-    } else if (delta < 0) {
-        // apenas decrementa, sem chamar contagem()
-    } else {
-        if (tempo.value > 0) contagem();
-        cancelar();
-    }
-}
+            function updateCounter(delta) {
+                let counter = document.getElementById("counter");
+                let value = parseInt(counter.textContent) + delta;
+                let reps = parseInt(document.getElementById('reps').value);
+                counter.textContent = Math.max(value, 0);
+                if (value <= reps && delta > 0) {
+                    if (tempo.value > 0) contagem();
+                } else if (delta < 0) {
+                    // apenas decrementa, sem chamar contagem()
+                } else {
+                    if (tempo.value > 0) contagem();
+                    cancelar();
+                }
+            }
 
-function contagem() {
-    let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
-    tela2.style.display = "none";
-    tela3.style.display = "block";
-    tela3.textContent = timeLeft;
-    timeLeft--;
-    let countdown = setInterval(function() {
-        if (timeLeft < 1) {
-            clearInterval(countdown);
-            tela3.textContent = "";
-            tela2.style.display = "flex";
-            tela3.style.display = "none";
-        } else {
-            tela3.textContent = timeLeft;
-            timeLeft--;
-        }
-    }, 1000);
-}
+            function contagem() {
+                let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
+                tela2.style.display = "none";
+                tela3.style.display = "block";
+                tela3.textContent = (timeLeft - 1);
+                timeLeft--;
+                let countdown = setInterval(function() {
+                    if (timeLeft < 1) {
+                        clearInterval(countdown);
+                        tela3.textContent = "";
+                        tela2.style.display = "flex";
+                        tela3.style.display = "none";
+                    } else {
+                        tela3.textContent = (timeLeft - 1); //timeLeft;
+                        timeLeft--;
+                    }
+                }, 1000);
+            }
 
-form1.addEventListener("submit", function(event) {
-    event.preventDefault();
-    if (form1.checkValidity()) {
-    reseta();
-        tela1.style.display = "none";
-        tela2.style.display = "flex";
-    }
-});
-function cancelar() {
-    tela1.style.display = "block";
-    tela2.style.display = "none";
-}
+            form1.addEventListener("submit", function(event) {
+                event.preventDefault();
+                if (form1.checkValidity()) {
+                    reseta();
+                    tela1.style.display = "none";
+                    tela2.style.display = "flex";
+                }
+            });
 
-desistir.addEventListener("click", cancelar);
+            function cancelar() {
+                tela1.style.display = "block";
+                tela2.style.display = "none";
+            }
 
-function reseta() {
-    document.getElementById("counter").textContent = '0'; 
-}
+            desistir.addEventListener("click", cancelar);
 
-document.getElementById('tela2').addEventListener("keydown", function(event) {
-    if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
-        document.getElementById("mais").click();
-    } else if (event.key === "ArrowDown") {
-        document.getElementById("menos").click();
-    } else if (event.key === "ArrowLeft" || event.key === "Esc") {
-        document.getElementById("desistir").click();
-    } else if (event.key === "ArrowRight") {
-        document.getElementById("reseta").click();
-    }
-});
+            function reseta() {
+                document.getElementById("counter").textContent = '0';
+            }
 
+            document.getElementById('tela2').addEventListener("keydown", function(event) {
+                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
+                    document.getElementById("mais").click();
+                } else if (event.key === "ArrowDown") {
+                    document.getElementById("menos").click();
+                } else if (event.key === "ArrowLeft" || event.key === "Esc") {
+                    document.getElementById("desistir").click();
+                } else if (event.key === "ArrowRight") {
+                    document.getElementById("reseta").click();
+                }
+            });
 
         </script>
     </body>
