@@ -10,14 +10,38 @@
                 --bgbtn: rgb(0, 0, 0, 0.1);
                 --bgipt: rgb(255, 255, 255, 0.25);
                 --sombra1: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+                --bgyugi: "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
+            }
+
+
+            .butao,
+            .megabutao,
+            .minibutao {
+                font-size: 3ch;
+                background: var(--bgbutao);
+                border: none;
+            }
+
+            .megabutao {
+                font-size: 8ch;
+            }
+
+            .minibutao {
+                font-size: 2ch;
+            }
+
+            #counter {
+                font-size: 2ch;
+                font-family: verdana;
+                font-weight: bold;
+                margin: 10px;
+                width: 9ch;
+                text-align: center;
+                color: white;
+                transform: scale(2);
             }
 
             @media screen and (orientation: portrait) {
-
-                #checkboxes {
-                    --cdiv: 1.1em;
-                }
-
                 #tela3 {
                     writing-mode: vertical-lr;
                     transform: translate(30%, 30%);
@@ -25,14 +49,22 @@
             }
 
             @media screen and (orientation: landscape) {
+                #tela2 {
+                    transform: rotate(-90deg);
+                }
+
+                .controle {
+                    transform: scaleX(-1);
+                }
+
+                .minibutao,
+                .megabutao {
+                    transform: rotate(90deg);
+                }
 
                 #tela3 {
                     transform: translate(30%, 30%);
                     transform-origin: center;
-                }
-
-                #checkboxes {
-                    --cdiv: 1em;
                 }
             }
 
@@ -63,8 +95,18 @@
 
             #tela2,
             #tela1 {
-                width: 98vw;
+                width: calc(98vw - 1ch);
                 Height: fit-content;
+            }
+
+            #tela2 {
+                Height: calc(100vh - 2ch);
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                height: 100svh;
+                overflow: auto;
+                background-size: cover;
             }
 
             #tela1 {
@@ -100,30 +142,6 @@
                 font-size: calc(10vh);
             }
 
-            input[type="checkbox"] {
-                display: none;
-            }
-
-            input[type="checkbox"]+label {
-                transition-duration: 2s;
-                color: white;
-            }
-
-            input[type="checkbox"]:checked+label {
-                transition-duration: 2s;
-                color: rgb(0, 253, 21);
-            }
-
-            #checkboxes {
-                display: flexbox;
-                flex-direction: row;
-                height: calc(99vh - 3ch);
-                width: calc(100vw - 1ch);
-                overflow-y: auto;
-                overflow-x: hidden;
-                font-family: verdana;
-            }
-
             form label {
                 display: inline-block;
                 width: auto;
@@ -139,30 +157,6 @@
                 font-size: calc(var(--tam) * 1.25);
                 background-color: rgba(0, 0, 0, 0.1);
                 z-index: 99;
-            }
-
-            #resetar {
-                left: 25%;
-            }
-
-            #desistir {
-                right: 25%;
-            }
-
-            #checkboxes div {
-                min-height: 30px;
-                display: inline-block;
-                line-height: 2.5;
-                width: calc(var(--cdiv) * 2);
-                height: auto;
-                transform: rotate(-30deg);
-                color: white;
-                text-shadow: var(--shadow);
-                background: rgb(0, 0, 0, 0.25);
-            }
-
-            #checkboxes div label {
-                font-size: var(--cdiv);
             }
 
             #radios input {
@@ -185,10 +179,10 @@
         <div id="principal">
             <div id="tela1">
                 <form id="form1"><br>
-                    <label for="repeticoes">🏋️☝️</label>
-                    <input type="number" id="repeticoes" value="10" name="repeticoes" required><br>
+                    <label for="reps">🏋️☝️</label>
+                    <input type="number" id="reps" value="10" min="1" name="reps" required><br>
                     <label for="tempo">⏱️⏳</label>
-                    <input id="tempo" type="number" value="15"><br>
+                    <input id="tempo" type="number" value="15" min="0"><br>
                     <div id="radios">
                         <input type="radio" name="topt" checked id="sec" value=1><label for="sec">Segs </label>
                         <input type="radio" name="topt" id="min" value=60><label for="min"> Mins</label></div>
@@ -196,11 +190,20 @@
                 </form>
             </div>
 
-            <div id="tela2" style="display: none;">
-                <div id="checkboxes"></div>
-                <button id="resetar">➡️0️⃣</button>
-                <button id="desistir">🥱</button>
+            <div id="tela2" tabindex="0" class="centralizado justificado" style="display: none;">
+                <div id="counter-view">
+                    <div id="counter">0</div>
+                    <div style="width: 1ch;">
+                        <button onclick="updateCounter(1)" class="megabutao" id="mais">➕</button>
+                    </div>
+                </div>
+                <div class="controle">
+                    <button onclick="updateCounter(-1)" class="minibutao" id="menos">➖</button>
+                    <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao" id="reseta">🔁</button>
+                    <button class="minibutao" id="desistir">❌</button>
+                </div>
             </div>
+
 
             <div id="tela3" style="display: none;">
             </div>
@@ -212,16 +215,26 @@
             let tela1 = document.getElementById("tela1");
             let tela2 = document.getElementById("tela2");
             let tela3 = document.getElementById("tela3");
-            let checkboxes = document.getElementById("checkboxes");
             let resetar = document.getElementById("resetar");
             let desistir = document.getElementById("desistir");
             let tempo = document.getElementById("tempo");
 
-            let checkedCount = 0;
 
-            function handleCheckboxChange(checkbox) {
-                if (checkbox.checked) {
-                    checkedCount++;
+
+            function updateCounter(delta) {
+                let counter = document.getElementById("counter");
+                let value = parseInt(counter.textContent) + delta;
+                let reps = parseInt(document.getElementById('reps').value);
+                counter.textContent = Math.max(value, 0);
+                if  (value < reps && delta > 0){
+                trataDecremento();
+                } else {
+                desistir.click();
+                }
+            }
+
+            function trataDecremento() {
+                
                     let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
                     tela2.style.display = "none";
                     tela3.style.display = "block";
@@ -229,10 +242,10 @@
                     tela3.textContent = timeLeft;
                     timeLeft--;
                     let countdown = setInterval(function() {
-                        if (timeLeft <= 0) {
+                        if (timeLeft < 1) {
                             clearInterval(countdown);
                             tela3.textContent = "";
-                            tela2.style.display = "block";
+                            tela2.style.display = "flex";
                             tela3.style.display = "none";
                         } else {
                             // Display the countdown timer in tela3
@@ -240,9 +253,7 @@
                             timeLeft--;
                         }
                     }, 1000);
-                } else {
-                    checkedCount--;
-                }
+                
                 if (checkedCount == repeticoes.value) {
                     setTimeout(function() {
                         desistir.click();
@@ -253,52 +264,28 @@
             form1.addEventListener("submit", function(event) {
                 event.preventDefault();
                 if (form1.checkValidity()) {
-                    for (let i = 0; i < repeticoes.value; i++) {
-                        let div = document.createElement("div");
-                        div.style.display = "inline-block";
-
-                        let checkbox = document.createElement("input");
-                        checkbox.type = "checkbox";
-                        checkbox.id = "checkbox" + i;
-
-                        checkbox.addEventListener("change", function() {
-                            handleCheckboxChange(this);
-                        });
-
-                        let label = document.createElement("label");
-                        label.htmlFor = "checkbox" + i;
-                        label.textContent = (i + 1).toString().padStart(2, "0");
-
-                        div.appendChild(checkbox);
-                        div.appendChild(label);
-                        div.style.backgroundColor = "#2f4934";
-                        /*
-                        div.style.backgroundImage =
-                          "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
-                        div.style.backgroundSize = "cover";*/
-                        checkboxes.appendChild(div);
-                    }
                     tela1.style.display = "none";
-                    tela2.style.display = "block";
-                }
-            });
-
-            resetar.addEventListener("click", function() {
-                checkedCount = 0;
-                for (let i = 0; i < repeticoes.value; i++) {
-                    let checkbox = document.getElementById("checkbox" + i);
-                    checkbox.checked = false;
+                    tela2.style.display = "flex";
                 }
             });
 
             desistir.addEventListener("click", function() {
-                checkedCount = 0;
-                while (checkboxes.firstChild) {
-                    checkboxes.removeChild(checkboxes.firstChild);
-                }
                 form1.reset();
                 tela1.style.display = "block";
                 tela2.style.display = "none";
+                updateCounter(-parseInt(counter.textContent));
+            });
+
+            document.getElementById('tela2').addEventListener("keydown", function(event) {
+                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
+                    document.getElementById("mais").click();
+                } else if (event.key === "ArrowDown") {
+                    document.getElementById("menos").click();
+                } else if (event.key === "ArrowLeft" || event.key === "Esc") {
+                    document.getElementById("desistir").click();
+                } else if (event.key === "ArrowRight") {
+                    document.getElementById("reseta").click();
+                }
             });
 
         </script>
