@@ -199,7 +199,7 @@
                 </div>
                 <div class="controle">
                     <button onclick="updateCounter(-1)" class="minibutao" id="menos">⛔</button>
-                    <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao" id="reseta">🔁</button>
+                    <button onclick="reseta()" class="minibutao" id="reseta">🔁</button>
                     <button class="minibutao" id="desistir">❌</button>
                 </div>
             </div>
@@ -211,82 +211,79 @@
 
         <script>
             let form1 = document.getElementById("form1");
-            let repeticoes = document.getElementById("repeticoes");
-            let tela1 = document.getElementById("tela1");
-            let tela2 = document.getElementById("tela2");
-            let tela3 = document.getElementById("tela3");
-            let resetar = document.getElementById("resetar");
-            let desistir = document.getElementById("desistir");
-            let tempo = document.getElementById("tempo");
+let repeticoes = document.getElementById("repeticoes");
+let tela1 = document.getElementById("tela1");
+let tela2 = document.getElementById("tela2");
+let tela3 = document.getElementById("tela3");
+let resetar = document.getElementById("resetar");
+let desistir = document.getElementById("desistir");
+let tempo = document.getElementById("tempo");
 
+function updateCounter(delta) {
+    let counter = document.getElementById("counter");
+    let value = parseInt(counter.textContent) + delta;
+    let reps = parseInt(document.getElementById('reps').value);
+    counter.textContent = Math.max(value, 0);
+    if (value <= reps && delta > 0) {
+        contagem();
+    } else if (delta < 0) {
+        // apenas decrementa, sem chamar contagem()
+    } else {
+        contagem();
+        cancelar();
+    }
+}
 
+function contagem() {
+    let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
+    if (timeLeft < 0) return;
+    tela2.style.display = "none";
+    tela3.style.display = "block";
+    tela3.textContent = timeLeft;
+    timeLeft--;
+    let countdown = setInterval(function() {
+        if (timeLeft < 1) {
+            clearInterval(countdown);
+            tela3.textContent = "";
+            tela2.style.display = "flex";
+            tela3.style.display = "none";
+        } else {
+            tela3.textContent = timeLeft;
+            timeLeft--;
+        }
+    }, 1000);
+}
 
-            function updateCounter(delta) {
-                let counter = document.getElementById("counter");
-                let value = parseInt(counter.textContent) + delta;
-                let reps = parseInt(document.getElementById('reps').value);
-                counter.textContent = Math.max(value, 0);
-                if  (value < reps && delta > 0){
-                trataDecremento();
-                } else {
-                desistir.click();
-                }
-            }
+form1.addEventListener("submit", function(event) {
+    event.preventDefault();
+    if (form1.checkValidity()) {
+        tela1.style.display = "none";
+        tela2.style.display = "flex";
+    }
+});
+function cancelar() {
+    tela1.style.display = "block";
+    tela2.style.display = "none";
+}
 
-            function trataDecremento() {
-                
-                    let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
-                    tela2.style.display = "none";
-                    tela3.style.display = "block";
-                    // Display the countdown timer in tela3
-                    tela3.textContent = timeLeft;
-                    timeLeft--;
-                    let countdown = setInterval(function() {
-                        if (timeLeft < 1) {
-                            clearInterval(countdown);
-                            tela3.textContent = "";
-                            tela2.style.display = "flex";
-                            tela3.style.display = "none";
-                        } else {
-                            // Display the countdown timer in tela3
-                            tela3.textContent = timeLeft;
-                            timeLeft--;
-                        }
-                    }, 1000);
-                
-                if (checkedCount == repeticoes.value) {
-                    setTimeout(function() {
-                        desistir.click();
-                    }, tempo.value * 1000);
-                }
-            }
+desistir.addEventListener("click", cancelar);
 
-            form1.addEventListener("submit", function(event) {
-                event.preventDefault();
-                if (form1.checkValidity()) {
-                    tela1.style.display = "none";
-                    tela2.style.display = "flex";
-                }
-            });
+function reseta() {
+    document.getElementById("counter").textContent = '0'; 
+}
 
-            desistir.addEventListener("click", function() {
-                form1.reset();
-                tela1.style.display = "block";
-                tela2.style.display = "none";
-                updateCounter(-parseInt(counter.textContent));
-            });
+document.getElementById('tela2').addEventListener("keydown", function(event) {
+    if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
+        document.getElementById("mais").click();
+    } else if (event.key === "ArrowDown") {
+        document.getElementById("menos").click();
+    } else if (event.key === "ArrowLeft" || event.key === "Esc") {
+        document.getElementById("desistir").click();
+    } else if (event.key === "ArrowRight") {
+        document.getElementById("reseta").click();
+    }
+});
 
-            document.getElementById('tela2').addEventListener("keydown", function(event) {
-                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
-                    document.getElementById("mais").click();
-                } else if (event.key === "ArrowDown") {
-                    document.getElementById("menos").click();
-                } else if (event.key === "ArrowLeft" || event.key === "Esc") {
-                    document.getElementById("desistir").click();
-                } else if (event.key === "ArrowRight") {
-                    document.getElementById("reseta").click();
-                }
-            });
 
         </script>
     </body>
