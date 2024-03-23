@@ -1,277 +1,483 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-        <title>Lista de Imagens e Videos</title>
-    </head>
-    <style>
-        body {
-    background: rgba(255, 129, 129, 0.836);
-    font-size: 3vmax;
-}
-
-button, input[type=text], input[type=number] {
-    font-size: 4vmax;
-}
-
-input[type=number] {
-    width: 3ch;
-}
-
-.lista img {
-    height: 100%;
-    width: auto;
-}
-
-.grande {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    z-index: 9999;
-    display: none;
-}
-
-.grande.visivel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#fechar {
-    background-color: white;
-    padding: 5px;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-    position: fixed;
-    right: 2ch;
-    top: 2ch;
-    cursor: pointer;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Imagens e Videos</title>
+  </head>
+  <style>
+    :root {
+      --bgcolor: #f5f3f8;
+      --bgimage1: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ba00ff' fill-opacity='0.99'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      --corAnterior: rgba(255, 129, 129, 0.836);
+      --bgimage2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ba00ff' fill-opacity='0.29'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
-    50% {
+    body {
+      background: var(--bgcolor);
+      background-image: var(--bgimage2);
+      font-size: calc(2vmax + 1vw);
+      --subt: 1ch;
+    }
+
+    img,
+    video {
+      object-fit: contain;
+    }
+
+    #im-container,
+    #vd-container {
+      width: 100%;
+    }
+
+    #im-container {
+      height: fit-content;
+    }
+
+    #vd-container {
+      height: calc(90vh - var(--subt));
+    }
+
+    #p2,
+    .lista,
+    #div-viewer {
+      width: 100%;
+    }
+
+    #p1,
+    #p2 {
+      height: fit-content;
+      width: fit-content;
+    }
+
+    #div-viewer {
+      height: calc(76.2svh - var(--subt));
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    #p1 {
+      transform: translate(10vh, 30vh);
+    }
+
+    button,
+    input[type=text],
+    input[type=number],
+    input[type=file] {
+      font-size: var(--tam);
+    }
+
+    input[type=number] {
+      width: 3ch;
+      text-align: center;
+    }
+
+    input[type=text] {
+      width: 10ch;
+    }
+
+    .lista {
+      width: 100%;
+      height: 15vh;
+      display: flex;
+      overflow-y: none;
+      overflow-x: scroll;
+    }
+
+    .lista img {
+      height: 100%;
+      width: auto;
+    }
+
+    .grande {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      z-index: 9999;
+      display: none;
+    }
+
+    .grande.visivel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #fechar {
+      background-color: white;
+      padding: 5px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+      position: fixed;
+      right: 2ch;
+      top: 2ch;
+      cursor: pointer;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
         transform: scale(1.1);
-    }
+      }
 
-    100% {
+      100% {
         transform: scale(1);
+      }
     }
-}
 
-#imagemGrande {
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    transform-origin: top left;
-    object-fit: contain;
-}
+    #imagemGrande {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      transform-origin: top left;
+      object-fit: contain;
+    }
 
-.enlarged {
-    max-width: 100%;
-    min-height: 100%;
-    object-fit: contain;
-    position: fixed;
-    top: 50%;
-    bottom: 50%;
-    left: 50%;
-    right: 50%;
-    transform: translate(-50%, -50%);
-}
+    .enlarged {
+      max-width: 100%;
+      min-height: 100%;
+      object-fit: contain;
+      position: fixed;
+      top: 50%;
+      bottom: 50%;
+      left: 50%;
+      right: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-.lista {
-    width: 100%;
-    height: 15vh;
-    display: flex;
-    overflow-y: none;
-    overflow-x: scroll;
-}
+    .lista img:hover {
+      opacity: 1;
+    }
 
-.lista img:hover {
-    opacity: 1;
-}
+    .lista img:not(:hover) {
+      opacity: 0.7;
+    }
 
-.lista img:not(:hover) {
-    opacity: 0.5;
-}
+    #vd-container:not(.some) {
+      display: flex;
+    }
 
-#vd-container {
-    display: flex;
-    width: 100vw;
-    height: 95vh;
-}
+    .some {
+      display: none;
+    }
 
-#videoPlayer {
-    width: 80%;
-    height: calc(90vh - 2ch);
-    object-fit: contain;
-}
+    #imgGrande {
+      background: rgba(0, 0, 0, 0.8);
+    }
 
-#videos {
-    width: 18%;
-    height: calc(90vh - 2ch);
-    overflow-y: scroll;
-}
+    #videoPlayer {
+      height: 99%;
+    }
 
-.some, .some #p2, .some #videoPlayer, .some #videos {
-    display: none;
-}
+    #videoPlayer,
+    #videos {
+      width: 80%;
+    }
 
-#imgGrande {
-    background: rgba(0, 0, 0, 0.5);
-}
+    #videos {
+      width: 20%;
+      overflow-y: scroll;
+    }
 
+    #viewer {
+      background: rgba(0, 0, 0, 0.05);
+    }
 
-    </style>
+    h1 {
+      background: purple;
+      text-shadow: 0 0 1px white, 0 0 3px white, 0 0 5px white, 0 0 0.5ch white;
+      text-align: center;
+    }
 
-    <body>
-        <div id="im-container">
-            <div id="p1">
-                <input type="text" id="links" placeholder="🔗🎆, 🔗🖼️, 🔗🎥,">
-                <input type="number" id="quanto" min=2>
-                <button onclick="start()">➕</button>
-            </div>
-            <div id="p2" class="some">
-                <button onclick="aV()">🎥↔️📷</button>
-                <button id="anterior">🔙</button>
-                <button id="proximo">🔜</button>
-                <button onclick="reseta()">🔁</button>
-            </div>
-            <div class="lista"></div>
-            <div tabindex="0"> <img id="viewer" src="" style="width: calc(99vw - 2ch); height: 80vh; object-fit: contain;"></div>
-            <div class="grande some" id="imgGrande">
-                <img id="imagemGrande" src="">
-            </div>
-        </div>
-        <div class="some" id="vd-container">
-            <video id="videoPlayer" controls></video>
-            <div id="videos"></div>
-        </div>
+    #videos * {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 0.3ch;
+      border: 3px solid #Fc56a7;
+      transition: background-color 1s linear;
+    }
 
-        <script>
-            let i = 0, t = 20, imgs = [], vids = [];
+    #videos button:hover,
+    #link-label:hover,
+    #quanto-label:hover {
+      border-radius: 1ch;
+      filter: hue-rotate(75deg);
+      color: white;
+      background: #Fc56a7;
+      transition: background-color 2s ease, filter 3s ease;
+    }
 
-function cBF() {
-    let bF = document.createElement('span');
-    bF.id = 'fechar'; bF.textContent = 'X'; bF.onclick = fI;
-    return bF;
-}
+    /* Configurações comuns para vários elementos */
+    #vai,
+    #anterior,
+    #proximo,
+    #reseta,
+    #troca,
+    #quanto-label,
+    #file-label {
+      font-size: 3ch;
+      height: 3ch;
+    }
 
-function fI() {
-    document.querySelector('.grande').classList.remove('visivel');
-    document.getElementById('imagemGrande').style.transform = 'scale(1)';
-}
+    #links {
+      font-size: 2ch;
+      height: 2ch;
+      background: rgba(0, 0, 0, 0);
+    }
 
-document.onkeydown = function(e) { if (e.key === 'Escape') fI(); };
+    #file-label,
+    #vai {
+      background: rgba(60, 255, 100, 0.7);
+      border: 3px solid rgba(0, 255, 255, 0.3);
+      border-radius: 0.7ch;
+    }
 
-function eI(imgs) {
-    let lista = document.querySelector(".lista");
-    lista.innerHTML = '';
-    for (let j = 0; j < t; j++) {
-        let img = document.createElement("img"), imgI = (i + j) % imgs.length;
-        img.src = imgs[imgI];
-        img.onmouseover = function() {
+    #vai,
+    #links,
+    #quanto-label {
+      text-shadow: 0 0 0.5ch white, 0 0 1ch white;
+      border-radius: 0.5ch;
+      border: 1px solid green;
+    }
+
+    #file-label {
+      text-shadow: 0 0 0.5ch black;
+    }
+
+    #link-label {
+      text-shadow: 0 0 0.5ch black, 0 0 0.8ch white;
+      background: rgba(0, 0, 0, 0.4);
+      font-size: 3ch;
+      border-radius: 1.5ch;
+    }
+
+    #quanto-label {
+      filter: hue-rotate(60deg);
+      transform: scale(1.2);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    #quanto {
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      height: 2.7ch;
+      background: none;
+      text-shadow: 0 0 2px white, 0 0 0.5ch white;
+      border: none;
+    }
+
+    #anterior,
+    #proximo,
+    #reseta,
+    #troca {
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      border-radius: 0.7ch;
+      text-shadow: 0 0 1px white, 0 0 0.3ch white, 0 0 0.5ch white, 0 0 1ch white;
+    }
+
+    #reseta {
+      filter: hue-rotate(60deg);
+    }
+
+  </style>
+
+  <body>
+    <div id="im-container">
+      <div id="p1">
+        <h1>🖼️📼📺🎆🎨🎭</h1>
+        <label id="quanto-label">🔢
+          <input type="number" id="quanto" min=2 value=10></label>
+        <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;"><br>
+        <label for="file-input" id="link-label">🔗
+          <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,"></label>
+        <button onclick="start()" id="vai">➕</button><br>
+      </div>
+      <div id="p2" class="some">
+        <button onclick="aV()" id="troca">🎥↔️📷</button>
+        <button id="anterior">🔙</button>
+        <button id="proximo">🔜</button>
+        <button onclick="reseta()" id="reseta">🔁</button>
+      </div>
+      <div tabindex="0" id="div-viewer" class="some"> <img src="" id="viewer"></div>
+      <div class="lista some"></div>
+      <div class="grande some" id="imgGrande">
+        <img id="imagemGrande" src="">
+      </div>
+    </div>
+    <div class="some" id="vd-container">
+      <video id="videoPlayer" controls></video>
+      <div id="videos"></div>
+    </div>
+
+    <script>
+      let i = 0,
+        t = 20,
+        imgs = [],
+        vids = [];
+
+      function cBF() {
+        let bF = document.createElement('span');
+        bF.id = 'fechar';
+        bF.textContent = 'X';
+        bF.onclick = fI;
+        return bF;
+      }
+
+      function fI() {
+        document.querySelector('.grande').classList.remove('visivel');
+        document.getElementById('imagemGrande').style.transform = 'scale(1)';
+      }
+
+      document.onkeydown = function(e) {
+        if (e.key === 'Escape') fI();
+      };
+
+      function eI(imgs) {
+        let lista = document.querySelector(".lista");
+        lista.innerHTML = '';
+        for (let j = 0; j < t; j++) {
+          let img = document.createElement("img"),
+            imgI = (i + j) % imgs.length;
+          img.src = imgs[imgI];
+          img.onmouseover = function() {
             let viewer = document.getElementById('viewer');
-            viewer.src = img.src; viewer.focus();
+            viewer.src = img.src;
+            viewer.focus();
             viewer.onclick = function() {
-                document.getElementById('imagemGrande').src = img.src;
-                document.querySelector('.grande').classList.add('visivel');
+              document.getElementById('imagemGrande').src = img.src;
+              document.querySelector('.grande').classList.add('visivel');
             };
-        };
-        lista.appendChild(img);
-    }
-}
-
-function start() {
-    let q = document.getElementById("quanto").value;
-    t = q ? q : 20;
-    if (document.getElementById("links").value != "")  aL();
-    let divG = document.querySelector('.grande');
-    divG.appendChild(cBF());
-
-    let imgG = document.getElementById('imagemGrande');
-    imgG.onclick = function() {
-        imgG.style.transform = imgG.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
-    };
-}
-
-function aL() {
-    let links = document.getElementById("links").value.split(",");
-    links.forEach(link => {
-        link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
-        if (link) { 
-            link.endsWith(".mp4") ? vids.push(link) : imgs.push(link);
+          };
+          lista.appendChild(img);
         }
-    });
-    eI(imgs); eV(vids); muda();
-}
+      }
 
-function eV(vids) {
-    let vP = document.getElementById("videoPlayer");
-    let vD = document.getElementById("videos");
-    vD.innerHTML = "";
+      function start() {
+        let q = document.getElementById("quanto").value;
+        t = q ? q : 20;
+        if (document.getElementById("links").value != "") aL();
+        let divG = document.querySelector('.grande');
+        divG.appendChild(cBF());
 
-    vids.forEach((v, k) => {
-        let vB = document.createElement("button");
-        vB.textContent = "🎥" + (k + 1);
-        vB.onclick = () => vP.src = v;
-        vD.appendChild(vB);
-    });
-}
+        let imgG = document.getElementById('imagemGrande');
+        imgG.onclick = function() {
+          imgG.style.transform = imgG.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
+        };
+        tela2();
+      }
 
-let a = document.getElementById("anterior"), p = document.getElementById("proximo"), v = document.getElementById("viewer");
+      function aL() {
+        let links = document.getElementById("links").value.split(",");
+        links.forEach(link => {
+          link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
+          if (link) {
+            link.endsWith(".mp4") ? vids.push(link) : imgs.push(link);
+          }
+        });
+        eI(imgs);
+        eV(vids);
+        muda();
+      }
 
-a.addEventListener("click", function() {
-    i = (i - t < 0) ? imgs.length - t : i - t;
-    eI(imgs);
-});
+      function eV(vids) {
+        let vP = document.getElementById("videoPlayer");
+        let vD = document.getElementById("videos");
+        vD.innerHTML = "";
 
-p.addEventListener("click", function() {
-    let nextMultiple = Math.ceil((i + 1) / t) * t;
-    i = (nextMultiple >= imgs.length) ? 0 : nextMultiple;
-    eI(imgs);
-});
+        vids.forEach((v, k) => {
+          let vB = document.createElement("button");
+          vB.textContent = "🎦" + (k + 1);
+          vB.onclick = () => vP.src = v;
+          vD.appendChild(vB);
+        });
+      }
 
-document.addEventListener("keydown", function(e) {
-    if (e.key === "ArrowLeft") a.click();
-    else if (e.key === "ArrowRight") p.click();
-});
+      function handleFiles() {
+        let fileInput = document.getElementById("file-input");
+        let files = fileInput.files;
+        for (let i = 0; i < files.length; i++) {
+          let file = files[i];
+          let url = URL.createObjectURL(file);
+          file.type.startsWith("video/") ? vids.push(url) : imgs.push(url);
+        }
+        eI(imgs);
+        eV(vids);
+        muda();
+      }
 
-function aV() {
-    document.getElementById("vd-container").classList.toggle("some");
-    document.querySelector(".lista").classList.toggle("some");
-    v.classList.toggle("some");
-}
+      function start2() {
+        start();
+        handleFiles();
+      }
 
-function muda() {
-    document.getElementById("p1").classList.toggle("some");
-    document.getElementById("p2").classList.toggle("some");
-}
+      let a = document.getElementById("anterior"),
+        p = document.getElementById("proximo"),
+        v = document.getElementById("div-viewer");
 
-function mostra(txt) {
-    document.getElementById("videos").innerHTML += txt;
-}
+      a.addEventListener("click", function() {
+        i = (i - t < 0) ? imgs.length - t : i - t;
+        eI(imgs);
+      });
 
-function reseta() {
-    document.querySelector(".lista").innerHTML = "";
-    document.getElementById("videos").innerHTML = "";
-    muda();
-    document.getElementById("videoPlayer").src = "";
-    imgs = [];
-    vids = [];
-    t = 20;
-}
+      p.addEventListener("click", function() {
+        let nextMultiple = Math.ceil((i + 1) / t) * t;
+        i = (nextMultiple >= imgs.length) ? 0 : nextMultiple;
+        eI(imgs);
+      });
 
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "ArrowLeft") a.click();
+        else if (e.key === "ArrowRight") p.click();
+      });
 
+      function aV() {
+        document.getElementById("vd-container").classList.toggle("some");
+        document.querySelector(".lista").classList.toggle("some");
+        v.classList.toggle("some");
+      }
 
-        </script>
-    </body>
+      function muda() {
+        document.getElementById("p1").classList.toggle("some");
+        document.getElementById("p2").classList.toggle("some");
+      }
+
+      function mostra(txt) {
+        document.getElementById("videos").innerHTML += txt;
+      }
+
+      function reseta() {
+        document.querySelector(".lista").innerHTML = "";
+        document.getElementById("videos").innerHTML = "";
+        muda();
+        document.getElementById("videoPlayer").src = "";
+        imgs = [];
+        vids = [];
+        t = 20;
+        i = 0;
+        telaInicial();
+      }
+
+      function telaInicial() {
+        document.getElementById("vd-container").classList.add("some");
+        document.querySelector(".lista").classList.add("some");
+        v.classList.add("some");
+      }
+
+      function tela2() {
+        document.querySelector(".lista").classList.remove("some");
+        v.classList.remove("some");
+      }
+
+    </script>
+  </body>
 
 </html>
