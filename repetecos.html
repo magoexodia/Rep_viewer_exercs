@@ -13,7 +13,7 @@
                 --bgbutao: rgba(0, 0, 0, 0);
                 --bgradio: rgba(0, 255, 0, 0.2);
                 --bgcolor: #fefdff;
-                --tam: 9vh;
+                --tam: calc(3vh + 3vw);
                 text-align: center;
                 font-size: var(--tam);
                 font-family: verdana;
@@ -21,14 +21,9 @@
                 background-image: var(--bgurl);
             }
 
-            #tela3 {
-                width: 100vw;
-                Height: 15ch;
-            }
-
             #principal {
-                width: calc(100vw);
-                height: calc(100vh);
+                width: calc(100vw - 3ch);
+                height: calc(100vh - 4ch);
             }
 
             input[type="number"] {
@@ -56,7 +51,7 @@
 
             form {
                 display: inline-block;
-                height: 100%;
+                height: calc(100vh - 5ch);
             }
 
             input[type="submit"] {
@@ -67,14 +62,10 @@
             }
 
             .centralizado {
-                display: flex;
                 flex-direction: column;
                 align-items: center;
                 height: 100svh;
                 overflow: auto;
-            }
-
-            .justificado {
                 justify-content: center;
             }
 
@@ -96,8 +87,8 @@
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100vw;
-                height: 100vh;
+                width: 100%;
+                height: 100%;
             }
 
             #tela3 img,
@@ -113,7 +104,9 @@
                 object-fit: contain;
             }
 
-            #foto {
+            #foto,
+            #radios input[type="radio"],
+            #radios2 input[type="radio"] {
                 display: none;
             }
 
@@ -123,12 +116,6 @@
 
             #foto:checked+#fotol {
                 background: none;
-            }
-
-
-            #radios input[type="radio"],
-            #radios2 input[type="radio"] {
-                display: none;
             }
 
             #sec:checked+label,
@@ -150,56 +137,74 @@
                 background: var(--bgradio);
             }
 
-            #counter {
-                font-size: 2ch;
-                font-weight: bold;
-                margin: 10px;
-                width: 9ch;
-                text-align: center;
+
+
+            #tela2 {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                width: 100%;
             }
 
-            .butao,
-            .megabutao,
-            .minibutao {
-                font-size: 3ch;
-                background: var(--bgbutao);
-                text-shadow: var(--shadow);
+            .controle {
+                display: flex;
+                direction: column;
+            }
+
+            .controle button {
                 border: none;
+                border-radius: 1ch;
+                font-size: 1.5ch;
+                margin: 0.3ch;
+                background: silver;
             }
 
-            .megabutao {
-                font-size: 8ch;
+            .controle button:hover {
+                transform: scale(1.3);
+                border-radius: 0;
+                background: none;
+                filter: hue-rotate(180deg);
             }
 
-            .minibutao {
+            #mais {
+                font-size: 6ch;
+                border: none;
+                border-radius: 1ch;
+                filter: hue-rotate(60deg);
+            }
+
+            #mais:hover {
+                transform: scale(1.3);
+                border-radius: 1ch;
+                filter: hue-rotate(180deg);
+                background: none;
+            }
+
+            #counter {
+                text-align: center;
+                background: none;
                 font-size: 2ch;
-            }
-
-            @media screen and (orientation: portrait) {
-
-                body {
-                    --tam: calc(7vh);
-                }
-
             }
 
 
             @media screen and (orientation: landscape) {
+                #counter-view {
+                    transform: rotate(-90deg) scale(1.2) translate(-2ch, -2ch);
+                }
 
-                #tela2 {
-                    height: 100%;
-                    width: 100%;
-                    direction: column;
-                    transform: rotate(-90deg);
-                    transform-origin: center;
+                #tela2 button {
+                    transform: rotate(90deg);
+                }
+
+                #tela2 button:hover {
+                    transform: rotate(90deg) scale(1.5);
                 }
 
                 .controle {
-                    transform: scaleX(-1);
-                }
-
-                .minibutao{
-                    transform: rotate(90deg);
+                    transform: rotate(-90deg) translate(4ch, 6ch) scale(1.1);
+                    flex-direction: row-reverse;
                 }
             }
 
@@ -215,15 +220,15 @@
     <body>
 
         <!-- Primeira Tela -->
-        <div id="tela1" class="justificado centralizado">
+        <div id="tela1" class="centralizado">
             <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
                 <label for="valor1">🏋️☝️</label><input type="number" id="valor1" min=1 value=3 required><br>
                 <div id="radios" style="display: none;">
                     <label for="valor2" id="valor2l">⏱️⏳</label><input type="number" id="valor2" min=0 value=2 required><br>⏱️❓
                     <input type="radio" name="topt" checked id="sec" value=1><label for="sec" id="secl">Seg</label>
                     <input type="radio" name="topt" id="min" value=60><label for="min" id="minl">Min</label></div>
-                <input type="checkbox" id="foto" onchange="none_some('linkImagem', this.checked)">
-                <label for="foto" id="fotol">📷🔗</label>
+                📷<input type="checkbox" id="foto" onchange="none_some('linkImagem', this.checked)">
+                <label for="foto" id="fotol">🔗</label>
                 <input type="text" id="linkImagem" value="https://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv" style="display: none;">
                 <div id="radios2">⌛❓
                     <input type="radio" name="corda" id="entre" onchange="some_tempo()" value=2>
@@ -240,17 +245,15 @@
 
         <!-- Segunda Tela -->
 
-        <div id="tela2" tabindex="0" class="centralizado justificado" style="display: none;">
+        <div id="tela2" tabindex="0" style="display: none;">
             <div id="counter-view">
                 <div id="counter">0</div>
-                <div style="width: 1ch;">
-                    <button onclick="updateCounter(1)" class="megabutao" id="mais">➕</button>
-                </div>
+                <button onclick="updateCounter(1)" class="megabutao" id="mais">🆙</button>
             </div>
             <div class="controle">
-                <button onclick="updateCounter(-1)" class="minibutao" id="menos">➖</button>
+                <button onclick="updateCounter(-1)" class="minibutao" id="menos">↩️</button>
                 <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao" id="reseta">🔁</button>
-                <button onclick="abrirTela1()" class="minibutao" id="cancela">❌</button>
+                <button onclick="abrirTela1()" class="minibutao" id="cancela">🔙</button>
             </div>
         </div>
 
@@ -262,25 +265,6 @@
         </div>
 
         <script>
-            function tela2_3teste() {
-                document.getElementById('tela1').style.display = 'none';
-
-                //carrega_tela3() e abrir_tela3) resumidos
-                document.getElementById('tela3').style.display = 'flex';
-                document.getElementById('imagem').src = document.getElementById('linkImagem').value;
-                document.getElementById('imagem').style.display = 'block';
-            }
-
-            function tela3teste() {
-                document.getElementById('imagem').src = document.getElementById('linkImagem').value;
-                document.getElementById('tela2').style.display = 'none';
-                document.getElementById('imagem').style.display = 'block';
-            }
-
-
-            /*
-            			FEITOS e BEM FEITOS
-            */
             function none_some(quem, alt) {
                 document.getElementById(quem).style.display = alt ? '' : 'none';
             }
@@ -328,11 +312,13 @@
                 //tela3teste();
                 carrega_tela3();
                 document.getElementById('tela3').style.display = 'flex';
-                var descanso = document.getElementById('valor2').value;
+                var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
                 setTimeout(function() {
                     document.getElementById('tela3').style.display = 'none';
                     document.getElementById('tela2').style.display = 'flex';
-                }, descanso * document.querySelector('input[name="topt"]:checked').value * 1000);
+					document.getElementById('imagem').style.display = 'none';
+					document.getElementById('emoticon').style.display = 'none';
+                }, descanso * 1000);
 
             }
 
@@ -340,8 +326,8 @@
                 //tela3teste();
                 carrega_tela3();
                 document.getElementById('tela3').style.display = 'flex';
-                var descanso = document.getElementById('valor2').value;
-                setTimeout(abrirTela1, descanso * document.querySelector('input[name="topt"]:checked').value * 1000);
+                var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
+                setTimeout(abrirTela1, descanso * 1000);
             }
 
             function carrega_tela3() {
@@ -351,16 +337,21 @@
                     document.getElementById('imagem').src = linkImagem;
                     document.getElementById('imagem').style.display = 'block';
                 } else {
-                    document.getElementById('emoticon').style.display = 'block';
-                    var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
-                    var i = 0;
-                    setInterval(function() {
-                        document.getElementById('emoticon').textContent = emoticons[i];
-                        i = (i + 1) % emoticons.length;
-                    }, 250);
+                    //contagem();
+					abrir_emoticon();
                 }
             }
 
+            function abrir_emoticon() {
+                document.getElementById('emoticon').style.display = 'block';
+                var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
+                var i = 0;
+                setInterval(function() {
+                    document.getElementById('emoticon').textContent = emoticons[i];
+                    i = (i + 1) % emoticons.length;
+                }, 250);
+            }
+			
             function abrirTela1() {
                 updateCounter(-parseInt(counter.textContent));
                 document.getElementById('tela3').style.display = 'none';
@@ -370,7 +361,10 @@
                 document.getElementById('meuForm').reset();
                 document.getElementById('imagem').style.display = 'none';
                 document.getElementById('emoticon').style.display = 'none';
+                document.getElementById('imagem').style.display = 'none';
+                document.getElementById('emoticon').style.display = 'none';
             }
+
             document.getElementById('tela2').addEventListener("keydown", function(event) {
                 if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
                     document.getElementById("mais").click();
@@ -382,7 +376,7 @@
                     document.getElementById("reseta").click();
                 }
             });
-            
+
         </script>
 
     </body>
