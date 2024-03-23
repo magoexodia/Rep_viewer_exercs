@@ -297,8 +297,21 @@
             function start2() {
                 let q = document.getElementById("quanto").value;
                 t = q ? q : 20;
+                if (document.getElementById("links").value != "") aL();
+                let divG = document.querySelector('.grande');
+                divG.appendChild(cBF());
+
+                let imgG = document.getElementById('imagemGrande');
+                imgG.onclick = function() {
+                    imgG.style.transform = imgG.style.transform === 'scale(3)' ? 'scale(1)' : 'scale(3)';
+                };
                 handleFiles();
             }
+            /*function start2() {
+                let q = document.getElementById("quanto").value;
+                t = q ? q : 20;
+                handleFiles();
+            }*/
 
             let a = document.getElementById("anterior"),
                 p = document.getElementById("proximo"),
