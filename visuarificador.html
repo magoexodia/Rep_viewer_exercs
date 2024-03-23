@@ -362,6 +362,7 @@
       }
 
       function start() {
+        if (document.getElementById("links").value == "") return;
         let q = document.getElementById("quanto").value;
         t = q ? q : 20;
         if (document.getElementById("links").value != "") aL();
