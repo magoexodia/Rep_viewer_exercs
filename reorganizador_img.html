@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exemplo de Página</title>
+  <style>
+  img {object-fit: contain; width: auto; height: 20vh;}
+    #div1, #div2 {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid black;
+    }
+      #div1 {display: flex; flex-direction: row; height: 70vh; overflow: scroll;}
+    #div1, #div2 {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid black;
+    }
+    #imageContainer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="div1">
+    <textarea id="linkInput" rows="4" cols="50"></textarea>
+    <button id="okButton">✔️</button>
+    <div id="imageContainer"></div>
+    <button id="resetButton" style="display: none;">🔙</button>
+  </div>
+  <div id="div2">
+    <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
+  </div>
+  <script>
+    var selectedImage = null;
+
+    document.getElementById('okButton').addEventListener('click', function() {
+      var links = document.getElementById('linkInput').value.split('\n');
+      var imageContainer = document.getElementById('imageContainer');
+      for (var i = 0; i < links.length; i++) {
+        var source = document.createElement('source');
+        source.src = links[i].slice(1, -2); // Remove as aspas simples e a vírgula
+        // Verifique se a imagem é WebP
+        if (source.src.slice(-4) === 'webp') {
+          source.type = 'image/webp';
+        } else {
+          source.type = '';
+        }
+        var img = document.createElement('img');
+        img.src = source.src;
+        img.onclick = function() { selectImage(this); };
+        imageContainer.appendChild(img);
+      }
+      document.getElementById('linkInput').style.display = 'none';
+      document.getElementById('okButton').style.display = 'none';
+      document.getElementById('resetButton').style.display = 'block';
+      imageContainer.style.display = 'block';
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function() {
+      location.reload();
+    });
+
+    function selectImage(img) {
+      if (selectedImage === null) {
+        selectedImage = img;
+      } else {
+        var tempSrc = selectedImage.src;
+        selectedImage.src = img.src;
+        img.src = tempSrc;
+        selectedImage = null;
+        updateLinkOutput();
+      }
+    }
+
+    function updateLinkOutput() {
+      var images = document.getElementById('imageContainer').getElementsByTagName('img');
+      var links = [];
+      for (var i = 0; i < images.length; i++) {
+        links.push("'" + images[i].src + "',"); // Adicione as aspas simples e a vírgula
+      }
+      document.getElementById('linkOutput').value = links.join('\n');
+    }
+  </script>
+</body>
+</html>
