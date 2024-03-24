@@ -1,0 +1,72 @@
+/*
+
+Esse trecho aqui cria uma div que é o ponteiro de um mouse virtual criaod para se usado com o gamepad como se fosse um mouse de verdade
+criado por mim com ajuda do bing copilot
+às 23:30 de 23/03/2024
+
+*/
+      let x = 0;
+      let y = 0;
+      let virtualMouse;
+
+      function createVirtualMouse() {
+        virtualMouse = document.createElement('div');
+        virtualMouse.id = 'virtualMouse';
+        virtualMouse.style.position = 'absolute';
+        virtualMouse.style.width = '20px';
+        virtualMouse.style.height = '20px';
+        virtualMouse.style.backgroundColor = 'black';
+        virtualMouse.style.borderRadius = '50%';
+        virtualMouse.style.pointerEvents = 'none';
+        document.body.appendChild(virtualMouse);
+      }
+
+      function handleGamepadInput() {
+        const gamepads = navigator.getGamepads();
+        for (const gamepad of gamepads) {
+          if (gamepad) {
+            if (!virtualMouse) {
+              createVirtualMouse();
+            }
+            const axes = gamepad.axes;
+            x += axes[0] * 10;
+            y += axes[1] * 10;
+            // Atualizar a posição do mouse virtual com base na entrada do gamepad
+            virtualMouse.style.left = x + 'px';
+            virtualMouse.style.top = y + 'px';
+
+            // Verificar pressionamentos de botão
+            for (let i = 0; i < gamepad.buttons.length; i++) {
+              if (gamepad.buttons[i].pressed) {
+                if (i === 0) {
+                  // Simular um clique esquerdo do mouse
+                  const clickEvent = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                  });
+                  const element = document.elementFromPoint(x, y);
+                  if (element) {
+                    element.dispatchEvent(clickEvent);
+                  }
+                } else if (i === 1) {
+                  // Simular um clique direito do mouse
+                  const clickEvent = new MouseEvent('contextmenu', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                  });
+                  const element = document.elementFromPoint(x, y);
+                  if (element) {
+                    element.dispatchEvent(clickEvent);
+                  }
+                }
+              }
+            }
+          }
+        }
+        requestAnimationFrame(handleGamepadInput);
+      }
+
+      // Começar a lidar com a entrada do gamepad
+      handleGamepadInput();
