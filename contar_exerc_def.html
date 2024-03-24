@@ -17,8 +17,7 @@
                 --tam: calc(7vh);
                 font-family: Monospace, sans-serif;
                 font-size: var(--tam);
-                text-shadow: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-                background-color: var(--bgcolor);
+                background-color: white;
                 background-image: var(--bgurl);
                 width: 100vw;
                 height: 100vh;
@@ -67,6 +66,8 @@
                 margin: 5px;
                 text-align: left;
                 width: 30vw;
+                border: 1px solid gray;
+                border-radius: 1ch;
             }
 
             input[type="radio"] {
@@ -74,18 +75,31 @@
             }
 
             #radios {
-                margin-left: 60%;
-                font-size: 0.5ch;
-            }
-
-            .selc {
-                background-Image: var(--bgurl);
-                background-color: #F95A37;
-                text-shadow: var(--shadow);
+                margin-left: 35%;
+                font-size: 0.8ch;
             }
 
             input[type="radio"]:checked+label {
-                font-size: 5ch;
+                background: orange;
+                color: white;
+                text-shadow: 0 0 1px lightgreen, 0 0 2px lightgreen, 0 0 5px green, 0 0 1ch green, 0 0 1ch darkgreen;
+                border: 3px solid red;
+                border-radius: 1ch;
+            }
+
+            input[type="radio"]:not(:checked)+label {
+                border: none;
+                border-radius: 0.6ch;
+                background: white;
+                color: gray;
+            }
+
+            label, #ok { text-shadow: 0 0 1px white, 0 0 2px white, 0 0 5px white, 0 0 1ch gray, 0 0 1ch black;}
+            
+            #selcB {
+                background-color: #F95A37AF;
+                border: 2px solid red;
+                border-radius: 1ch;
             }
 
             button {
@@ -198,8 +212,6 @@
                 }
 
                 .minibutao {
-                    /*font-size: 3vh;
-           */
                     width: 1.5ch;
                 }
 
@@ -212,17 +224,16 @@
                 }
             }
 
-            /*.arqOpt {display: none;}*/
-
         </style>
     </head>
 
     <body>
         <!-- Tela 1 -->
+        <!-- Tela 1 -->
         <div class="screen active" id="screen1">
             <div>
                 <label for="repetitions">0️⃣ a </label>
-                <input type="number" id="repetitions" value="2" min="0" style="width: 4.5ch; text-align: right;"><br><label for="tempo"> ⏳ &nbsp;</label>
+                <input type="number" id="repetitions" value="2" min="2" style="width: 4.5ch; text-align: right;"><br><label for="tempo"> ⏳ &nbsp;</label>
                 <input type="number" id="tempo" value="1" min="0" style="width: 4.5ch; text-align: right;">
                 <br class="enfeite">
                 <div id="radios">
@@ -268,6 +279,7 @@
 
 
         <script>
+            const imgPadrao = 'https://64.media.tumblr.com/d30a238f7944c9288e9c6220c1838b16/ee25d2eee81b3d44-78/s400x600/6aa56f5b2468903bb2b2730af8a5c5e3775fd85d.gifv';
             let repetitions = document.getElementById("repetitions");
             let counter = document.getElementById("counter");
             let image = document.getElementById("image");
@@ -331,37 +343,6 @@
                 changeScreen(3);
             }
 
-            function loadoriginal() {
-                const imageLink = document.getElementById("imgLink").value;
-                const imageFile = document.getElementById("imgFile").files[0];
-                const inputBChecked = document.getElementById('inputB').checked;
-                const inputAChecked = document.getElementById('inputA').checked;
-                const screen3 = document.getElementById('screen3');
-                let fileSrc = "";
-
-                if (inputBChecked) {
-                    // Se inputB está marcado, pegue o link da imagem ou vídeo
-                    fileSrc = imageLink;
-                } else if (imageFile) {
-                    // Se inputB não está marcado e há um arquivo de imagem, use o URL.createObjectURL
-                    fileSrc = URL.createObjectURL(imageFile);
-                } else {
-                    // Se ambos os campos estão vazios, exiba os emoticons
-                    screen3.innerHTML = "✔️ ☑️"; // Você pode personalizar os emoticons aqui
-                    return;
-                }
-
-                if (fileSrc.includes(".mp4")) {
-                    // Se o arquivo é um vídeo
-                    screen3.innerHTML = `<video controls><source src="${fileSrc}" type="video/mp4">Seu navegador não suporta a tag de vídeo.</video>`;
-                } else {
-                    // Se o arquivo é uma imagem
-                    screen3.innerHTML = `<img src="${fileSrc}" alt="Imagem">`;
-                }
-
-                changeScreen(3);
-            }
-
 
             function createVideo(fileSrc, type) {
                 return `<video controls><source src="${fileSrc}" type="${type}">Seu navegador não suporta a tag de vídeo.</video>`;
@@ -394,13 +375,7 @@
                         screen3.innerHTML = createImage(fileSrc);
                     }
                 } else {
-                    /*abrirTela1();*/
-                    var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
-                    var i = 0;
-                    setInterval(function() {
-                        document.getElementById('screen3').textContent = emoticons[i];
-                        i = (i + 1) % emoticons.length;
-                    }, 250);
+                        screen3.innerHTML = createImage(imgPadrao);
                 }
 
                 changeScreen(3);
