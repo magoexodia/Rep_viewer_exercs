@@ -3,28 +3,33 @@
 <head>
   <title>Organiza videos 📼📽️📺</title>
   <style>
+    p, h1, h2, h3, h4 { background: #ff000092; text-shadow: 0 0 2px white;}
     textarea {width: 100%;}
     button {font-size: 10vh; position: fixed; top: 12px; right: 10px; border: 2px solid black; border-radius: 1ch; background: gold; transition: background 1s ease; }
     button:hover {background: purple; text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white; transition: background 2s ease}
-    video {object-fit: contain; width: auto; height: calc(20vh);}
+    img, video {object-fit: contain; width: auto; height: calc(15vh + 15vw);}
+    
+      #div1 {display: flex; flex-direction: row; height: 78vh; overflow: scroll;}
     #div1, #div2 {
-      margin: 20px;
-      padding: 20px;
-      border: 1px solid black;
-    }
-      #div1 {display: flex; flex-direction: row; height: 70vh; overflow: scroll;}
-    #div1, #div2 {
-      margin: 20px;
-      padding: 20px;
+      margin: 3px;
+      padding: 3px;
       border: 1px solid black;
     }
     #imageContainer {
       display: none;
     }
+    label{position: fixed; top:0; left: 10px;}
   </style>
 </head>
 <body>
   <div id="div1">
+    <label for="linkInput"> clica na 🖼️ depois da outra. 😉</label>
+    <textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
+'link1.jpg',
+'link2.png',
+'link3.img',
+'link5.png',
+'link6.img'," ></textarea>
     <textarea id="linkInput" rows="4" cols="50"></textarea>
     <button id="okButton">✔️</button>
     <div id="videoContainer"></div>
