@@ -47,7 +47,7 @@
     var src = links[i].slice(1, -2); // Remove as aspas simples e a vírgula
     // Verifique se a imagem é WebP
     if (src.includes('<') || src === null) {
-    imageContainer.innerHTML += '<p>' + src + '❌</p>';
+    imageContainer.innerHTML += '<p>' + src + '❌</p><img  src="https://assets.tumblr.com/images/media_violation/community_guidelines_v1_500.png" onclick="selectImage(this);">';
     } else if (src.includes('mp4')) {
     var type = 'video/mp4';
     var imgHTML = '<video src="' + src + '" onclick="selectImage(this);" ' + (type ? 'type="' + type + '"' : '') + '></video>';
