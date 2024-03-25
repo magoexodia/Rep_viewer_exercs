@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Organiza videos 📼📽️📺</title>
+  <style>
+    textarea {width: 100%;}
+    button {font-size: 10vh; position: fixed; top: 12px; right: 10px; border: 2px solid black; border-radius: 1ch; background: gold; transition: background 1s ease; }
+    button:hover {background: purple; text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white; transition: background 2s ease}
+    video {object-fit: contain; width: auto; height: calc(20vh);}
+    #div1, #div2 {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid black;
+    }
+      #div1 {display: flex; flex-direction: row; height: 70vh; overflow: scroll;}
+    #div1, #div2 {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid black;
+    }
+    #imageContainer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="div1">
+    <textarea id="linkInput" rows="4" cols="50"></textarea>
+    <button id="okButton">✔️</button>
+    <div id="videoContainer"></div>
+    <button id="resetButton" style="display: none;">🔙</button>
+  </div>
+  <div id="div2">
+    <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
+  </div>
+  <script>
+    var selectedVideo = null;
+
+    document.getElementById('okButton').addEventListener('click', function() {
+      var links = document.getElementById('linkInput').value.split('\n');
+      var videoContainer = document.getElementById('videoContainer');
+      for (var i = 0; i < links.length; i++) {
+        var video = document.createElement('video');
+        video.src = links[i].slice(1, -2); // Remove as aspas simples e a vírgula
+        video.onclick = function() { selectVideo(this); };
+        videoContainer.appendChild(video);
+      }
+      document.getElementById('linkInput').style.display = 'none';
+      document.getElementById('okButton').style.display = 'none';
+      document.getElementById('resetButton').style.display = 'block';
+      videoContainer.style.display = 'block';
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function() {
+      location.reload();
+    });
+
+    function selectVideo(video) {
+      if (selectedVideo === null) {
+        selectedVideo = video;
+      } else {
+        var tempSrc = selectedVideo.src;
+        selectedVideo.src = video.src;
+        video.src = tempSrc;
+        selectedVideo = null;
+        updateLinkOutput();
+      }
+    }
+
+    function updateLinkOutput() {
+      var videos = document.getElementById('videoContainer').getElementsByTagName('video');
+      var links = [];
+      for (var i = 0; i < videos.length; i++) {
+        links.push("'" + videos[i].src + "',"); // Adicione as aspas simples e a vírgula
+      }
+      document.getElementById('linkOutput').value = links.join('\n');
+    }
+  </script>
+</body>
+</html>
