@@ -1,93 +1,161 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Reorganização de imagens🖼️</title>
-  <style>
-    p, h1, h2, h3, h4 { background: #ff000092; text-shadow: 0 0 2px white;}
-    textarea {width: 100%;}
-    button {font-size: 10vh; position: fixed; top: 12px; right: 10px; border: 2px solid black; border-radius: 1ch; background: gold; transition: background 1s ease; }
-    button:hover {background: purple; text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white; transition: background 2s ease}
-    img, video {object-fit: contain; width: auto; height: calc(15vh + 15vw);}
-    
-      #div1 {display: flex; flex-direction: row; height: 78vh; overflow: scroll;}
-    #div1, #div2 {
-      margin: 3px;
-      padding: 3px;
-      border: 1px solid black;
-    }
-    #imageContainer {
-      display: none;
-    }
-    label{position: fixed; top:0; left: 10px;}
-  </style>
-</head>
-<body><br>
-  <div id="div1">
-    <label for="linkInput"> clica na 🖼️ depois da outra. 😉</label>
-    <textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
+
+  <head>
+    <title>Reorganização de imagens🖼️</title>
+    <style>
+      p,
+      h1,
+      h2,
+      h3,
+      h4 {
+        background: #ff000092;
+        text-shadow: 0 0 2px white;
+      }
+
+      textarea {
+        width: 100%;
+      }
+
+      button {
+        font-size: 10vh;
+        position: fixed;
+        top: 12px;
+        right: 10px;
+        border: 2px solid black;
+        border-radius: 1ch;
+        background: gold;
+        transition: background 1s ease;
+      }
+
+      button:hover {
+        background: purple;
+        text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white;
+        transition: background 2s ease
+      }
+
+      img,
+      video {
+        object-fit: contain;
+        width: auto;
+        height: calc(15vh + 15vw);
+				margin: 3px;
+				padding: 3px;
+      }
+
+      #div1 {
+        display: flex;
+        flex-direction: row;
+        height: 78vh;
+        overflow: scroll;
+				background: lightgray;
+      }
+
+      #div1,
+      #div2 {
+        margin: 3px;
+        padding: 3px;
+        border: 1px solid black;
+      }
+
+      #imageContainer {
+        display: none;
+      }
+
+      label {
+        position: fixed;
+        top: 0;
+        left: 10px;
+      }
+			.selected {
+    border: 2px solid red; /* Por exemplo, você pode adicionar uma borda vermelha */
+}
+
+    </style>
+  </head>
+
+  <body><br>
+    <div id="div1">
+      <label for="linkInput"> clica na 🖼️ depois da outra. 😉</label>
+      <textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
 'link1.jpg',
 'link2.png',
 'link3.img',
 'link5.png',
-'link6.img'," ></textarea>
-    <button id="okButton">✔️</button>
-    <div id="imageContainer"></div>
-    <button id="resetButton" style="display: none;">🔙</button>
-  </div>
-  <div id="div2">
-    <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
-  </div>
-  <script>
-    var selectedImage = null;
+'link6.img',"></textarea>
+      <button id="okButton">✔️</button>
+      <div id="imageContainer"></div>
+      <button id="resetButton" style="display: none;">🔙</button>
+      <button id="deleteButton" style="display: none; top: 3ch">🗑️</button>
+    </div>
+    <div id="div2">
+      <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
+    </div>
+    <script>
+      var selectedImage = null;
 
-    document.getElementById('okButton').addEventListener('click', function() {
-  var links = document.getElementById('linkInput').value.split('\n');
-  var imageContainer = document.getElementById('imageContainer');
-  for (var i = 0; i < links.length; i++) {
-    var src = links[i].slice(1, -2); // Remove as aspas simples e a vírgula
-    // Verifique se a imagem é WebP
-    if (src.includes('<') || src === null) {
-    imageContainer.innerHTML += '<p>' + src + '❌</p><img  src="https://assets.tumblr.com/images/media_violation/community_guidelines_v1_500.png" onclick="selectImage(this);">';
-    } else if (src.includes('mp4')) {
-    var type = 'video/mp4';
-    var imgHTML = '<video src="' + src + '" onclick="selectImage(this);" ' + (type ? 'type="' + type + '"' : '') + '></video>';
-    imageContainer.innerHTML += imgHTML;
-    } else {
-    var type = src.slice(-4) === 'webp' ? 'image/webp' : '';
-    var imgHTML = '<img src="' + src + '" onclick="selectImage(this);" ' + (type ? 'type="' + type + '"' : '') + '>';
-    imageContainer.innerHTML += imgHTML;}
-  }
-  document.getElementById('linkInput').style.display = 'none';
-  document.getElementById('okButton').style.display = 'none';
-  document.getElementById('resetButton').style.display = 'block';
-  imageContainer.style.display = 'block';
+      document.getElementById('okButton').addEventListener('click', function() {
+        var links = document.getElementById('linkInput').value.split('\n');
+        var imageContainer = document.getElementById('imageContainer');
+        for (var i = 0; i < links.length; i++) {
+          var src = links[i].slice(1, -2); // Remove as aspas simples e a vírgula
+          // Verifique se a imagem é WebP
+          if (src.includes('<') || src === null) {
+            imageContainer.innerHTML += '<p>' + src + '❌</p><img  src="https://assets.tumblr.com/images/media_violation/community_guidelines_v1_500.png" onclick="selectImage(this);">';
+          } else if (src.includes('mp4')) {
+            var type = 'video/mp4';
+            var imgHTML = '<video src="' + src + '" onclick="selectImage(this);" ' + (type ? 'type="' + type + '"' : '') + '></video>';
+            imageContainer.innerHTML += imgHTML;
+          } else {
+            var imgHTML = '<img src="' + src + '" onclick="selectImage(this);">';
+            imageContainer.innerHTML += imgHTML;
+          }
+        }
+        document.getElementById('linkInput').style.display = 'none';
+        document.getElementById('okButton').style.display = 'none';
+        document.getElementById('resetButton').style.display = 'block';
+        imageContainer.style.display = 'block';
+      });
+
+      document.getElementById('resetButton').addEventListener('click', function() {
+        location.reload();
+      });
+
+      document.getElementById('deleteButton').addEventListener('click', function() {
+    if (selectedImage !== null) {
+        selectedImage.classList.remove('selected');
+        selectedImage.remove();
+        selectedImage = null;
+        updateLinkOutput();
+        document.getElementById('deleteButton').style.display = 'none';
+    }
 });
 
-document.getElementById('resetButton').addEventListener('click', function() {
-  location.reload();
-});
-
-
-    function selectImage(img) {
-      if (selectedImage === null) {
+      function selectImage(img) {
+    if (selectedImage === null) {
         selectedImage = img;
-      } else {
+        img.classList.add('selected');
+        document.getElementById('deleteButton').style.display = 'block';
+    } else {
         var tempSrc = selectedImage.src;
         selectedImage.src = img.src;
         img.src = tempSrc;
+        selectedImage.classList.remove('selected');
         selectedImage = null;
         updateLinkOutput();
-      }
     }
+}
 
-    function updateLinkOutput() {
-      var images = document.getElementById('imageContainer').getElementsByTagName('img');
-      var links = [];
-      for (var i = 0; i < images.length; i++) {
-        links.push("'" + images[i].src + "',"); // Adicione as aspas simples e a vírgula
+      function updateLinkOutput() {
+        var images = document.getElementById('imageContainer').getElementsByTagName('img');
+        var links = [];
+        for (var i = 0; i < images.length; i++) {
+          links.push("'" + images[i].src + "',"); // Adicione as aspas simples e a vírgula
+        }
+        document.getElementById('linkOutput').value = links.join('\n');
       }
-      document.getElementById('linkOutput').value = links.join('\n');
-    }
-  </script>
-</body>
+
+    </script>
+  </body>
+
 </html>
