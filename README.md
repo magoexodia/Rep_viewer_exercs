@@ -9,10 +9,10 @@
 <h1>
 🔤
 </h1>
-<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html">links_viewer.html</a></h3>
+<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/z-teste-tabs.html">z-teste-tabs.html</a></h3>
 <li> Um misto de todos, mas com visualização dos links abaixo.
 <li> A mix of all those files with buttons to cicle between them. 
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html">links_viewer.html</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/z-teste-tabs.html">z-teste-tabs.html</a>
 
 
 
@@ -27,11 +27,6 @@
 📷&🎥
 </h1>
 
-
-<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visuarificador.html">visuarificador.html</a></h3>
-<li> Aqui você pode listar todas suas imagens e iterar sobre elas. E ver videos mp4. (somente links web)
-<li> To view all you images from a list of links. And mp4 videos too. 
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/visuarificador.html">visuarificador.html</a>
 
 <h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html">offline_image_loader.html</a></h3>
 <li>Um simples visualizador que carrega arquivos offline de imagens pra visualizar no navegador</li>
