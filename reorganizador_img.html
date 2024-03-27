@@ -38,17 +38,18 @@
       video {
         object-fit: contain;
         width: auto;
-        height: calc(15vh + 15vw);
-				margin: 3px;
-				padding: 3px;
+        height: calc(60% + 2vw);
+        margin: 3px;
+        padding: 3px;
       }
 
       #div1 {
         display: flex;
         flex-direction: row;
-        height: 78vh;
+        height: calc(80vh);
+        min-height: 50vh;
         overflow: scroll;
-				background: lightgray;
+        background: lightgray;
       }
 
       #div1,
@@ -67,9 +68,11 @@
         top: 0;
         left: 10px;
       }
-			.selected {
-    border: 2px solid red; /* Por exemplo, você pode adicionar uma borda vermelha */
-}
+
+      .selected {
+        border: 2px solid red;
+        /* Por exemplo, você pode adicionar uma borda vermelha */
+      }
 
     </style>
   </head>
@@ -86,35 +89,36 @@
       <button id="okButton">✔️</button>
       <div id="imageContainer"></div>
       <button id="resetButton" style="display: none;">🔙</button>
-      <button id="deleteButton" style="display: none; top: 3ch">🗑️</button>
+      <button id="deleteButton" style="display: none; top: 30vh;">🗑️</button>
     </div>
     <div id="div2">
       <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
     </div>
     <script>
-      var selectedImage = null;
+      var selectedElement = null;
+      var allLines = [];
 
       document.getElementById('okButton').addEventListener('click', function() {
-        var links = document.getElementById('linkInput').value.split('\n');
+        allLines = document.getElementById('linkInput').value.split('\n');
         var imageContainer = document.getElementById('imageContainer');
-        for (var i = 0; i < links.length; i++) {
-          var src = links[i].slice(1, -2); // Remove as aspas simples e a vírgula
-          // Verifique se a imagem é WebP
-          if (src.includes('<') || src === null) {
-            imageContainer.innerHTML += '<p>' + src + '❌</p><img  src="https://assets.tumblr.com/images/media_violation/community_guidelines_v1_500.png" onclick="selectImage(this);">';
+        for (var i = 0; i < allLines.length; i++) {
+          var src = allLines[i].trim();
+          if (src.includes('<') || src.includes('=')) {
+            imageContainer.innerHTML += src + '<br><img style="height: 10vh;" src="https://64.media.tumblr.com/66d1e195b83e8afdbdcd17014d1d1e66/tumblr_owm69zzYPz1r187pho4_400.gifv" onclick="selectElement(this);">';
           } else if (src.includes('mp4')) {
             var type = 'video/mp4';
-            var imgHTML = '<video src="' + src + '" onclick="selectImage(this);" ' + (type ? 'type="' + type + '"' : '') + '></video>';
-            imageContainer.innerHTML += imgHTML;
-          } else {
-            var imgHTML = '<img src="' + src + '" onclick="selectImage(this);">';
-            imageContainer.innerHTML += imgHTML;
+            var elementHTML = '<video src="' + src.slice(1, -2) + '" onclick="selectElement(this);" ' + (type ? 'type="' + type + '"' : '') + '></video>';
+            imageContainer.innerHTML += elementHTML;
+          } else if (src.includes('%') || src.includes('*') || src === null) {} else {
+            var elementHTML = '<img src="' + src.slice(1, -2) + '" onclick="selectElement(this);">';
+            imageContainer.innerHTML += elementHTML;
           }
         }
         document.getElementById('linkInput').style.display = 'none';
         document.getElementById('okButton').style.display = 'none';
         document.getElementById('resetButton').style.display = 'block';
         imageContainer.style.display = 'block';
+        updateLinkOutput();
       });
 
       document.getElementById('resetButton').addEventListener('click', function() {
@@ -122,40 +126,57 @@
       });
 
       document.getElementById('deleteButton').addEventListener('click', function() {
-    if (selectedImage !== null) {
-        selectedImage.classList.remove('selected');
-        selectedImage.remove();
-        selectedImage = null;
-        updateLinkOutput();
-        document.getElementById('deleteButton').style.display = 'none';
-    }
-});
+        if (selectedElement !== null) {
+          selectedElement.classList.remove('selected');
+          selectedElement.remove();
+          selectedElement = null;
+          updateLinkOutput();
+          document.getElementById('deleteButton').style.display = 'none';
+        }
+      });
 
-      function selectImage(img) {
-    if (selectedImage === null) {
-        selectedImage = img;
-        img.classList.add('selected');
-        document.getElementById('deleteButton').style.display = 'block';
-    } else {
-        var tempSrc = selectedImage.src;
-        selectedImage.src = img.src;
-        img.src = tempSrc;
-        selectedImage.classList.remove('selected');
-        selectedImage = null;
-        updateLinkOutput();
-    }
-}
+      function selectElement(element) {
+        if (selectedElement === null) {
+          selectedElement = element;
+          element.classList.add('selected');
+          document.getElementById('deleteButton').style.display = 'block';
+        } else {
+          if (selectedElement.tagName === element.tagName) {
+            // Se os elementos são do mesmo tipo, troque suas fontes
+            var tempSrc = selectedElement.src;
+            selectedElement.src = element.src;
+            element.src = tempSrc;
+          } else {
+            // Se os elementos são de tipos diferentes, troque os próprios elementos
+            var parentElement = selectedElement.parentElement;
+            var nextSibling = selectedElement.nextElementSibling;
+            element.parentElement.insertBefore(selectedElement, element);
+            if (nextSibling) {
+              parentElement.insertBefore(element, nextSibling);
+            } else {
+              parentElement.appendChild(element);
+            }
+          }
+          selectedElement.classList.remove('selected');
+          selectedElement = null;
+          updateLinkOutput();
+        }
+      }
 
       function updateLinkOutput() {
-        var images = document.getElementById('imageContainer').getElementsByTagName('img');
+        var elements = document.getElementById('imageContainer').getElementsByTagName('*');
         var links = [];
-        for (var i = 0; i < images.length; i++) {
-          links.push("'" + images[i].src + "',"); // Adicione as aspas simples e a vírgula
+        for (var i = 0; i < elements.length; i++) {
+          if (elements[i].src) {
+            links.push("'" + elements[i].src + "',"); // Adicione as aspas simples e a vírgula
+          }
         }
         document.getElementById('linkOutput').value = links.join('\n');
       }
 
     </script>
+
+
   </body>
 
 </html>
