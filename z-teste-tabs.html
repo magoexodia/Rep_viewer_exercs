@@ -1,107 +1,190 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        body, html {
-    height: calc(100vh - 1em);
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-.tab {
-    display: none;
-    height: 3ch;
-}
-.tab:checked + label {
-    background: #ccccccB3;
-    width: auto; /* Full width when selected */
-}
-.tab:not(:checked) + label {
-    height: 1ch; width: 1em; /* Limited width when not selected */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Add ellipsis when the text is too long */
-}
-.tab:checked + label + .content {
-    display: block;
-}
-.content {
-    display: none;
-    position: absolute;
-    top:4em; /* Adjust based on the height of your labels */
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    height: 90vh; /* iframe takes 90% of the visible area */
-}
-#tabs {
-    position: relative;
-    padding-top: 40px;
-}
-label {
-    display: inline-block;
-    padding: 10px;
-    background: #ddd;
-    cursor: pointer;
-}
-iframe {
-    width: 100%;
-    height: 90%;
-    border: none;
-}
 
-    </style>
-</head>
-<body>
-    <div id="tabs">
-        <!-- Tabs will be inserted here -->
-    </div>
+    <head>
+        <style>
+            body,
+            html {
+                height: calc(100vh - 1ch);
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
 
-    <script>
-        var urls = [
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html",
-            "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html"
-        ];
+            :root {
+                --bgimg: url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
+                --bgcolor: rgba(0, 0, 0, 0.164);
+                --bgprev: rgba(255, 255, 255, 0.35);
+            }
 
-        function createTab(id, checked) {
-            var tab = document.createElement('input');
-            tab.type = 'radio';
-            tab.id = id;
-            tab.name = 'tab-control';
-            tab.className = 'tab';
-            if (checked) tab.checked = true;
-            return tab;
-        }
+            body {
+                font-family: 'Lucida Sans', sans-serif;
+                font-size: calc(1vmin / 2vmax);
+                background: var(--bgcolor);
+                background-image: var(--bgimg);
+                background-size: no-repeat center center fixed;
+                cursor: crosshair;
+            }
 
-        function createLabel(forId, text) {
-            var label = document.createElement('label');
-            label.htmlFor = forId;
-            label.textContent = text;
-            return label;
-        }
+            .tab {
+                display: none;
+            }
 
-        function createContent(url) {
-            var content = document.createElement('div');
-            content.className = 'content';
-            var iframe = document.createElement('iframe');
-            iframe.src = url;
-            content.appendChild(iframe);
-            return content;
-        }
+            .tab:checked+label {
+                background: purple;
+                color: white;
+                width: auto;
+                /* Full width when selected */
+                opacity: 1;
+                border-radius: 1ch;
+            }
 
-        var tabsDiv = document.getElementById('tabs');
-        for (var i = 0; i < urls.length; i++) {
-            var tabId = 'tab' + (i + 1);
-            tabsDiv.appendChild(createTab(tabId, i === 0));
-            tabsDiv.appendChild(createLabel(tabId, 'Tab ' + (i + 1)));
-            tabsDiv.appendChild(createContent(urls[i]));
-        }
-    </script>
-</body>
+            .tab:not(:checked)+label {
+                height: 1ch;
+                width: 1em;
+                /* Limited width when not selected */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                /* Add ellipsis when the text is too long */
+                background-color: #CCFFAAC5;
+                opacity: 0.5;
+                border: 1px solid #00000065;
+            }
+
+            .tab:checked+label+.content {
+                display: block;
+            }
+
+            .content {
+                display: none;
+                position: absolute;
+                top: 4ch;
+                /* Adjust based on the height of your labels */
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                height: 90vh;
+                /* iframe takes 90% of the visible area */
+                text-shadow: 0 0 2px white, 0 0 5px white;
+                background-color: rgba(255, 255, 255, 0.4);
+            }
+
+            #tabs {
+                position: relative;
+                padding-top: 5px;
+            }
+
+            label {
+                display: inline-block;
+                padding: 10px;
+                background: #ddd;
+                cursor: pointer;
+            }
+
+            iframe {
+                padding-top: 2ch;
+                width: 100%;
+                height: 90%;
+                padding: 5px;
+                border: none;
+            }
+
+            #entrada label {
+                background-color: #0b07;
+            }
+
+            #entrada button {
+                background-color: #fff;
+            }
+
+            #entrada * {
+                width: fit-content;
+                font-size: 1.2em;
+                border-radius: 1ch;
+            }
+
+            #entrada,
+            #entrada * {
+                text-shadow: 0 0 2px black, 0 0 5px black;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="entrada">
+            <label for="links" id="links-label">🔗
+                <input type="text" placeholder="🔗,🔗,🔗," id="links" onclick="this.select()">
+                <button id="links-add" onclick="addLinks()" title="🆗">➕</button><button id="links-pad" onclick="enche_links()" title="links pré-definidos">☑️</button></label>
+        </div>
+        <div id="tabs">
+            <!-- Tabs will be inserted here -->
+        </div>
+
+        <script>
+            var urls = ["https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md"];
+
+            function enche_links() {
+                document.getElementById('links').value = [
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html",
+                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html"
+                ].join();
+            }
+
+            function createTab(id, checked) {
+                var tab = document.createElement('input');
+                tab.type = 'radio';
+                tab.id = id;
+                tab.name = 'tab-control';
+                tab.className = 'tab';
+                if (checked) tab.checked = true;
+                return tab;
+            }
+
+            function createLabel(forId, text) {
+                var label = document.createElement('label');
+                label.htmlFor = forId;
+                label.textContent = text;
+                return label;
+            }
+
+            function createContent(url) {
+                var content = document.createElement('div');
+                content.className = 'content';
+                var iframe = document.createElement('iframe');
+                iframe.src = url;
+                content.appendChild(iframe);
+                return content;
+            }
+
+            function addLinks() {
+                document.getElementById('tabs').innerHTML = '';
+                urls = document.getElementById('links').value.replace(/['"\s]/g, '').split(',');
+                tabiniza();
+                document.getElementById('entrada').style.display = 'none';
+                //document.getElementById('tabs').innerHTML = urls;
+            }
+
+            function tabiniza() {
+                var tabsDiv = document.getElementById('tabs');
+                for (var i = 0; i < urls.length; i++) {
+                    var tabId = 'tab' + (i + 1);
+                    tabsDiv.appendChild(createTab(tabId, i === 0));
+                    tabsDiv.appendChild(createLabel(tabId, urls[i].split('/')[urls[i].split('/').length - 1].substr(0, 16)));
+                    tabsDiv.appendChild(createContent(urls[i]));
+                }
+            }
+            
+            tabiniza();
+
+        </script>
+    </body>
+
 </html>
