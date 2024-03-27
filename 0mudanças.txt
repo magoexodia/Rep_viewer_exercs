@@ -1,8 +1,0 @@
-unir:
-video_viewer.html com visuarificadoor.html
-
-limpador de arquivos
-com
-texto_2_links
-
-repetecos e rep2counter
