@@ -1,6 +1,9 @@
+<html>
+
+<body>
 # Rep_viewer_exercs
 
-<div style="text-shadow: 0 0 2px white, 0 0 5px white, 0 2px 6px white; background: rgba(0, 100, 0, 0.5);">
+<div style="text-shadow: 0 0 2px white, 0 0 5px white, 0 2px 6px white; background: rgba(120, 120, 120, 0.5);">
 
     <h2>O que é?<br> What it is?</h2>
     <li>Só pra mostrar pra um amigo que sei que está curioso. <ul> Espero que gostem, eu gostei resultado... que ainda não é final.</ul>
@@ -34,6 +37,8 @@
             </h1>
 
 
+            
+						
 
             <h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html">offline_image_loader.html</a></h3>
         <li>Um simples visualizador que carrega arquivos offline de imagens pra visualizar no navegador</li>
@@ -84,3 +89,5 @@
 
 
 </div>
+</body>
+</html>
