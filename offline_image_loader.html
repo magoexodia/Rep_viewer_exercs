@@ -76,7 +76,6 @@
 
       #p2 {
         font-size: calc(4vh);
-	z-index: -99;
       }
     }
 
@@ -343,7 +342,7 @@
         top: 0;
         width: 100%;
         overflow: auto;
-				font-size: 1ch;
+	font-size: 1ch;
       }
     }
 
@@ -482,6 +481,7 @@
       let a = document.getElementById("anterior"),
         p = document.getElementById("proximo"),
         v = document.getElementById("div-viewer");
+	t = document.getElementById("troca");
 
       a.addEventListener("click", function() {
         i = (i - t < 0) ? imgs.length - t : i - t;
@@ -497,6 +497,7 @@
       document.addEventListener("keydown", function(e) {
         if (e.key === "ArrowLeft") a.click();
         else if (e.key === "ArrowRight") p.click();
+        else if (e.key === "t" || e.key === "T") t.click();
       });
 
       function aV() {
