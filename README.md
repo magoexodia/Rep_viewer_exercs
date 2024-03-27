@@ -34,11 +34,11 @@
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html">offline_image_loader.html</a>
 </p>
 
-<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html">reorganizador_img.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_vds.html">reorganizador_vds.html</a></h3>
+<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html">reorganizador_img.html</a></h3>
 <li> Reorganização de images, clica no 🖼️1 depois na 🖼️2 daí troca.
 <li> To re-order image files. First click the 🖼️1 then click in 🖼️ you want change position with.
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html">reorganizador_img.html</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_vds.html">reorganizador_vds.html</a>
+
 
 <h1>
 🔢
