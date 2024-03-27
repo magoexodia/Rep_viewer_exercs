@@ -64,10 +64,7 @@
                 left: 0;
                 right: 0;
                 z-index: 1;
-                height: calc(99vh - 2ch);
                 /* iframe takes 90% of the visible area */
-                text-shadow: 0 0 2px white, 0 0 5px white;
-                background-color: rgba(255, 255, 255, 0.4);
             }
 
             #tabs {
@@ -83,9 +80,11 @@
             }
 
             iframe {
+                height: calc(99vh - 2ch);
+                text-shadow: 0 0 2px white, 0 0 5px white;
+                background-color: rgba(255, 255, 255, 0.4);
                 padding-top: 2ch;
                 width: 100%;
-                height: calc(85vh - 2ch);
                 padding: 5px;
                 border: none;
             }
