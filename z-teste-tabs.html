@@ -1,190 +1,201 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <style>
-            body,
-            html {
-                height: calc(100vh - 1ch);
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-            }
+  <head>
+    <style>
+      body,
+      html {
+        height: calc(100vh);
+        margin: 0;
+        padding: 0;
+      }
 
-            :root {
-                --bgimg: url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
-                --bgcolor: rgba(0, 0, 0, 0.164);
-                --bgprev: rgba(255, 255, 255, 0.35);
-            }
+      :root {
+        --bgimg: url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
+        --bgcolor: rgba(0, 0, 0, 0.164);
+        --bgprev: rgba(255, 255, 255, 0.35);
+      }
 
-            body {
-                font-family: 'Lucida Sans', sans-serif;
-                font-size: calc(1vmin / 2vmax);
-                background: var(--bgcolor);
-                background-image: var(--bgimg);
-                background-size: no-repeat center center fixed;
-                cursor: crosshair;
-            }
+      body {
+        font-family: 'Lucida Sans', sans-serif;
+        font-size: 40px;
+        background: var(--bgcolor);
+        background-image: var(--bgimg);
+        background-size: no-repeat center center fixed;
+        cursor: crosshair;
+      }
 
-            .tab {
-                display: none;
-            }
+      .tab {
+        display: none;
+        overflow-y: scroll;
+      }
 
-            .tab:checked+label {
-                background: purple;
-                color: white;
-                width: auto;
-                /* Full width when selected */
-                opacity: 1;
-                border-radius: 1ch;
-            }
+      .tab:checked+label {
+        background: purple;
+        color: white;
+        width: 60px;
+        /* Full width when selected */
+        opacity: 1;
+        border-radius: 1ch;
+        text-transform: uppercase;
+        z-index: -1;
+      }
 
-            .tab:not(:checked)+label {
-                height: 1ch;
-                width: 3ch;
-                /* Limited width when not selected */
-                overflow: hidden;
-                text-overflow: ellipsis;
-                /* Add ellipsis when the text is too long */
-                background-color: #CCFFAAC5;
-                opacity: 0.5;
-                border: 1px solid #00000065;
-                font-size: calc(1vh + 1vw);
-            }
+      .tab:not(:checked)+label {
+        width: 40px;
+        /* Limited width when not selected */
+        overflow: hidden;
+        text-overflow: clip;
+        /* Add ellipsis when the text is too long */
+        background-color: #CCFFAAC5;
+        opacity: 0.5;
+        border: 1px solid #00000065;
+      }
 
-            .tab:checked+label+.content {
-                display: block;
-            }
+      .tab:checked+label+.content {
+        display: block;
+      }
 
-            .content {
-                display: none;
-                position: absolute;
-                top: 4ch;
-                /* Adjust based on the height of your labels */
-                bottom: 0;
-                left: 0;
-                right: 0;
-                z-index: 1;
-                /* iframe takes 90% of the visible area */
-            }
+      #tabs {
+        position: relative;
+        padding-top: 5px;
+        white-space: nowrap;
+      }
 
-            #tabs {
-                position: relative;
-                padding-top: 5px;
-            }
+      label {
+        display: inline-block;
+        padding: 10px;
+        background: #ddd;
+        cursor: pointer;
+      }
 
-            label {
-                display: inline-block;
-                padding: 10px;
-                background: #ddd;
-                cursor: pointer;
-            }
+      .content {
+        display: none;
+        position: absolute;
+        top: 4ch;
+        /* Adjust based on the height of your labels */
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        /* iframe takes 90% of the visible area */
+      }
 
-            iframe {
-                height: calc(99vh - 2ch);
-                text-shadow: 0 0 2px white, 0 0 5px white;
-                background-color: rgba(255, 255, 255, 0.4);
-                padding-top: 2ch;
-                width: 100%;
-                padding: 5px;
-                border: none;
-            }
+      iframe {
+        height: calc(90vh - 50px);
+        text-shadow: 0 0 2px white, 0 0 5px white;
+        background-color: rgba(255, 255, 255, 0.4);
+        padding-top: -2ch;
+        width: calc(100% - 16px);
+        padding: 5px;
+        border: none;
+        margin: 3px;
+      }
+      
+      #entrada { display: block; position: fixed; top: 0; left: 0; right: 0; margin: auto; z-index: 1;}
 
-            #entrada label {
-                background-color: #0b07;
-            }
+      #entrada label {
+        background-color: #0b07;
+        font-size: 35px;
+      }
 
-            #entrada button {
-                background-color: #fff;
-            }
+      #entrada button {
+        background-color: #fff;
+        margin-left: 6px;
+      }
 
-            #entrada * {
-                width: fit-content;
-                font-size: 1.2em;
-                border-radius: 1ch;
-            }
+      #entrada * {
+        width: fit-content;
+        font-size: 1.2em;
+        border-radius: 1ch;
+      }
 
-            #entrada,
-            #entrada * {
-                text-shadow: 0 0 2px black, 0 0 5px black;
-            }
+      #entrada,
+      #entrada * {
+        text-shadow: 0 0 2px black, 0 0 5px black;
+      }
 
-        </style>
-    </head>
+      #links {
+        width: 50vw;
+        min-width: 6ch;
+      }
 
-    <body>
-        <div id="entrada">
-            <label for="links" id="links-label">🔗
-                <input type="text" placeholder="🔗,🔗,🔗," id="links" onclick="this.select()">
-                <button id="links-add" onclick="addLinks()" title="🆗">➕</button><button id="links-pad" onclick="enche_links()" title="links pré-definidos">☑️</button></label>
-        </div>
-        <div id="tabs">
-            <!-- Tabs will be inserted here -->
-        </div>
+    </style>
+  </head>
 
-        <script>
-            var urls = ["https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md"];
+  <body>
+    <div id="entrada">
+      <label for="links" id="links-label">🔗
+        <input type="text" placeholder="🔗,🔗,🔗," id="links" onclick="this.select()">
+        <button id="links-add" onclick="addLinks()" title="🆗">➕</button><button id="links-pad" onclick="enche_links()" title="links pré-definidos">☑️</button></label>
+    </div>
+    <div id="tabs">
+      <!-- Tabs will be inserted here -->
+    </div>
 
-            function enche_links() {
-                document.getElementById('links').value = [
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html",
-                    "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html"
-                ].join();
-            }
+    <script>
+      var urls = ["https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md"];
 
-            function createTab(id, checked) {
-                var tab = document.createElement('input');
-                tab.type = 'radio';
-                tab.id = id;
-                tab.name = 'tab-control';
-                tab.className = 'tab';
-                if (checked) tab.checked = true;
-                return tab;
-            }
+      function enche_links() {
+        document.getElementById('links').value = [
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html"
+        ].join();
+      }
 
-            function createLabel(forId, text) {
-                var label = document.createElement('label');
-                label.htmlFor = forId;
-                label.textContent = text;
-                return label;
-            }
+      function createTab(id, checked) {
+        var tab = document.createElement('input');
+        tab.type = 'radio';
+        tab.id = id;
+        tab.name = 'tab-control';
+        tab.className = 'tab';
+        if (checked) tab.checked = true;
+        return tab;
+      }
 
-            function createContent(url) {
-                var content = document.createElement('div');
-                content.className = 'content';
-                var iframe = document.createElement('iframe');
-                iframe.src = url;
-                content.appendChild(iframe);
-                return content;
-            }
+      function createLabel(forId, text) {
+        var label = document.createElement('label');
+        label.htmlFor = forId;
+        label.textContent = text;
+        return label;
+      }
 
-            function addLinks() {
-                document.getElementById('tabs').innerHTML = '';
-                urls = document.getElementById('links').value.replace(/['"\s]/g, '').split(',');
-                tabiniza();
-                document.getElementById('entrada').style.display = 'none';
-                //document.getElementById('tabs').innerHTML = urls;
-            }
+      function createContent(url) {
+        var content = document.createElement('div');
+        content.className = 'content';
+        var iframe = document.createElement('iframe');
+        iframe.src = url;
+        content.appendChild(iframe);
+        return content;
+      }
 
-            function tabiniza() {
-                var tabsDiv = document.getElementById('tabs');
-                for (var i = 0; i < urls.length; i++) {
-                    var tabId = 'tab' + (i + 1);
-                    tabsDiv.appendChild(createTab(tabId, i === 0));
-                    tabsDiv.appendChild(createLabel(tabId, urls[i].split('/')[urls[i].split('/').length - 1].substr(0, 16)));
-                    tabsDiv.appendChild(createContent(urls[i]));
-                }
-            }
-            
-            tabiniza();
+      function addLinks() {
+        document.getElementById('tabs').innerHTML = '';
+        urls = document.getElementById('links').value.replace(/['"\s]/g, '').split(',');
+        tabiniza();
+        document.getElementById('entrada').style.display = 'none';
+        //document.getElementById('tabs').innerHTML = urls;
+      }
 
-        </script>
-    </body>
+      function tabiniza() {
+        var tabsDiv = document.getElementById('tabs');
+        for (var i = 0; i < urls.length; i++) {
+          var tabId = 'tab' + (i + 1);
+          tabsDiv.appendChild(createTab(tabId, i === 0));
+          tabsDiv.appendChild(createLabel(tabId, urls[i].split('/')[urls[i].split('/').length - 1].substr(0, 16)));
+          tabsDiv.appendChild(createContent(urls[i]));
+        }
+      }
+
+      tabiniza();
+
+    </script>
+  </body>
 
 </html>
