@@ -14,7 +14,8 @@
     body {
       background: var(--bgcolor);
       background-image: var(--bgimage2);
-      font-size: calc(2vmax + 1vw);
+			height: calc(100vh - 3ch);
+			width: calc(100vw - 3ch);
       --subt: 1ch;
     }
 
@@ -83,23 +84,58 @@
     .some {
       display: none;
     }
+		#p1:not(.some) {width: fit-content; height: fit-content; display: block; position: fixed; left: 0; right: 0; top: 0; bottom: 0; margin: auto;}
+#p1 * {font-size: 40px; display: flex; flex-direction: row; justify-content: center; align-items: center;}
+#p1 input, #file-label, #vai {border-radius: 1ch; border: 2px solid #000000A6;}
+#p1 label {text-shadow: 0 0 3px white, 0 0 6px white, 0 0 1.5ch white;}
+#quanto-label, #link-label {border: 2px solid purple; background-color: gray; border-radius: 1ch;}
+#quanto {width: 7ch; text-align: right;}
+#links {width: 15ch;}
+#p1 button, #file-label {background-color: lightgreen; margin-right: 1ch;}
+
+img, video {object-fit: contain;}
+
+#p2 * {font-size: 30px; background-color: gray;  text-shadow: 0 0 3px white, 0 0 6px white, 0 0 1.5ch white; border-radius: 1ch;}
+.lista:not(.some) {height: calc(99vh - 3ch); width: calc(20vw - 1ch);}
+#p2 button, #quanto-label {filter: hue-rotate(60deg);}
+#im-container {height: fit-content; width: 100%;}
+#div-viewer:not(.some) { height: calc(100vh - 60px );  width: 80vw;  position: fixed; left: 0; top: 50px; margin: 2px;}
+.lista {overflow-y: scroll; overflow-x: hidden; position: fixed; right: 0; top: 40px; margin: 3px;}
+.lista img {height: auto;  width: 100%;}
+#viewer {height: 100%;  width: 100%; background-color: #00000045}
+
+
+#vd-container:not(.some) {display: flex; flex-direction: column;width: calc(100vw - 1.5ch); height: 90vh; }
+#videos button {font-size: 25px; height: fit-content; margin: 3px;}
+#videos:not(.some) {display:flex; flex-direction: row;  height: 75px; width: 100%; overflow-y: hidden; overflow-x: scroll;}
+#vd-container video {height: 90%;  width: calc(100%); object-fit: contain;}
+
+@media screen and (orientation: portrait){
+		#div-viewer:not(.some) { height: calc(80vh - 70px); width: 100%; position: relative;}
+		.lista:not(.some) {height: 10vh; width: 100%; position: relative; padding-top: 15px;}
+		.lista img {height: 100%; width: auto;}
+		#vd-container:not(.some) {display: flex; flex-direction: row;width: calc(100vw - 1.5ch); height: 90vh; }
+#videos button {height: fit-content; font-size: 25px; width: 7ch;}
+#videos:not(.some) { height: calc(100vh - 70px ); width: 11ch; margin: 3px; overflow-y: scroll; overflow-x: hidden; display:flex; flex-direction: column;}
+#vd-container video {height: 100%;  width: calc(100% - 10ch); object-fit: contain;}
+
+}
 
 
   </style>
   <body>
     <div id="im-container">
       <div id="p1">
-        <h1>🖼️📼📺🎆🎨🎭</h1>
-        <label id="quanto-label">🔢
-          <input type="number" id="quanto" min=2 value=10></label>
-        <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;"><br>
-        <label for="file-input" id="file-label">📂</label><br>
-        <label for="file-input" id="link-label">🔗
-          <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,"></label>
-        <button onclick="start()" id="vai">➕</button><br>
+        <label id="quanto-label" for="quanto">🔢
+          <input type="number" id="quanto" min=2 value=10></label><br>
+        <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;">
+        <label for="links" id="link-label">🔗
+          <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,"></label><br>
+        <div id="butoes"><button onclick="start()" id="vai">➕</button>
+				<label for="file-input" id="file-label">📂</label></div>
       </div>
       <div id="p2" class="some">
-        <button onclick="aV()" id="troca">🎥↔️📷</button>
+        <button onclick="aV()" id="troca">💱</button>
         <button id="anterior">🔙</button>
         <button id="proximo">🔜</button>
         <button onclick="reseta()" id="reseta">🔁</button>
