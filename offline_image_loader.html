@@ -8,104 +8,15 @@
   <style>
     :root {
       --bgcolor: #f5f3f8;
-
-      --corAnterior: rgba(255, 129, 129, 0.836);
       --bgimage2: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ba00ff' fill-opacity='0.29'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
     body {
       background: var(--bgcolor);
       background-image: var(--bgimage2);
-      font-size: calc(2vmax + 1vw);
+			height: calc(100vh - 3ch);
+			width: calc(100vw - 3ch);
       --subt: 1ch;
-    }
-
-    img,
-    video {
-      object-fit: contain;
-    }
-
-    #im-container,
-    #vd-container {
-      width: 100%;
-    }
-
-    #im-container {
-      height: fit-content;
-    }
-
-    #vd-container {
-      height: calc(90vh - var(--subt));
-    }
-
-    #p2,
-    .lista,
-    #div-viewer {
-      width: 100%;
-    }
-
-    #p1,
-    #p2 {
-      height: fit-content;
-      width: fit-content;
-    }
-
-    #div-viewer {
-      height: calc(76.2svh - var(--subt));
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-
-    @media (max-aspect-ratio: 1/1) and (min-width: 500px) {
-      #p1 {
-        font-size: calc(2.5vh + 2vw);
-      }
-
-      #p2 {
-        font-size: calc(4vw);
-      }
-    }
-
-    @media (min-aspect-ratio: 1/1) {
-      #p1 {
-        font-size: calc(5.5vh);
-      }
-
-      #p2 {
-        font-size: calc(4vh);
-      }
-    }
-
-    button,
-    input[type=text],
-    input[type=number],
-    input[type=file] {
-      font-size: var(--tam);
-    }
-
-    input[type=number] {
-      width: 3ch;
-      text-align: center;
-    }
-
-    input[type=text] {
-      width: 10ch;
-    }
-
-    .lista {
-      width: 100%;
-      height: 15vh;
-      display: flex;
-      overflow-y: none;
-      overflow-x: scroll;
-    }
-
-    .lista img {
-      height: 100%;
-      width: auto;
     }
 
     .grande {
@@ -170,197 +81,61 @@
       transform: translate(-50%, -50%);
     }
 
-    .lista img:hover {
-      opacity: 1;
-    }
-
-    .lista img:not(:hover) {
-      opacity: 0.7;
-    }
-
-    #vd-container:not(.some) {
-      display: flex;
-    }
-
     .some {
       display: none;
     }
+		#p1:not(.some) {width: fit-content; height: fit-content; display: block; position: fixed; left: 0; right: 0; top: 0; bottom: 0; margin: auto;}
+#p1 * {font-size: 40px; display: flex; flex-direction: row; justify-content: center; align-items: center;}
+#p1 input, #file-label, #vai {border-radius: 1ch; border: 2px solid #000000A6;}
+#p1 label {text-shadow: 0 0 3px white, 0 0 6px white, 0 0 1.5ch white;}
+#quanto-label, #link-label {border: 2px solid purple; background-color: gray; border-radius: 1ch;}
+#quanto {width: 7ch; text-align: right;}
+#links {width: 15ch;}
+#p1 button, #file-label {background-color: lightgreen; margin-right: 1ch;}
 
-    #imgGrande {
-      background: rgba(0, 0, 0, 0.8);
-    }
+img, video {object-fit: contain;}
 
-    #videoPlayer {
-      height: 99%;
-    }
+#p2 * {font-size: 30px; background-color: gray;  text-shadow: 0 0 3px white, 0 0 6px white, 0 0 1.5ch white; border-radius: 1ch;}
+.lista:not(.some) {height: calc(99vh - 3ch); width: calc(20vw - 1ch);}
+#p2 button, #quanto-label {filter: hue-rotate(60deg);}
+#im-container {height: fit-content; width: 100%;}
+#div-viewer:not(.some) { height: calc(100vh - 60px );  width: 80vw;  position: fixed; left: 0; top: 50px; margin: 2px;}
+.lista {overflow-y: scroll; overflow-x: hidden; position: fixed; right: 0; top: 40px; margin: 3px;}
+.lista img {height: auto;  width: 100%;}
+#viewer {height: 100%;  width: 100%; background-color: #00000045}
 
-    #videoPlayer,
-    #videos {
-      width: 80%;
-    }
 
-    #videos {
-      width: 20%;
-      overflow-y: scroll;
-    }
+#vd-container:not(.some) {display: flex; flex-direction: column;width: calc(100vw - 1.5ch); height: 90vh; }
+#videos button {font-size: 25px; height: fit-content; margin: 3px;}
+#videos:not(.some) {display:flex; flex-direction: row;  height: 75px; width: 100%; overflow-y: hidden; overflow-x: scroll;}
+#vd-container video {height: 90%;  width: calc(100%); object-fit: contain;}
 
-    #viewer {
-      background: rgba(0, 0, 0, 0.05);
-    }
+@media screen and (orientation: portrait){
+		#div-viewer:not(.some) { height: calc(80vh - 70px); width: 100%; position: relative;}
+		.lista:not(.some) {height: 10vh; width: 100%; position: relative; padding-top: 15px;}
+		.lista img {height: 100%; width: auto;}
+		#vd-container:not(.some) {display: flex; flex-direction: row;width: calc(100vw - 1.5ch); height: 90vh; }
+#videos button {height: fit-content; font-size: 25px; width: 7ch;}
+#videos:not(.some) { height: calc(100vh - 70px ); width: 11ch; margin: 3px; overflow-y: scroll; overflow-x: hidden; display:flex; flex-direction: column;}
+#vd-container video {height: 100%;  width: calc(100% - 10ch); object-fit: contain;}
 
-    h1 {
-      background: purple;
-      text-shadow: 0 0 1px white, 0 0 3px white, 0 0 5px white, 0 0 0.5ch white;
-      text-align: center;
-    }
+}
 
-    #videos * {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 0.3ch;
-      border: 3px solid #Fc56a7;
-      transition: background-color 1s linear;
-    }
-
-    #videos button:hover,
-    #link-label:hover,
-    #quanto-label:hover {
-      border-radius: 1ch;
-      filter: hue-rotate(75deg);
-      color: white;
-      background: #Fc56a7;
-      transition: background-color 2s ease, filter 3s ease;
-    }
-
-    /* Configurações comuns para vários elementos */
-    #vai,
-    #anterior,
-    #proximo,
-    #reseta,
-    #troca,
-    #quanto-label,
-    #file-label {
-      font-size: 3ch;
-      height: 3ch;
-    }
-
-    #links {
-      font-size: 2ch;
-      height: 2ch;
-      background: rgba(0, 0, 0, 0);
-    }
-
-    #file-label,
-    #vai {
-      background: rgba(60, 255, 100, 0.7);
-      border: 3px solid rgba(0, 255, 255, 0.3);
-      border-radius: 0.7ch;
-    }
-
-    #vai,
-    #links,
-    #quanto-label {
-      text-shadow: 0 0 0.5ch white, 0 0 1ch white;
-      border-radius: 0.5ch;
-      border: 1px solid green;
-    }
-
-    #file-label {
-      text-shadow: 0 0 0.5ch black;
-    }
-
-    #link-label {
-      text-shadow: 0 0 0.5ch black, 0 0 0.8ch white;
-      background: rgba(0, 0, 0, 0.4);
-      font-size: 3ch;
-      border-radius: 1.5ch;
-    }
-
-    #quanto-label {
-      filter: hue-rotate(60deg);
-      transform: scale(1.2);
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    #quanto {
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      height: 2.7ch;
-      background: none;
-      text-shadow: 0 0 2px white, 0 0 0.5ch white;
-      border: none;
-    }
-
-    #anterior,
-    #proximo,
-    #reseta,
-    #troca {
-      background: rgba(0, 0, 0, 0.4);
-      border: 2px solid rgba(0, 0, 0, 0.3);
-      border-radius: 0.7ch;
-      text-shadow: 0 0 1px white, 0 0 0.3ch white, 0 0 0.5ch white, 0 0 1ch white;
-    }
-
-    #reseta {
-      filter: hue-rotate(60deg);
-    }
-
-    @media screen and (orientation: landscape) {
-      #im-container {
-        display: flex;
-        flex-direction: row;
-        padding-top: 2ch;
-        height: calc(100vh - 3ch);
-      }
-
-      #div-viewer,
-      .lista {
-        flex-grow: 1;
-        width: calc(100%);
-        height: calc(100vh - 3ch);
-      }
-
-      #div-viewer {
-        width: calc(80%);
-      }
-
-      .lista {
-        width: calc(20%);
-        overflow-y: scroll;
-        overflow-x: none;
-        flex-direction: column;
-      }
-
-      .lista img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-      }
-
-      #p2 {
-        position: fixed;
-        left: 100px;
-        top: 0;
-        width: 100%;
-        overflow: auto;
-	font-size: 1ch;
-      }
-    }
 
   </style>
   <body>
     <div id="im-container">
       <div id="p1">
-        <h1>🖼️📼📺🎆🎨🎭</h1>
-        <label id="quanto-label">🔢
-          <input type="number" id="quanto" min=2 value=10></label>
-        <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;"><br>
-        <label for="file-input" id="file-label">📂</label><br>
-        <label for="file-input" id="link-label">🔗
-          <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,"></label>
-        <button onclick="start()" id="vai">➕</button><br>
+        <label id="quanto-label" for="quanto">🔢
+          <input type="number" id="quanto" min=2 value=10></label><br>
+        <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;">
+        <label for="links" id="link-label">🔗
+          <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,"></label><br>
+        <div id="butoes"><button onclick="start()" id="vai">➕</button>
+				<label for="file-input" id="file-label">📂</label></div>
       </div>
       <div id="p2" class="some">
-        <button onclick="aV()" id="troca">🎥↔️📷</button>
+        <button onclick="aV()" id="troca">💱</button>
         <button id="anterior">🔙</button>
         <button id="proximo">🔜</button>
         <button onclick="reseta()" id="reseta">🔁</button>
