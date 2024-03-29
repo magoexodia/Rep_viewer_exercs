@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" name="viewport" content="width=device-width>
+    <meta initial-scale=1">
     <title>Teste de tabs</title>
     <style>
       body,
@@ -24,33 +25,43 @@
         background-image: var(--bgimg);
         background-size: no-repeat center center fixed;
         cursor: crosshair;
+				--label_wid: fit-content;
+				--label_hei: 50px;
+				--label_fon: 30px;
       }
 
       .tab {
         display: none;
-        overflow-y: scroll;
       }
 
       .tab:checked+label {
         background: purple;
         color: white;
-        width: 60px;
+        font-size: var(--label_fon);
+        width: var(--label_wid);
+				height: var(--label_hei);
         /* Full width when selected */
-        opacity: 1;
         border-radius: 1ch;
         text-transform: uppercase;
         z-index: -1;
+				writing-mode: vertical-lr;
+				line-height: 0.75ch;
       }
 
       .tab:not(:checked)+label {
-        width: 40px;
+        font-size: var(--label_fon);
+        text-transform: lowercase;
+        border-radius: 0.3ch;
+        width: var(--label_wid);
+				height: var(--label_hei);
         /* Limited width when not selected */
         overflow: hidden;
         text-overflow: clip;
         /* Add ellipsis when the text is too long */
         background-color: #CCFFAAC5;
-        opacity: 0.5;
-        border: 1px solid #00000065;
+        border: 2px solid #00000065;
+				writing-mode: vertical-lr;
+				line-height: 0.75ch;
       }
 
       .tab:checked+label+.content {
@@ -59,15 +70,20 @@
 
       #tabs {
         position: relative;
-        padding-top: 5px;
-        white-space: nowrap;
+        padding-top: 3px;
+        white-space: wrap;
       }
 
-      label {
+      #tabs label {
         display: inline-block;
         padding: 10px;
-        background: #ddd;
         cursor: pointer;
+				font-size: calc(1vmin / 2vmax);
+      }
+
+      #entrada label {
+        padding: 10px;
+				font-size: calc(1vmin / 2vmax);
       }
 
       .content {
@@ -83,32 +99,32 @@
       }
 
       iframe {
-        height: calc(90vh - 50px);
+        height: calc(80vh);
+				min-height: 500px;
+        width: calc(100% - 16px);
         text-shadow: 0 0 2px white, 0 0 5px white;
         background-color: rgba(255, 255, 255, 0.4);
         padding-top: -2ch;
-        width: calc(100% - 16px);
         padding: 5px;
         border: none;
         margin: 3px;
       }
       
-      #entrada { display: block; position: fixed; top: 0; left: 0; right: 0; margin: auto; z-index: 1;}
+      #entrada { display: block; position: fixed; top: 0; left: 0; right: 0; margin: auto; z-index: 1; width: fit-content;}
 
       #entrada label {
-        background-color: #0b07;
-        font-size: 35px;
+        background-color: #0b0f;
       }
 
       #entrada button {
-        background-color: #fff;
-        margin-left: 6px;
+        background-color: #00000000;
+				border: none;
       }
 
       #entrada * {
         width: fit-content;
-        font-size: 1.2em;
         border-radius: 1ch;
+        font-size: 8vw;
       }
 
       #entrada,
@@ -128,7 +144,7 @@
     <div id="entrada">
       <label for="links" id="links-label">🔗
         <input type="text" placeholder="🔗,🔗,🔗," id="links" onclick="this.select()">
-        <button id="links-add" onclick="addLinks()" title="🆗">➕</button><button id="links-pad" onclick="enche_links()" title="links pré-definidos">☑️</button></label>
+        <button id="links-add" onclick="addLinks()" title="🆗">➕</button></label>
     </div>
     <div id="tabs">
       <!-- Tabs will be inserted here -->
@@ -142,11 +158,12 @@
           "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md",
           "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html",
           "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html",
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html",
           "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html",
           "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html",
-          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html",
-          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html",
-          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html"
+          "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/readme.html",
         ].join();
       }
 
@@ -178,6 +195,7 @@
 
       function addLinks() {
         document.getElementById('tabs').innerHTML = '';
+				if (document.getElementById('links').value === "") enche_links();
         urls = document.getElementById('links').value.replace(/['"\s]/g, '').split(',');
         tabiniza();
         document.getElementById('entrada').style.display = 'none';
@@ -194,7 +212,8 @@
         }
       }
 
-      tabiniza();
+      // addLinks(); 
+			tabiniza();
 
     </script>
   </body>
