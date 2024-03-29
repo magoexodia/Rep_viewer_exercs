@@ -170,7 +170,6 @@
             }
 
             .controle button:hover {
-                transform: scale(1.3);
                 border-radius: 0;
                 background: none;
                 filter: hue-rotate(180deg);
@@ -184,7 +183,6 @@
             }
 
             #mais:hover {
-                transform: scale(1.3);
                 border-radius: 1ch;
                 filter: hue-rotate(180deg);
                 background: none;
@@ -207,11 +205,11 @@
                 }
 
                 #tela2 button:hover {
-                    transform: rotate(90deg) scale(1.5);
+                    transform: rotate(90deg);
                 }
 
                 .controle {
-                    transform: rotate(-90deg) translate(4ch, 6ch) scale(1.1);
+                    transform: rotate(-90deg) translate(4ch, 6ch);
                     flex-direction: row-reverse;
                 }
             }
@@ -315,12 +313,13 @@
                 counter.textContent = Math.max(value, 0);
                 if (value == reps) {
                     if (opt > 0) {
-                        abrirTela3();
+                        if (document.getElementById('valor2').value != 0 ) abrirTela3();
+												else abrirTela1();
                     } else {
                         abrirTela1();
                     }
                 } else if (value < reps && opt == 2 && delta > 0) {
-                    piscaTela3();
+                    if (document.getElementById('valor2').value != 0 ) piscaTela3();
                 }
             }
 
@@ -386,7 +385,7 @@
             }
 
             document.getElementById('tela2').addEventListener("keydown", function(event) {
-                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
+                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter" || (event.key === "Control" && event.location === 1)) {
                     document.getElementById("mais").click();
                 } else if (event.key === "ArrowDown") {
                     document.getElementById("menos").click();
