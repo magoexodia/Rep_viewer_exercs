@@ -3,7 +3,7 @@
 
 <h2>O que é?<br> What it is?</h2>
   <li>Só pra mostrar pra um amigo que sei que está curioso. <ul> Espero que gostem, eu gostei resultado... que ainda não é final.</ul><ul>É um conjunto de páginas aleatórias para servir de base para projetos particulares que faço. E pra mostrar como está.</ul></li>
-<li>To show for a friend as curious as me. <ul> I wish you like this job. I've put to much effort into this just to get those files viewable in web. </ul><ul>It's a group of random jobs for consultation. And to show how it's going.</ul></li>
+<li>To show for a friend as curious as me. <ul> I wish you like this job. I've put too much effort into this just to get those files viewable in web. </ul><ul>It's a group of random jobs for consultation. And to show how it's going on.</ul></li>
 
 <div>
 <h1>
