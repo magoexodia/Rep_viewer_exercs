@@ -1,319 +1,308 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Contar Repetições com Pausas</title>
-        <style>
-            :root {
-                --bgurl: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
-                --bgbtn: rgb(0, 0, 0, 0.1);
-                --bgipt: rgb(255, 255, 255, 0.25);
-                --sombra1: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-                --bgyugi: "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
-            }
-
-            body,
-            input {
-                font-size: calc(5vh + 3vw);
-            }
-
-            body {
-            	background-image: var(--bgurl);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                font-family: verdana;
-		overflow-y: hidden;
-            }
-
-            #tela1 {
-                text-align: center;
-				--bg1borda: 2px solid rgba(0,0,0,0.3);
-            }
-
-            #tela1 input[type=number] {
-                width: 4ch;
-				background: rgba(255,255,255,0.3);
-				border: var(--bg1borda);
-            }
-
-            #tela1 form>label {
-				border: var(--bg1borda);
-				text-shadow: 0 0 3px white, 0 0 5px white, 0 0 10px white, 0 0 1ch white;
-            }
-
-            #tela1 input[type=radio] {
-                display: none;
-            }
-
-            #tela1 input[type=radio]:checked+label {
-                text-shadow: 0 0 3px black, 0 0 0.5ch black, 0 0 1ch black, 0 0 2ch silver;
-                color: white;
-                opacity: 1;
-            }
-
-            #tela1 input[type=radio]+label {
-				margin: auto;
-                opacity: 0.6;
-            }
-
-            #tela2 {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .controle button {
-                border: none;
-                border-radius: 1ch;
-                font-size: 1.5ch;
-                margin: 0.3ch;
-                background: silver;
-            }
-
-            .controle button:hover {
-                transform: scale(1.3);
-                border-radius: 0;
-                background: none;
-                filter: hue-rotate(180deg);
-            }
-
-            #mais {
-                font-size: 6ch;
-                border: none;
-                border-radius: 1ch;
-                filter: hue-rotate(60deg);
-            }
-
-            #mais:hover {
-                transform: scale(1.3);
-                border-radius: 1ch;
-                filter: hue-rotate(180deg);
-                background: none;
-            }
-
-            #counter {
-                text-align: center;
-                background: none;
-                font-size: 2ch;
-            }
-
-            #tela3 {
-                text-align: center;
-                font-size: 4ch;
-                transform: rotate(90deg);
-                color: purple;
-                text-shadow: 0 0 3px white, 0 0 5px silver, 0 0 10px gray, 0 0 0.3ch black, 0 0 0.5ch pink, 0 0 0.7ch purple, 0 0 1ch red;
-            }
-
-            @media screen and (orientation: landscape) {
-                #tela2 {
-                    transform: rotate(-90deg);
-                }
-
-                #tela2 button {
-                    transform: rotate(90deg);
-                }
-
-                #tela2 button:hover {
-                    transform: rotate(90deg) scale(1.3);
-                }
-
-                .controle {
-                    transform: scale(-1);
-                }
-
-                #tela3 {
-                    transform: none;
-                }
-            }
-
-        </style>
-    </head>
-
-    <body>
-
-        <div id="principal">
-            <div id="tela1">
-                <form id="form1"><br>
-                    <label for="reps">🏋️☝️</label>
-                    <input type="number" id="reps" value="10" min="1" name="reps" required><br>
-                    <label for="tempo">⏱️⏳</label>
-                    <input id="tempo" type="number" value="15" min="0"><br>
-                    <div id="radios">
-                        <input type="radio" name="topt" checked id="sec" value=1><label for="sec">Segs </label>
-                        <input type="radio" name="topt" id="min" value=60><label for="min"> Mins</label></div>
-                    <input type="submit" value="✔️">
-                </form>
-            </div>
-
-            <div id="tela2" tabindex="0" style="display: none;">
-                <div id="counter-view">
-                    <div id="counter">0</div>
-                    <div id="megabutao">
-                        <button onclick="updateCounter(1)" class="megabutao" id="mais">🆙</button>
-                    </div>
-                </div>
-                <div class="controle">
-                    <button onclick="updateCounter(-1)" class="minibutao" id="menos">⛔</button>
-                    <button onclick="reseta()" class="minibutao" id="reseta">🔁</button>
-                    <button class="minibutao" id="desistir">❌</button>
-                </div>
-            </div>
-
-
-            <div id="tela3" style="display: none;">
-            </div>
-        </div>
-
-        <script>
-            let form1 = document.getElementById("form1");
-            let repeticoes = document.getElementById("repeticoes");
-            let tela1 = document.getElementById("tela1");
-            let tela2 = document.getElementById("tela2");
-            let tela3 = document.getElementById("tela3");
-            let resetar = document.getElementById("resetar");
-            let desistir = document.getElementById("desistir");
-            let tempo = document.getElementById("tempo");
-
-            function updateCounter(delta) {
-                let counter = document.getElementById("counter");
-                let value = parseInt(counter.textContent) + delta;
-                let reps = parseInt(document.getElementById('reps').value);
-                counter.textContent = Math.max(value, 0);
-                if (value <= reps && delta > 0) {
-                    if (tempo.value > 0) contagem();
-                } else if (delta < 0) {
-                    // apenas decrementa, sem chamar contagem()
-                } else {
-                    if (tempo.value > 0) contagem();
-                    cancelar();
-                }
-            }
-
-            function contagem() {
-                let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
-                tela2.style.display = "none";
-                tela3.style.display = "block";
-                tela3.textContent = (timeLeft - 1);
-                timeLeft--;
-                let countdown = setInterval(function() {
-                    if (timeLeft < 1) {
-                        clearInterval(countdown);
-                        tela3.textContent = "";
-                        tela2.style.display = "flex";
-                        tela3.style.display = "none";
-                    } else {
-                        tela3.textContent = (timeLeft - 1); //timeLeft;
-                        timeLeft--;
-                    }
-                }, 1000);
-            }
-
-            form1.addEventListener("submit", function(event) {
-                event.preventDefault();
-                if (form1.checkValidity()) {
-                    reseta();
-                    tela1.style.display = "none";
-                    tela2.style.display = "flex";
-                }
-            });
-
-            function cancelar() {
-                tela1.style.display = "block";
-                tela2.style.display = "none";
-            }
-
-            desistir.addEventListener("click", cancelar);
-
-            function reseta() {
-                document.getElementById("counter").textContent = '0';
-            }
-
-            document.getElementById('tela2').addEventListener("keydown", function(event) {
-                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter") {
-                    document.getElementById("mais").click();
-                } else if (event.key === "ArrowDown") {
-                    document.getElementById("menos").click();
-                } else if (event.key === "ArrowLeft" || event.key === "Esc") {
-                    document.getElementById("desistir").click();
-                } else if (event.key === "ArrowRight") {
-                    document.getElementById("reseta").click();
-                }
-            });
-
-      
-      let x = 0;
-      let y = 0;
-      let virtualMouse;
-
-      function createVirtualMouse() {
-        virtualMouse = document.createElement('div');
-        virtualMouse.id = 'virtualMouse';
-        virtualMouse.style.position = 'absolute';
-        virtualMouse.style.width = '20px';
-        virtualMouse.style.height = '20px';
-        virtualMouse.style.backgroundColor = 'black';
-        virtualMouse.style.borderRadius = '50%';
-        virtualMouse.style.pointerEvents = 'none';
-        document.body.appendChild(virtualMouse);
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contar Repetições com Pausas</title>
+    <style>
+      :root {
+        --bgurl: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
+        --bgbtn: rgb(0, 0, 0, 0.1);
+        --bgipt: rgb(255, 255, 255, 0.25);
+        --sombra1: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+        --bgyugi: "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
       }
 
-      function handleGamepadInput() {
-        const gamepads = navigator.getGamepads();
-        for (const gamepad of gamepads) {
-          if (gamepad) {
-            if (!virtualMouse) {
-              createVirtualMouse();
-            }
-            const axes = gamepad.axes;
-            x += axes[0] * 10;
-            y += axes[1] * 10;
-            // Atualizar a posição do mouse virtual com base na entrada do gamepad
-            virtualMouse.style.left = x + 'px';
-            virtualMouse.style.top = y + 'px';
+      body,
+      input {
+        font-size: calc(5vh + 3vw);
+      }
 
-            // Verificar pressionamentos de botão
-            for (let i = 0; i < gamepad.buttons.length; i++) {
-              if (gamepad.buttons[i].pressed) {
-                if (i === 0) {
-                  // Simular um clique esquerdo do mouse
-                  const clickEvent = new MouseEvent('click', {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window
-                  });
-                  const element = document.elementFromPoint(x, y);
-                  if (element) {
-                    element.dispatchEvent(clickEvent);
-                  }
-                } else if (i === 1) {
-                  // Simular um clique direito do mouse
-                  const clickEvent = new MouseEvent('contextmenu', {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window
-                  });
-                  const element = document.elementFromPoint(x, y);
-                  if (element) {
-                    element.dispatchEvent(clickEvent);
-                  }
-                }
-              }
-            }
-          }
+      body {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: verdana;
+        overflow-y: hidden;
+      }
+
+      body:has(#tela2[style*="display: flex"]),
+      body:has(#tela2[style*="display: block"]) {
+        background-color: black;
+        color: gray;
+      }
+
+      body:has(#tela3[style*="display: flex"]),
+      body:has(#tela3[style*="display: block"]) {
+        background-color: gray;
+      }
+
+      #tela1 {
+        text-align: center;
+        --bg1borda: 2px solid rgba(0, 0, 0, 0.3);
+      }
+
+      #tela1 input[type=number] {
+        width: 4ch;
+        background: rgba(255, 255, 255, 0.3);
+        border: var(--bg1borda);
+        border-radius: 1ch;
+      }
+
+      #tela1 form>label {
+        border: var(--bg1borda);
+        text-shadow: 0 0 3px white, 0 0 5px white, 0 0 10px white, 0 0 1ch white;
+      }
+
+      #radios,
+      #tela1 form>label {
+        background-image: var(--bgurl);
+        border: 2px solid red;
+        border-radius: 1ch;
+        line-height: 2ch;
+      }
+
+      #radios * {
+        font-size: 1ch;
+        line-height: 2ch;
+        width: fit-content;
+      }
+
+      #tela1 input[type=radio] {
+        display: none;
+      }
+
+      #tela1 input[type=radio]:checked+label {
+        text-shadow: 0 0 3px black, 0 0 0.5ch black, 0 0 1ch black, 0 0 2ch silver;
+        color: white;
+        opacity: 1;
+        text-transform: uppercase;
+        transition: opacity 1s ease, color 2s linear;
+      }
+
+      #tela1 input[type=radio]+label {
+        margin: auto;
+        opacity: 0.7;
+        transition: opacity 1s ease, color 2s linear;
+      }
+
+      #tela2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .controle button {
+        border: 3px solid silver;
+        border-radius: 0.6ch;
+        font-size: 1.5ch;
+        margin: 0.3ch;
+        background: none;
+        transition: border 1s ease, filter 2s linear;
+      }
+
+      .controle button:hover {
+        border: 3px solid gold;
+        border-radius: 1ch;
+        background: none;
+        filter: hue-rotate(180deg);
+      }
+
+      #mais {
+        font-size: 8ch;
+        border: none;
+        border-radius: 2ch;
+        filter: hue-rotate(60deg);
+        background: none;
+      }
+
+      #mais:hover {
+        border-radius: 1ch;
+        filter: hue-rotate(180deg);
+        transition: filter 1s linear;
+      }
+
+      #counter {
+        text-align: center;
+        background: none;
+        font-size: 2ch;
+      }
+
+      #tela3 {
+        text-align: center;
+        font-size: 4ch;
+        transform: rotate(90deg);
+        color: purple;
+        text-shadow: 0 0 3px white, 0 0 5px silver, 0 0 10px gray, 0 0 0.3ch black, 0 0 0.5ch pink, 0 0 0.7ch purple, 0 0 1ch red;
+      }
+
+      @media screen and (orientation: landscape) {
+        #tela2 {
+          transform: rotate(-90deg);
         }
-        requestAnimationFrame(handleGamepadInput);
+
+        #tela2 button {
+          transform: rotate(90deg);
+        }
+
+        #tela2 button:hover {
+          transform: rotate(90deg);
+        }
+
+        .controle {
+          transform: scale(-1);
+        }
+
+        #tela3 {
+          transform: none;
+        }
       }
 
-      // Começar a lidar com a entrada do gamepad
-      handleGamepadInput();
+    </style>
+  </head>
 
-        </script>
-    </body>
+  <body>
+
+    <div id="principal">
+      <div id="tela1">
+        <form id="form1"><br>
+          <label for="reps">🏋️☝️
+            <input type="number" id="reps" value="10" min="1" name="reps" required></label><br>
+          <label for="tempo">⏱️⏳
+            <input id="tempo" type="number" value="5" min="0"></label><br>
+          <div id="radios">
+            <input type="radio" name="topt" checked id="sec" value=1><label for="sec">segs</label>
+            <input type="radio" name="topt" id="min" value=60><label for="min">mins</label></div>
+          <input type="submit" value="✔️">
+        </form>
+      </div>
+
+      <div id="tela2" tabindex="0" style="display: none;">
+        <div id="counter-view">
+          <div id="counter">0</div>
+          <div id="megabutao">
+            <button onclick="updateCounter(1)" class="megabutao" id="mais">🆙</button>
+          </div>
+        </div>
+        <div class="controle">
+          <button onclick="updateCounter(-1)" class="minibutao" id="menos">⛔</button>
+          <button onclick="reseta()" class="minibutao" id="reseta">🔁</button>
+          <button class="minibutao" id="desistir">❌</button>
+        </div>
+      </div>
+
+
+      <div id="tela3" style="display: none;">
+      </div>
+    </div>
+
+    <script>
+      let form1 = document.getElementById("form1");
+      let repeticoes = document.getElementById("repeticoes");
+      let tela1 = document.getElementById("tela1");
+      let tela2 = document.getElementById("tela2");
+      let tela3 = document.getElementById("tela3");
+      let resetar = document.getElementById("resetar");
+      let desistir = document.getElementById("desistir");
+      let tempo = document.getElementById("tempo");
+
+      function updateCounter(delta) {
+        let counter = document.getElementById("counter");
+        let value = parseInt(counter.textContent) + delta;
+        let reps = parseInt(document.getElementById('reps').value);
+        counter.textContent = Math.max(value, 0);
+        if (value <= reps && delta > 0) {
+          if (tempo.value > 0) contagem();
+        } else if (delta < 0) {
+          // apenas decrementa, sem chamar contagem()
+        } else {
+          if (tempo.value > 0) contagem();
+          cancelar();
+        }
+      }
+
+      function contagem() {
+        let timeLeft = tempo.value * document.querySelector('input[name="topt"]:checked').value;
+        pausarEventListener();
+        tela2.style.display = "none";
+        tela3.style.display = "block";
+        tela3.textContent = (timeLeft - 1);
+        timeLeft--;
+        let countdown = setInterval(function() {
+          if (timeLeft < 1) {
+            clearInterval(countdown);
+            tela3.textContent = "";
+            tela2.style.display = "flex";
+            tela3.style.display = "none";
+            reativarEventListener();
+          } else {
+            tela3.textContent = (timeLeft - 1); //timeLeft;
+            timeLeft--;
+          }
+        }, 1000);
+      }
+
+      form1.addEventListener("submit", function(event) {
+        event.preventDefault();
+        if (form1.checkValidity()) {
+          reativarEventListener()
+          reseta();
+          tela1.style.display = "none";
+          tela2.style.display = "flex";
+        }
+      });
+
+      function cancelar() {
+        tela1.style.display = "block";
+        tela2.style.display = "none";
+        pausarEventListener();
+      }
+
+      desistir.addEventListener("click", cancelar);
+
+      function reseta() {
+        document.getElementById("counter").textContent = '0';
+      }
+
+      // Defina uma variável para controlar o estado do ouvinte de evento
+      let eventListenerAtivo = true;
+
+      // Defina a função que lida com o evento "keydown"
+      function handleKeyPress(event) {
+        if (!eventListenerAtivo) {
+          return; // Se o ouvinte estiver pausado, saia da função
+        }
+
+        if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter" || (event.key === "Control" && event.location === 1)) {
+          document.getElementById("mais").click();
+        } else if (event.key === "ArrowDown") {
+          document.getElementById("menos").click();
+        } else if (event.key === "ArrowLeft" || event.key === "Esc") {
+          document.getElementById("cancela").click();
+        } else if (event.key === "ArrowRight") {
+          document.getElementById("reseta").click();
+        }
+      }
+
+      // Adicione o ouvinte de evento à tecla "keydown"
+      document.addEventListener("keydown", handleKeyPress);
+
+      // Função para pausar o ouvinte de evento
+      function pausarEventListener() {
+        eventListenerAtivo = false;
+      }
+
+      // Função para reativar o ouvinte de evento
+      function reativarEventListener() {
+        eventListenerAtivo = true;
+      }
+      pausarEventListener();
+
+    </script>
+  </body>
 
 </html>
