@@ -25,11 +25,11 @@
   <br><div id="div1">
     <label for="linkInput"> clica na 🖼️ depois da outra. 😉</label>
     <textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
-'link1.jpg',
-'link2.png',
-'link3.img',
-'link5.png',
-'link6.img'," ></textarea>
+'link1.mp4',
+'link2.mp4',
+'link3.mp4',
+'link5.mp4',
+'link6.video'," ></textarea>
     <button id="okButton">✔️</button>
     <div id="videoContainer"></div>
     <button id="resetButton" style="display: none;">🔙</button>
@@ -41,7 +41,7 @@
     var selectedVideo = null;
 
     document.getElementById('okButton').addEventListener('click', function() {
-      var links = document.getElementById('linkInput').value.split('\n');
+      var links = document.getElementById('linkInput').value.trim().split('\n');
       var videoContainer = document.getElementById('videoContainer');
       for (var i = 0; i < links.length; i++) {
         var video = document.createElement('video');
