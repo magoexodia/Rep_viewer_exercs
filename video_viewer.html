@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lista de Vídeos</title>
+    <!-- <title>Lista de Vídeos</title>
     <style>
         body {background: red; font-size: 3vmax;} input[type=text], button {font-size: 2ch;}
         #mainVideo {
@@ -117,3 +117,37 @@
     </script>
 </body>
 </html> -->
+
+    <title>Dimensões da Tela</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="dimensions"></div>
+    <script>
+        function getScreenDimensions() {
+            var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            var trueWidth = screen.width;
+            var trueHeight = screen.height;
+
+            return 'Largura: ' + width + 'px, Altura: ' + height + 'px, Largura Verdadeira: ' + trueWidth + 'px, Altura Verdadeira: ' + trueHeight + 'px';
+        }
+
+        document.getElementById('dimensions').innerHTML = getScreenDimensions();
+
+        window.addEventListener('resize', function() {
+            document.getElementById('dimensions').innerHTML = getScreenDimensions();
+        });
+    </script>
+</body>
+</html>
+
