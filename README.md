@@ -52,18 +52,19 @@
 
 
 
+<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a></h2>
+<li> Um contador de repetições minimalista para repetições rápidas. Para facilitar contar unidades.
+<li> A minimalist repetitions counter to quick repetitions. To help you count unities.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a>
+
+
 <h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html">timer_exerc_gif.html</a></h3> 
 <li> Algo para contar o tempo pra você e depois mostrar um gif pra relaxar.
 <li> To count time than show you a gif to relax (or not)
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html">timer_exerc_gif.html</a>
 
 
-
-<h3><a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a> & <a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a></h2>
-<li> Um contador de repetições minimalista para repetições rápidas. Para facilitar contar unidades.
-<li> A minimalist repetitions counter to quick repetitions. To help you count unities.
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exerc_def.html">contar_exerc_def.html</a>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔗<a target="_blank" href="https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html">contar_exec_linkOuFile.html</a>
   
   <h1>
   💸💹
