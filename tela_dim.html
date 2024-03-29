@@ -125,6 +125,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            width:  100vw;
             font-size: 6vh;
             font-family: Arial, sans-serif;
         }
@@ -139,7 +140,7 @@
             var trueWidth = screen.width;
             var trueHeight = screen.height;
 
-            return '📏🚶‍♂️: ' + width + 'px<br> 📐🗼: ' + height + 'px<br> 📏🚶‍♂️: ' + trueWidth + 'px<br> 📐🗼📱: ' + trueHeight + 'px';
+            return '📏🚶‍:<br>Navegador: ' + width + 'px<br> Tela: ' + trueWidth + 'px<br><br>📐🪂:<br> Navegador: ' + height + 'px<br> Tela: ' + trueHeight + 'px';
         }
 
         document.getElementById('dimensions').innerHTML = getScreenDimensions();
@@ -150,4 +151,3 @@
     </script>
 </body>
 </html>
-
