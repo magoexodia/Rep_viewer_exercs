@@ -99,10 +99,10 @@
       var allLines = [];
 
       document.getElementById('okButton').addEventListener('click', function() {
-        allLines = document.getElementById('linkInput').value.split('\n');
+        allLines = document.getElementById('linkInput').value.trim().split('\n');
         var imageContainer = document.getElementById('imageContainer');
         for (var i = 0; i < allLines.length; i++) {
-          var src = allLines[i].trim();
+          var src = allLines[i];
           if (src.includes('<') || src.includes('=')) {
             imageContainer.innerHTML += src + '<br><img style="height: 10vh;" src="https://64.media.tumblr.com/66d1e195b83e8afdbdcd17014d1d1e66/tumblr_owm69zzYPz1r187pho4_400.gifv" onclick="selectElement(this);">';
           } else if (src.includes('mp4')) {
