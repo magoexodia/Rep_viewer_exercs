@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
+
+  <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Visualizador</title>
   </head>
@@ -108,6 +109,7 @@
       left: 0;
       top: 50px;
       margin: 2px;
+      overflow: auto;
     }
 
     #viewer:not(.some) {
@@ -127,17 +129,20 @@
 
     #p1 input,
     #file-label,
-    #vai, h2 {
+    #vai,
+    h2 {
       border-radius: 1ch;
       border: 2px solid #000000A6;
     }
 
-    #p1 label, h2 {
+    #p1 label,
+    h2 {
       text-shadow: 0 0 3px white, 0 0 6px white, 0 0 1.5ch white;
     }
 
     #quanto-label,
-    #link-label, h2 {
+    #link-label,
+    h2 {
       border: 2px solid purple;
       background-color: gray;
       border-radius: 1ch;
@@ -287,16 +292,18 @@
     }
 
   </style>
+
   <body>
     <div id="im-container">
-      <div id="p1"><h2>🖼️📺🎭</h2>
+      <div id="p1">
+        <h2>🖼️📺🎭</h2>
         <label id="quanto-label" for="quanto">🔢
           <input type="number" id="quanto" min=2 value=10></label><br>
         <input type="file" id="file-input" accept="image/*,video/*" multiple onchange="start2()" style="display:none;">
         <label for="links" id="link-label">🔗
           <input type="text" id="links" placeholder="🎆, 🖼️, 🎥,"></label><br>
         <div id="butoes"><button onclick="start()" id="vai">➕</button>
-				<label for="file-input" id="file-label">📂</label></div>
+          <label for="file-input" id="file-label">📂</label></div>
       </div>
       <div id="p2" class="some">
         <button onclick="aV()" id="troca">💱</button>
@@ -345,6 +352,7 @@
           let img = document.createElement("img"),
             imgI = (i + j) % imgs.length;
           img.src = imgs[imgI];
+          img.loading ="lazy";
           img.onmouseover = function() {
             let viewer = document.getElementById('viewer');
             viewer.src = img.src;
@@ -421,7 +429,6 @@
       let a = document.getElementById("anterior"),
         p = document.getElementById("proximo"),
         v = document.getElementById("div-viewer");
-		t = document.getElementById("troca");
 
       a.addEventListener("click", function() {
         i = (i - t < 0) ? imgs.length - t : i - t;
@@ -437,7 +444,18 @@
       document.addEventListener("keydown", function(e) {
         if (e.key === "ArrowLeft") a.click();
         else if (e.key === "ArrowRight") p.click();
-        else if (e.key === "t" || e.key === "T") t.click();
+        else if (e.key === "t" || e.key === "T") document.getElementById("troca").click();
+        else if (e.key === "5") {
+          document.getElementById("viewer").style.height = "500%";
+          document.getElementById("viewer").style.width = "500%";          
+        }
+        else if (e.key === "z" || e.key === "Z") {
+          document.getElementById("viewer").style.height = "250%";
+          document.getElementById("viewer").style.width = "250%";          
+        } else if (e.key === "o" || e.key === "O") {
+          document.getElementById("viewer").style.height = '';
+          document.getElementById("viewer").style.width = '';
+        }
       });
 
       function aV() {
@@ -456,7 +474,7 @@
         document.getElementById("videos").innerHTML = "";
         muda();
         document.getElementById("videoPlayer").src = "";
-        if (document.getElementById("links").value === ',') document.getElementById("links").value =  "" ;
+        if (document.getElementById("links").value === ',') document.getElementById("links").value = "";
         document.getElementById("file-input").value = "";
         imgs = [];
         vids = [];
@@ -483,6 +501,7 @@
           document.querySelector(".lista").scrollLeft += event.deltaY;
         }
       }
+
       function videosScroll(event) {
         if (event.deltaY !== 0) {
           document.querySelector("#videos").scrollLeft += event.deltaY;
@@ -490,6 +509,7 @@
       }
       document.querySelector(".lista").addEventListener("wheel", listaScroll);
       document.querySelector("#videos").addEventListener("wheel", videosScroll);
+
     </script>
   </body>
 
