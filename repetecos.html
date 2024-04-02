@@ -1,403 +1,379 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contar repetições modo lento e modo rápido - atualizado</title>
-        <style>
-            body {
-                --shadow: 0px 0px 2px black, 0px 0px 3px white, 0px 0px 4px black;
-                --bglabel: rgba(0, 0, 0, 0.1);
-                --bgurl: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
-                --bgbutao: rgba(0, 0, 0, 0);
-                --bgradio: rgba(0, 255, 0, 0.2);
-                --bgcolor: #fefdff;
-                --tam: calc(5vh + 3vw);
-				--bg1borda: 2px solid rgba(0,0,0,0.3);
-				--bg1shadow: 0 0 3px white, 0 0 5px white, 0 0 10px white, 0 0 1ch white;
-                text-align: center;
-                font-size: var(--tam);
-                font-family: verdana;
-                background-color: #FAF2E8;
-                background-image: var(--bgurl);
-		overflow-y: hidden;
-            }
-			
-			.titulo {
-				font-size: 1.5ch;
-				border: var(--bg1borda);
-				text-shadow: var(--bg1shadow);
-			}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contar repetições modo lento e modo rápido - atualizado</title>
+     <style>
+      :root {
+        --bgurl: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
+        --bgbtn: rgb(0, 0, 0, 0.1);
+        --bgipt: rgb(255, 255, 255, 0.25);
+        --sombra1: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
+        --bgyugi: "url('https://cdn.wallpapersafari.com/76/11/dEFLmg.png')";
+      }
 
-            #principal {
-                width: calc(100vw - 3ch);
-                height: calc(100vh - 4ch);
-            }
+      body,
+      input {
+        font-size: calc(5vh + 3vw);
+      }
 
-            input[type="number"] {
-                text-align: center;
-                width: 5ch;
-            }
+      body {
 
-            input[type="text"] {
-                text-align: left;
-                width: 6ch;
-            }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: verdana;
+        overflow-y: hidden;
+      }
 
-            input[type="number"],
-            input[type="text"] {
+      body:has(#tela2[style*="display: flex"]),
+      body:has(#tela2[style*="display: block"]) {
+        background-color: black;
+        color: gray;
+      }
 
-                margin-left: 10px;
-                background: rgb(255, 255, 255, 0.5);
-                color: black;
-                font-size: var(--tam);
-            }
+      body:has(#tela3[style*="display: flex"]),
+      body:has(#tela3[style*="display: block"]) {
+        background-color: gray;
+      }
 
-            form {
-                display: inline-block;
-                height: calc(100vh - 5ch);
-            }
+      #tela1 {
+        text-align: center;
+        --bg1borda: 2px solid rgba(0, 0, 0, 0.3);
+      }
 
-            input[type="submit"] {
-                width: fit-content;
-                font-size: var(--tam);
-                transform: scale(0.8);
-                background-color: var(--bglabel);
-            }
+      #tela1 input[type=number] {
+        width: 4ch;
+        background: rgba(255, 255, 255, 0.3);
+        border: var(--bg1borda);
+        border-radius: 1ch;
+      }
 
-            .centralizado {
-                flex-direction: column;
-                align-items: center;
-                height: 100svh;
-                overflow: auto;
-                justify-content: center;
-            }
+      #tela1 form>label {
+        border: var(--bg1borda);
+        text-shadow: 0 0 3px white, 0 0 5px white, 0 0 10px white, 0 0 1ch white;
+      }
 
-            .imagem-emoticon {
-                max-width: 100%;
-                max-height: 100%;
-            }
+      #radios,
+      #tela1 form>label {
+        background-image: var(--bgurl);
+        border: 2px solid red;
+        border-radius: 1ch;
+        line-height: 2ch;
+      }
 
-            #emoticon {
-                transform: scale(5);
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin: auto;
-            }
+      #radios * {
+        font-size: 1ch;
+        line-height: 2ch;
+        width: fit-content;
+      }
 
-            #tela3 {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
+      #tela1 input[type=radio] {
+        display: none;
+      }
 
-            #tela3 img,
-            #tela3 video {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin: auto;
-                width: 100vw;
-                max-height: 100vh;
-                object-fit: contain;
-            }
+      #tela1 input[type=radio]:checked+label {
+        text-shadow: 0 0 3px black, 0 0 0.5ch black, 0 0 1ch black, 0 0 2ch silver;
+        color: white;
+        opacity: 1;
+        text-transform: uppercase;
+        filter:none;
+        transition: opacity 1s ease, color 2s linear;
+      }
 
-            #foto,
-            #file-input,
-            #radios input[type="radio"],
-            #radios2 input[type="radio"] {
-                display: none;
-            }
+      #tela1 input[type=radio]+label {
+        margin: auto;
+        opacity: 0.7;
+        transition: opacity 1s ease, color 2s linear;
+      }
 
-            #fotol, #arql {
-                background: red;
-				text-shadow: var(--bg1shadow);
-				border: var(--bg1borda);
-            }
+      #tela2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-            #foto:checked+#fotol {
-                background: none;
-            }
+      .controle button {
+        border: 3px solid silver;
+        border-radius: 0.6ch;
+        font-size: 1.5ch;
+        margin: 0.3ch;
+        background: none;
+        transition: border 1s ease, filter 2s linear;
+      }
 
-            #sec:checked+label,
-            #min:checked+label,
-            #com:checked+label,
-            #entre:checked+label,
-            #sem:checked+label {
-                opacity: 1.0;
-                background: #00FF00;
-            }
+      .controle button:hover {
+        border: 3px solid gold;
+        border-radius: 1ch;
+        background: none;
+        filter: hue-rotate(180deg);
+      }
 
-            #secl,
-            #minl,
-            #coml,
-            #entrel,
-            #seml {
-                opacity: 0.4;
-                color: #0F0F0F;
-                background: var(--bgradio);
-				border: var(--bg1borda);
-				text-shadow:  var(--bg1shadow);
-            }
+      #mais {
+        font-size: 8ch;
+        border: none;
+        border-radius: 2ch;
+        filter: hue-rotate(60deg);
+        background: none;
+      }
 
-            #tela2 {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                height: 100%;
-                width: 100%;
-            }
+      #mais:hover {
+        border-radius: 1ch;
+        filter: hue-rotate(180deg);
+        transition: filter 1s linear;
+      }
 
-            .controle {
-                display: flex;
-                direction: column;
-            }
+      #counter {
+        text-align: center;
+        background: none;
+        font-size: 2ch;
+      }
 
-            .controle button {
-                border: none;
-                border-radius: 1ch;
-                font-size: 1.5ch;
-                margin: 0.3ch;
-                background: silver;
-            }
+      #tela3 {
+        text-align: center;
+        font-size: 4ch;
+        transform: rotate(90deg);
+        color: purple;
+        text-shadow: 0 0 3px white, 0 0 5px silver, 0 0 10px gray, 0 0 0.3ch black, 0 0 0.5ch pink, 0 0 0.7ch purple, 0 0 1ch red;
+      }
 
-            .controle button:hover {
-                border-radius: 0;
-                background: none;
-                filter: hue-rotate(180deg);
-            }
+      @media screen and (orientation: landscape) {
+        #tela2 {
+          transform: rotate(-90deg);
+        }
 
-            #mais {
-                font-size: 6ch;
-                border: none;
-                border-radius: 1ch;
-                filter: hue-rotate(60deg);
-            }
+        #tela2 button {
+          transform: rotate(90deg);
+        }
 
-            #mais:hover {
-                border-radius: 1ch;
-                filter: hue-rotate(180deg);
-                background: none;
-            }
+        #tela2 button:hover {
+          transform: rotate(90deg);
+        }
 
-            #counter {
-                text-align: center;
-                background: none;
-                font-size: 2ch;
-            }
+        .controle {
+          transform: scale(-1);
+        }
 
+        #tela3 {
+          transform: none;
+        }
+      }
+      .titulo, .titulo * {
+        font-size: 2ch;
+        border: var(--bg1borda);
+        text-shadow: var(--bg1shadow);
+      }
+      
+      #file-input,
+      input[type="radio"],
+      input[type="checkbox"] {
+        display: none;
+      }
+      
+      #config {
+        position: fixed; background: white; right: 0; top: 0; bottom: 0; left: 0; margin: auto; width: fit-content; height: fit-content;
+        border: 2px solid gold;
+      }
+      #config label, #config {border-radius: 2ch;}
+      #config label, #ok {border: 2px solid gold;}
+      
+      #fotol,
+      #arql, #coml, #seml, #entrel {
+        background: silver;
+        border-radius: 1ch;
+        filter: grayscale(1);
+        transition: background 2s ease, filter 2s linear;;
+      }
 
-            @media screen and (orientation: landscape) {
-                #counter-view {
-                    transform: rotate(-90deg) scale(1.2) translate(-2ch, -2ch);
-                }
+      #fotol:hover,
+      #arql:hover, #coml:hover, #seml:hover, #entrel:hover {
+        background: gray;
+        border-radius: 1ch;
+        filter: none;
+        transition: background 1s ease;
+      }
+      #radio2 input[type="text"] {width: 14ch;}
+    </style>
+  </head>
 
-                #tela2 button {
-                    transform: rotate(90deg);
-                }
+  <body>
 
-                #tela2 button:hover {
-                    transform: rotate(90deg);
-                }
-
-                .controle {
-                    transform: rotate(-90deg) translate(4ch, 6ch);
-                    flex-direction: row-reverse;
-                }
-            }
-
-
-            @media screen and (orientation: portrait) {
-				img {
-					transform: rotate(-90deg);
-					max-width: 100vh;
-					height: 100%;
-				}
-            }
-
-        </style>
-    </head>
-
-    <body>
-
-        <!-- Primeira Tela -->
-        <div id="tela1" class="centralizado">
-            <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
-                <label class="titulo" for="valor1">🏋️☝️</label><input type="number" id="valor1" min=1 value=3 required><br>
-                <div id="radios" style="display: none;">
-				<label class="titulo" for="valor2" id="valor2l">⏱️⏳</label><input type="number" id="valor2" min=0 value=2 required><br>
-				<label class="titulo">⏱️❓</label>
-                    <input type="radio" name="topt" checked id="sec" value=1><label for="sec" id="secl">Seg</label>
-                    <input type="radio" name="topt" id="min" value=60><label for="min" id="minl">Min</label></div>
-					<label class="titulo">📷</label><input type="checkbox" id="foto" onchange="none_some('linkImagem', this.checked)">
-                <label for="foto" id="fotol">🔗</label>
-                <input type="text" id="linkImagem" value="https://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv" style="display: none;">
-                <label for="file-input" id="arql">📂</label>
-				<input type="file" id="file-input" accept="image/*" onchange="start2()">
-				<div id="radios2"><label class="titulo">⌛❓</label>
-                    <input type="radio" name="corda" id="entre" onchange="some_tempo()" value=2>
-                    <label for="entre" id="entrel">🥪</label>
-                    <input type="radio" name="corda" id="com" onchange="some_tempo()" value=1>
-                    <label for="com" id="coml">🔚</label>
-                    <input type="radio" name="corda" id="sem" onchange="some_tempo()" checked value=0>
-                    <label for="sem" id="seml">🚫</label>
-                </div>
-                <input type="submit" value="✔️">
-            </form>
+    <!-- Primeira Tela -->
+    <div id="tela1" class="centralizado">
+      <form id="meuForm" onsubmit="event.preventDefault(); if(validarForm()) abrirTela2()">
+        <label class="titulo" for="valor1">🏋️☝️<input type="number" id="valor1" min=1 value=3 required></label><br>
+        <label class="titulo" for="valor2" id="valor2l">⏱️⏳<input type="number" id="valor2" min=0 value=2 required></label>
+          <div id="radios"><input type="radio" name="topt" checked id="sec" value=1><label for="sec" id="secl">Seg</label>
+          <input type="radio" name="topt" id="min" value=60><label for="min" id="minl">Min</label></div>
+        <div id="config" style="display:some;">
+          <label class="titulo">📷</label><input type="checkbox" id="foto" onchange="none_some('linkImagem', this.checked)"><br>
+          <label for="foto" id="fotol">🔗</label>
+          <input type="text" id="linkImagem" value="https://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv" style="display: none;">
+          <label for="file-input" id="arql">📂</label>
+          <input type="file" id="file-input" accept="image/*" onchange="start2()">
+          <div id="radios2"><label class="titulo">⌛❓</label><br>
+            <input type="radio" name="corda" id="entre" value=2>
+            <label for="entre" id="entrel">🥪</label>
+            <input type="radio" name="corda" id="com" value=1>
+            <label for="com" id="coml">🔚</label>
+            <input type="radio" name="corda" id="sem" checked value=0>
+            <label for="sem" id="seml">🚫</label><br><br>
+            <label for="bt-config" class="titulo">✔️</label>
+          </div>
         </div>
+        <input type="submit" value="✔️" id="ok">
+        <label for="bt-config" class="titulo">⚙️<input type="checkbox" id='bt-config' onclick="none_some('config', this.checked)"></label>
+      </form>
+    </div>
 
 
-        <!-- Segunda Tela -->
+    <!-- Segunda Tela -->
 
-        <div id="tela2" tabindex="0" style="display: none;">
-            <div id="counter-view">
-                <div id="counter">0</div>
-                <button onclick="updateCounter(1)" class="megabutao" id="mais">🆙</button>
-            </div>
-            <div class="controle">
-                <button onclick="updateCounter(-1)" class="minibutao" id="menos">↩️</button>
-                <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao" id="reseta">🔁</button>
-                <button onclick="abrirTela1()" class="minibutao" id="cancela">🔙</button>
-            </div>
-        </div>
+    <div id="tela2" tabindex="0" style="display: none;">
+      <div id="counter-view">
+        <div id="counter">0</div>
+        <button onclick="updateCounter(1)" class="megabutao" id="mais">🆙</button>
+      </div>
+      <div class="controle">
+        <button onclick="updateCounter(-1)" class="minibutao" id="menos">↩️</button>
+        <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao" id="reseta">🔁</button>
+        <button onclick="abrirTela1()" class="minibutao" id="cancela">🔙</button>
+      </div>
+    </div>
 
-        <!-- Terceira Tela -->
-        <div id="tela3" class="centralizado" style="display: none;">
-            <img id="imagem" class="imagem-emoticon">
-            <video id="vdagem" class="imagem-emoticon" style="display: none;" controls play></video>
-            <p id="emoticon" class="imagem-emoticon" style="font-size: 50px; display: none;"></p>
-        </div>
+    <!-- Terceira Tela -->
+    <div id="tela3" class="centralizado" style="display: none;">
+      <img id="imagem" class="imagem-emoticon">
+      <video id="vdagem" class="imagem-emoticon" style="display: none;" controls play></video>
+      <p id="emoticon" class="imagem-emoticon" style="font-size: 50px; display: none;"></p>
+    </div>
 
-        <script>
-            function none_some(quem, alt) {
-				alterna_display(quem, alt);
-				//alterna_display('arql', alt);
-            }
-            function alterna_display(quem, alt) {
-                document.getElementById(quem).style.display = alt ? '' : 'none';
-            }
-            function some_tempo() {
-                none_some("radios", !document.getElementById("sem").checked);
-            }
+    <script>
+      function none_some(quem, alt) {
+        alterna_display(quem, alt);
+        //alterna_display('arql', alt);
+      }
 
-            function validarForm() {
-                var valor1 = document.getElementById('valor1').value;
-                var valor2 = document.getElementById('valor2').value;
-                if (valor1 == "" || valor2 == "") {
-                    alert("Por favor, preencha ambos os valores.");
-                    return false;
-                }
-                return true;
-            }
+      function alterna_display(quem, alt) {
+        document.getElementById(quem).style.display = alt ? '' : 'none';
+      }
+
+      function validarForm() {
+        var valor1 = document.getElementById('valor1').value;
+        var valor2 = document.getElementById('valor2').value;
+        if (valor1 == "" || valor2 == "") {
+          alert("Por favor, preencha ambos os valores.");
+          return false;
+        }
+        return true;
+      }
 
 
-            function abrirTela2() {
-                document.getElementById('tela1').style.display = 'none';
-                document.getElementById('tela2').style.display = 'flex';
-                document.getElementById('mais').focus();
-            }
+      function abrirTela2() {
+        document.getElementById('tela1').style.display = 'none';
+        document.getElementById('tela2').style.display = 'flex';
+        document.getElementById('mais').focus();
+      }
 
-            function updateCounter(delta) {
-                let counter = document.getElementById("counter");
-                let value = parseInt(counter.textContent) + delta;
-                let opt = document.querySelector('input[name="corda"]:checked').value;
-                let reps = parseInt(document.getElementById('valor1').value);
-                counter.textContent = Math.max(value, 0);
-                if (value == reps) {
-                    if (opt > 0) {
-                        if (document.getElementById('valor2').value != 0 ) abrirTela3();
-												else abrirTela1();
-                    } else {
-                        abrirTela1();
-                    }
-                } else if (value < reps && opt == 2 && delta > 0) {
-                    if (document.getElementById('valor2').value != 0 ) piscaTela3();
-                }
-            }
+      function updateCounter(delta) {
+        let counter = document.getElementById("counter");
+        let value = parseInt(counter.textContent) + delta;
+        let opt = document.querySelector('input[name="corda"]:checked').value;
+        let reps = parseInt(document.getElementById('valor1').value);
+        counter.textContent = Math.max(value, 0);
+        if (value == reps) {
+          if (opt > 0) {
+            if (document.getElementById('valor2').value != 0) abrirTela3();
+            else abrirTela1();
+          } else {
+            abrirTela1();
+          }
+        } else if (value < reps && opt == 2 && delta > 0) {
+          if (document.getElementById('valor2').value != 0) piscaTela3();
+        }
+      }
 
 
-            function piscaTela3() {
-                //tela3teste();
-                carrega_tela3();
-                document.getElementById('tela3').style.display = 'flex';
-                var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
-                setTimeout(function() {
-                    document.getElementById('tela3').style.display = 'none';
-                    document.getElementById('tela2').style.display = 'flex';
-					document.getElementById('imagem').style.display = 'none';
-					document.getElementById('emoticon').style.display = 'none';
-                }, descanso * 1000);
+      function piscaTela3() {
+        //tela3teste();
+        carrega_tela3();
+        document.getElementById('tela3').style.display = 'flex';
+        var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
+        setTimeout(function() {
+          document.getElementById('tela3').style.display = 'none';
+          document.getElementById('tela2').style.display = 'flex';
+          document.getElementById('imagem').style.display = 'none';
+          document.getElementById('emoticon').style.display = 'none';
+        }, descanso * 1000);
 
-            }
+      }
 
-            function abrirTela3() {
-                //tela3teste();
-                carrega_tela3();
-                document.getElementById('tela3').style.display = 'flex';
-                var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
-                setTimeout(abrirTela1, descanso * 1000);
-            }
+      function abrirTela3() {
+        //tela3teste();
+        carrega_tela3();
+        document.getElementById('tela3').style.display = 'flex';
+        var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
+        setTimeout(abrirTela1, descanso * 1000);
+      }
 
-            function carrega_tela3() {
-                document.getElementById('tela2').style.display = 'none';
-                var linkImagem = document.getElementById('linkImagem').value;
-                if (document.getElementById("file-input").files[0] && document.getElementById('foto').checked) {
-                    document.getElementById('imagem').src = URL.createObjectURL(document.getElementById("file-input").files[0]);
-                    document.getElementById('imagem').style.display = 'block';
-                } else if (linkImagem.includes('//') && document.getElementById('foto').checked) {
-                    document.getElementById('imagem').src = linkImagem;
-                    document.getElementById('imagem').style.display = 'block';
-                } else {
-                    //contagem();
-					abrir_emoticon();
-                }
-            }
+      function carrega_tela3() {
+        document.getElementById('tela2').style.display = 'none';
+        var linkImagem = document.getElementById('linkImagem').value;
+        if (document.getElementById("file-input").files[0] && document.getElementById('foto').checked) {
+          document.getElementById('imagem').src = URL.createObjectURL(document.getElementById("file-input").files[0]);
+          document.getElementById('imagem').style.display = 'block';
+        } else if (linkImagem.includes('//') && document.getElementById('foto').checked) {
+          document.getElementById('imagem').src = linkImagem;
+          document.getElementById('imagem').style.display = 'block';
+        } else {
+          //contagem();
+          abrir_emoticon();
+        }
+      }
 
-            function abrir_emoticon() {
-                document.getElementById('emoticon').style.display = 'block';
-                var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
-                var i = 0;
-                setInterval(function() {
-                    document.getElementById('emoticon').textContent = emoticons[i];
-                    i = (i + 1) % emoticons.length;
-                }, 250);
-            }
-			
-            function abrirTela1() {
-                updateCounter(-parseInt(counter.textContent));
-                document.getElementById('tela3').style.display = 'none';
-                document.getElementById('tela1').style.display = 'flex';
-                document.getElementById('tela2').style.display = 'none';
-                document.getElementById('checkboxes').innerHTML = '';
-                document.getElementById('meuForm').reset();
-                document.getElementById('imagem').style.display = 'none';
-                document.getElementById('emoticon').style.display = 'none';
-                document.getElementById('imagem').style.display = 'none';
-                document.getElementById('emoticon').style.display = 'none';
-            }
+      function abrir_emoticon() {
+        document.getElementById('emoticon').style.display = 'block';
+        var emoticons = ['🙂', '😁', '😄', '😯', '😉'];
+        var i = 0;
+        setInterval(function() {
+          document.getElementById('emoticon').textContent = emoticons[i];
+          i = (i + 1) % emoticons.length;
+        }, 250);
+      }
 
-            document.getElementById('tela2').addEventListener("keydown", function(event) {
-                if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter" || (event.key === "Control" && event.location === 1)) {
-                    document.getElementById("mais").click();
-                } else if (event.key === "ArrowDown") {
-                    document.getElementById("menos").click();
-                } else if (event.key === "ArrowLeft" || event.key === "Esc") {
-                    document.getElementById("cancela").click();
-                } else if (event.key === "ArrowRight") {
-                    document.getElementById("reseta").click();
-                }
-            });
+      function abrirTela1() {
+        updateCounter(-parseInt(counter.textContent));
+        document.getElementById('tela3').style.display = 'none';
+        document.getElementById('tela1').style.display = 'flex';
+        document.getElementById('tela2').style.display = 'none';
+        document.getElementById('checkboxes').innerHTML = '';
+        document.getElementById('meuForm').reset();
+        document.getElementById('imagem').style.display = 'none';
+        document.getElementById('emoticon').style.display = 'none';
+        document.getElementById('imagem').style.display = 'none';
+        document.getElementById('emoticon').style.display = 'none';
+      }
 
-        </script>
+      document.getElementById('tela2').addEventListener("keydown", function(event) {
+        if (event.key === "ArrowUp" || event.key === "Space" || event.key === "Enter" || (event.key === "Control" && event.location === 1)) {
+          document.getElementById("mais").click();
+        } else if (event.key === "ArrowDown") {
+          document.getElementById("menos").click();
+        } else if (event.key === "ArrowLeft" || event.key === "Esc") {
+          document.getElementById("cancela").click();
+        } else if (event.key === "ArrowRight") {
+          document.getElementById("reseta").click();
+        }
+      });
+      
+      none_some('config', false);
 
-    </body>
+    </script>
+
+  </body>
 
 </html>
