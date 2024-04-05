@@ -103,8 +103,9 @@
         var imageContainer = document.getElementById('imageContainer');
         for (var i = 0; i < allLines.length; i++) {
           var src = allLines[i];
-          if (src.includes('<') || src.includes('=')) {
-            imageContainer.innerHTML += src + '<br><img style="height: 10vh;" src="https://64.media.tumblr.com/66d1e195b83e8afdbdcd17014d1d1e66/tumblr_owm69zzYPz1r187pho4_400.gifv" onclick="selectElement(this);">';
+          if ( src === "") {
+          } else if (src.includes('<') || src.includes('=') || !src === "") {
+            imageContainer.innerHTML += src + '<br><img style="height: 10vh;" src="https://assets.tumblr.com/images/media_violation/copyright_v1_1280.png" onclick="selectElement(this);">';
           } else if (src.includes('mp4')) {
             var type = 'video/mp4';
             var elementHTML = '<video src="' + src.slice(1, -2) + '" onclick="selectElement(this);" ' + (type ? 'type="' + type + '"' : '') + '></video>';
@@ -162,13 +163,15 @@
           updateLinkOutput();
         }
       }
-
+      
       function updateLinkOutput() {
         var elements = document.getElementById('imageContainer').getElementsByTagName('*');
         var links = [];
         for (var i = 0; i < elements.length; i++) {
           if (elements[i].src) {
-            links.push("'" + elements[i].src + "',"); // Adicione as aspas simples e a vírgula
+            links.push("'" + elements[i].src + "',");
+          } else if (elements[i].innerText !== "") {
+            links.push(elements[i].innerText + "<br><h1>🔚❌📐</h1>");
           }
         }
         document.getElementById('linkOutput').value = links.join('\n');
