@@ -15,7 +15,7 @@ text-shadow: 0 0 2px white;
 
 textarea {
 width: 99%;
-height: calc(90vh);
+height: calc(50vh);
 min-height: 50vh;
 }
 
@@ -76,6 +76,11 @@ padding: 3px;
 border: 1px solid black;
 }
 
+#previewContainer {
+background-color: #00558890;
+height: calc(50vh - 3ch);
+}
+
 @media screen and (orientation: landscape){
   #div1, #previewContainer {
     width: calc(50% - 1ch);
@@ -90,15 +95,12 @@ right: 0;
 left: 50%;
 margin: auto;
 background-color: gray;
+height: 90vh;
+    width: calc(50% - 1ch);
 }
 #buttonContainer{
   left: 45%;
 }
-}
-
-#previewContainer {
-background-color: #00558890;
-height: calc(50vh - 3ch);
 }
 
 #previewContainer img, #previewContainer video {
