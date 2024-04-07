@@ -56,7 +56,7 @@ padding: 3px;
 display: flex;
 flex-direction: row;
 overflow: auto;
-background: purple;
+background: gray;
 height: fit-content;
 max-height: calc(50vh - 3ch);
 }
@@ -69,21 +69,20 @@ height: fit-content;
 }
 
 #div1,
-#div2,
-#previewContainer {
+#div2 {
 margin: 3px;
 padding: 3px;
 border: 1px solid black;
 }
 
 #previewContainer {
-background-color: #00558890;
 height: calc(50vh - 3ch);
+border: none;
 }
 
 @media screen and (orientation: landscape){
   #div1, #previewContainer {
-    width: calc(50% - 1ch);
+    width: calc(51% - 1ch);
     height: 90vh;
   }
 #previewContainer {
@@ -94,17 +93,17 @@ bottom: 10vh;
 right: 0;
 left: 50%;
 margin: auto;
-background-color: gray;
 height: 90vh;
-    width: calc(50% - 1ch);
+    width: calc(51% - 1ch);
 }
 #buttonContainer{
   left: 45%;
 }
 }
 
-#previewContainer img, #previewContainer video {
-height: 100%; width: 100%; object-fit: contain;
+
+#previewVideo, #previewImage {
+height: 99%; width: 99%; object-fit: contain; margin: 4px; background: none;
 }
 
 #imageContainer {
@@ -113,7 +112,7 @@ display: none;
 
 
 .selected {
-border: 2px solid red;
+background: white;
 text-shadow: 0 0 2px red, 0 0 6px red, 0 0 1ch pink;
 transition: border 1s linear;
 }
@@ -194,6 +193,9 @@ selectedElement = null;
 updateLinkOutput();
 document.getElementById('deleteButton').style.display = 'none';
 }
+document.getElementById('previewImage').src = '';
+document.getElementById('previewVideo').src = '';
+document.getElementById('previewContainer').style.display = 'none';
 });
 
 function previewImg (src){
@@ -258,9 +260,16 @@ links.push("'<" + elements[i].tagName + ">" + elements[i].textContent + "</" + e
 document.getElementById('linkOutput').value = links.join('\n');
 }
 
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Delete" && document.getElementById("deleteButton").style.display === "block") {
+          document.getElementById("deleteButton").click();
+        } else if (event.key === "F2" && document.getElementById("resetButton").style.display === "block") {
+          document.getElementById("resetButton").click();
+        } else if ( event.key === "F3" ) {
+          document.getElementById("okButton").click();
+        } 
+      });
+
 </script>
-
-
 </body>
-
 </html>
