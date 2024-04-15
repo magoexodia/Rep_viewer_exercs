@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Manipulação de linhas</h2>
+
+<textarea id="texto" rows="10" cols="30">
+</textarea>
+
+<button onclick="processarTexto()">Processar Texto</button>
+
+<ul id="lista">
+</ul>
+
+<button onclick="mostrarResultado()">Mostrar Resultado</button>
+
+<textarea id="resultado" rows="10" cols="30" readonly style="display: none;">
+</textarea>
+
+<script>
+function processarTexto() {
+    var texto = document.getElementById("texto").value;
+    var linhas = texto.split('\n');
+    var lista = document.getElementById("lista");
+    lista.innerHTML = '';
+    
+    for(var i = 0; i < linhas.length; i++) {
+        var li = document.createElement("li");
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = "checkbox" + i;
+        checkbox.name = "checkbox";
+        checkbox.value = "value";
+        checkbox.addEventListener('change', function() {
+            if(this.checked) {
+                this.parentNode.style.backgroundColor = "lightgreen";
+            } else {
+                this.parentNode.style.backgroundColor = "white";
+            }
+        });
+        
+        var label = document.createElement('label');
+        label.htmlFor = "checkbox" + i;
+        if(linhas[i].includes('http')) {
+            var anchor = document.createElement('a');
+            anchor.href = linhas[i];
+            anchor.text = linhas[i].substr(-40);
+            anchor.target = "_blank";
+            li.appendChild(anchor);
+        } else {
+            label.appendChild(document.createTextNode(linhas[i]));
+            li.appendChild(checkbox);
+            li.appendChild(label);
+        }
+        
+        var btnUp = document.createElement("button");
+        btnUp.innerHTML = "⬆️";
+        btnUp.onclick = function() {
+            this.parentNode.parentNode.insertBefore(this.parentNode, this.parentNode.previousSibling);
+        }
+        
+        var btnDown = document.createElement("button");
+        btnDown.innerHTML = "⬇️";
+        btnDown.onclick = function() {
+            if (this.parentNode.nextSibling) {
+                this.parentNode.parentNode.insertBefore(this.parentNode.nextSibling, this.parentNode);
+            }
+        }
+        
+        var btnDelete = document.createElement("button");
+        btnDelete.innerHTML = "❌";
+        btnDelete.onclick = function() {
+            this.parentNode.parentNode.removeChild(this.parentNode);
+        }
+        
+        li.appendChild(btnUp);
+        li.appendChild(btnDown);
+        li.appendChild(btnDelete);
+        lista.appendChild(li);
+    }
+    
+    document.getElementById("texto").style.display = "none";
+}
+
+function mostrarResultado() {
+    var lista = document.getElementById("lista");
+    var resultado = document.getElementById("resultado");
+    var linhas = lista.getElementsByTagName("li");
+    var texto = "";
+    
+    for(var i = 0; i < linhas.length; i++) {
+        var checkbox = linhas[i].getElementsByTagName("input")[0];
+        var label = linhas[i].getElementsByTagName("label")[0];
+        var anchor = linhas[i].getElementsByTagName("a")[0];
+        if(checkbox && label) {
+            texto += checkbox.checked ? "[x] " : "[ ] ";
+            texto += label.textContent + "\n";
+        } else if(anchor) {
+            texto += anchor.href + "\n";
+        }
+    }
+    
+    resultado.value = texto;
+    resultado.style.display = "block";
+}
+</script>
+
+</body>
+</html>
