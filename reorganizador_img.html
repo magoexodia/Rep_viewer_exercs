@@ -1,219 +1,240 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-<title>Reorganização de imagens🖼️</title>
-<style>
-p,
-h1,
-h2,
-h3,
-h4 {
-background: #ff000092;
-text-shadow: 0 0 2px white;
-}
+  <head>
+    <title>Reorganização de imagens🖼️</title>
+    <style>
+      p,
+      h1,
+      h2,
+      h3,
+      h4 {
+        background: #ff000092;
+        text-shadow: 0 0 2px white;
+      }
 
-textarea {
-width: 99%;
-height: calc(50vh);
-min-height: 50vh;
-}
+      textarea {
+        width: 99%;
+        height: calc(50vh);
+        min-height: 50vh;
+      }
 
-#buttonContainer {
-height: fit-content;
-display: block;
-position: fixed;
-top: 12px;
-right: 10px;
-}
+      #buttonContainer {
+        height: fit-content;
+        display: block;
+        position: fixed;
+        top: 12px;
+        right: 10px;
+      }
 
-button {
-font-size: 4vmax;
-border: 2px solid black;
-border-radius: 1ch;
-background: gold;
-transition: background 1s ease;
-height: fit-content;
-margin: 1ch;
-}
+      button {
+        font-size: 4vmax;
+        border: 2px solid black;
+        border-radius: 1ch;
+        background: gold;
+        transition: background 1s ease;
+        height: fit-content;
+        margin: 1ch;
+      }
 
-button:hover {
-background: purple;
-text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white;
-transition: background 2s ease
-}
+      button:hover {
+        background: purple;
+        text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white;
+        transition: background 2s ease
+      }
 
-img,
-video {
-object-fit: contain;
-width: auto;
-height: calc(10vmax + 2vw + 1vh);
-margin: 3px;
-padding: 3px;
-}
+      img,
+      video {
+        object-fit: contain;
+        width: auto;
+        height: calc(10vmax + 2vw + 1vh);
+        margin: 3px;
+        padding: 3px;
+      }
 
-#div1 {
-display: flex;
-flex-direction: row;
-overflow: auto;
-background: gray;
-height: fit-content;
-max-height: calc(50vh - 3ch);
-}
-
-
-#div2 {
-min-height: 20vh;
-background: lightgreen;
-height: fit-content;
-}
-
-#div1,
-#div2 {
-margin: 3px;
-padding: 3px;
-border: 1px solid black;
-}
-
-#previewContainer {
-height: calc(50vh - 3ch);
-border: none;
-}
-
-@media screen and (orientation: landscape){
-  #div1 {max-height: 100vh; }
-  #div1, #previewContainer {
-    width: calc(51% - 1ch);
-    height: 90vh;
-  }
-#previewContainer {
-display: block;
-position: fixed;
-top: 10vh;
-bottom: 10vh;
-right: 0;
-left: 50%;
-margin: auto;
-height: 90vh;
-    width: calc(51% - 1ch);
-}
-#buttonContainer{
-  left: 45%;
-}
-}
+      #div1 {
+        display: flex;
+        flex-direction: row;
+        overflow: auto;
+        background: gray;
+        height: fit-content;
+        max-height: calc(50vh - 3ch);
+      }
 
 
-#previewVideo, #previewImage {
-height: 99%; width: 99%; object-fit: contain; margin: 4px; background: none;
-}
+      #div2 {
+        min-height: 20vh;
+        background: lightgreen;
+        height: fit-content;
+      }
 
-#imageContainer {
-display: none;
-}
+      #div1,
+      #div2 {
+        margin: 3px;
+        padding: 3px;
+        border: 1px solid black;
+      }
+
+      #previewContainer {
+        height: calc(50vh - 3ch);
+        border: none;
+      }
+
+      @media screen and (orientation: landscape) {
+        #div1 {
+          max-height: 100vh;
+        }
+
+        #div1,
+        #previewContainer {
+          width: calc(51% - 1ch);
+          height: 90vh;
+        }
+
+        #previewContainer {
+          display: block;
+          position: fixed;
+          top: 10vh;
+          bottom: 10vh;
+          right: 0;
+          left: 50%;
+          margin: auto;
+          height: 90vh;
+          width: calc(51% - 1ch);
+          z-index: -99;
+        }
+
+        #buttonContainer {
+          left: 45%;
+        }
+      }
 
 
-.selected {
-background: white;
-text-shadow: 0 0 2px red, 0 0 6px red, 0 0 1ch pink;
-transition: border 1s linear;
-}
+      #previewVideo,
+      #previewImage {
+        height: 99%;
+        width: 99%;
+        object-fit: contain;
+        margin: 4px;
+        background: none;
+      }
 
-#label-linkInput {writing-mode: vertical-lr; transform: rotate(180deg); text-align: center; background-color: darkgray; text-overflow: none;}
+      #imageContainer {
+        display: none;
+      }
 
-#label-linkOutput {text-align: center;}
 
-</style>
-</head>
-<body>
-<div id="div1">
-<label for="linkInput" id="label-linkInput">Escolhe 1ª🖼️ depois 2ª🖼️</label>
-<textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
+      .selected {
+        background: white;
+        text-shadow: 0 0 2px red, 0 0 6px red, 0 0 1ch pink;
+        transition: border 1s linear;
+      }
+
+      #label-linkInput {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        text-align: center;
+        background-color: darkgray;
+        text-overflow: none;
+      }
+
+      #label-linkOutput {
+        text-align: center;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="div1">
+      <label for="linkInput" id="label-linkInput">Escolhe 1ª🖼️ depois 2ª🖼️</label>
+      <textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
 'link1.jpg',
 'link2.png',
 'link3.img',
 'link5.png',
 'link6.img',"></textarea>
-<div id="imageContainer"></div>
-<div id="buttonContainer">
-<button id="okButton">✔️</button>
-<button id="resetButton" style="display: none;">🔙</button>
-<button id="deleteButton" style="display: none;">🗑️</button>
-</div>
-</div>
-<div id="previewContainer" style="display: none;">
-<img id="previewImage" src="">
-<video id="previewVideo" src="" style="display: none;" controls></video>
-</div>
-<div id="div2"><label for="linkOutput" id="label-linkOutput"> ☑️resultado final da reorganização aqui❗ </label>
-<textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
-</div>
-<script>
-var selectedElement = null;
-var allLines = [];
-const link_asset = "https://assets.tumblr.com/images/media_violation/copyright_v1_1280.png";
-const asset_img = '<img src="' + link_asset +'" onclick="selectElement(this);">';
+      <div id="imageContainer"></div>
+      <div id="buttonContainer">
+        <button id="okButton">✔️</button>
+        <button id="resetButton" style="display: none;">🔙</button>
+        <button id="deleteButton" style="display: none;">🗑️</button>
+      </div>
+    </div>
+    <div id="previewContainer" style="display: none;">
+      <img id="previewImage" src="">
+      <video id="previewVideo" src="" style="display: none;" controls></video>
+    </div>
+    <div id="div2"><label for="linkOutput" id="label-linkOutput"> ☑️resultado final da reorganização aqui❗ </label>
+      <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
+    </div>
+    <script>
+      var selectedElement = null;
+      var allLines = [];
+      const link_asset = "https://assets.tumblr.com/images/media_violation/copyright_v1_1280.png";
+      const asset_img = '<img src="' + link_asset + '" onclick="selectElement(this);">';
 
-document.getElementById('okButton').addEventListener('click', function() {
-allLines = document.getElementById('linkInput').value.trim().split('\n');
-var imageContainer = document.getElementById('imageContainer');
-for (var i = 0; i < allLines.length; i++) {
-var src = allLines[i];
-if ( src === "" || src === null){// || src.includes('*')) {
-//imageContainer.innerHTML += '<br />';
-} else if (src.includes('/H')) {
-imageContainer.innerHTML += src + '<br />' + asset_img + asset_img + '<br />';
-} else if (!src.includes('http')) {
-imageContainer.innerHTML += src;
-} else if (src.includes('mp4') || src.includes('webm')) {
-imageContainer.innerHTML += '<video src="' + src.replace(/['",]/g, '') + '" onclick="selectElement(this);" onmouseover="previewVd(this.src);" ></video>';
-} else {
-imageContainer.innerHTML += '<img src="' + src.replace(/['",]/g, '') + '" onclick="selectElement(this);" onmouseover="previewImg(this.src);">';
-}
-if (src.includes("[")){
-imageContainer.innerHTML += '<h1>' +  src.replace(/['",]/g, '') + '</h1>';
-} else if (src.includes("];")){
-imageContainer.innerHTML += '<h1>];</h1>';
-} 
-}
-document.getElementById('linkInput').style.display = 'none';
-document.getElementById('okButton').style.display = 'none';
-document.getElementById('resetButton').style.display = 'block';
-imageContainer.style.display = 'block';
-updateLinkOutput();
-});
+      document.getElementById('okButton').addEventListener('click', function() {
+        allLines = document.getElementById('linkInput').value.trim().split('\n');
+        var imageContainer = document.getElementById('imageContainer');
+        for (var i = 0; i < allLines.length; i++) {
+          var src = allLines[i];
+          if (src === "" || src === null) { // || src.includes('*')) {
+            //imageContainer.innerHTML += '<br />';
+          } else if (src.includes('/H')) {
+            imageContainer.innerHTML += src + '<br />' + asset_img + asset_img + '<br />';
+          } else if (!src.includes('http')) {
+            imageContainer.innerHTML += src;
+          } else if (src.includes('mp4') || src.includes('webm')) {
+            imageContainer.innerHTML += '<video src="' + src.replace(/['",]/g, '') + '" onclick="selectElement(this);" onmouseover="previewVd(this.src);" ></video>';
+          } else {
+            imageContainer.innerHTML += '<img src="' + src.replace(/['",]/g, '') + '" onclick="selectElement(this);" onmouseover="previewImg(this.src);">';
+          }
+          if (src.includes("[")) {
+            imageContainer.innerHTML += '<h1>' + src.replace(/['",]/g, '') + '</h1>';
+          } else if (src.includes("];")) {
+            imageContainer.innerHTML += '<h1>];</h1>';
+          }
+        }
+        document.getElementById('linkInput').style.display = 'none';
+        document.getElementById('okButton').style.display = 'none';
+        document.getElementById('resetButton').style.display = 'block';
+        imageContainer.style.display = 'block';
+        updateLinkOutput();
+      });
 
-document.getElementById('resetButton').addEventListener('click', function() {
-location.reload();
-});
+      document.getElementById('resetButton').addEventListener('click', function() {
+        location.reload();
+      });
 
-document.getElementById('deleteButton').addEventListener('click', function() {
-if (selectedElement !== null) {
-selectedElement.classList.remove('selected');
-selectedElement.remove();
-selectedElement = null;
-updateLinkOutput();
-document.getElementById('deleteButton').style.display = 'none';
-}
-document.getElementById('previewImage').src = '';
-document.getElementById('previewVideo').src = '';
-document.getElementById('previewContainer').style.display = 'none';
-});
+      document.getElementById('deleteButton').addEventListener('click', function() {
+        if (selectedElement !== null) {
+          selectedElement.classList.remove('selected');
+          selectedElement.remove();
+          selectedElement = null;
+          updateLinkOutput();
+          document.getElementById('deleteButton').style.display = 'none';
+        }
+        document.getElementById('previewImage').src = '';
+        document.getElementById('previewVideo').src = '';
+        document.getElementById('previewContainer').style.display = 'none';
+      });
 
-function previewImg (src){
-document.getElementById('previewImage').src = src;
-document.getElementById('previewImage').style.display = 'block';
-document.getElementById('previewVideo').pause();
-document.getElementById('previewVideo').src = '';
-document.getElementById('previewVideo').style.display = 'none';
-document.getElementById('previewContainer').style.display = 'block';
-}
+      function previewImg(src) {
+        document.getElementById('previewImage').src = src;
+        document.getElementById('previewImage').style.display = 'block';
+        document.getElementById('previewVideo').pause();
+        document.getElementById('previewVideo').src = '';
+        document.getElementById('previewVideo').style.display = 'none';
+        document.getElementById('previewContainer').style.display = 'block';
+      }
 
-function previewVd (src){
-document.getElementById('previewVideo').src = src;
-document.getElementById('previewVideo').style.display = 'block';
-document.getElementById('previewImage').style.display = 'none';
-document.getElementById('previewContainer').style.display = 'block';
-}
+      function previewVd(src) {
+        document.getElementById('previewVideo').src = src;
+        document.getElementById('previewVideo').style.display = 'block';
+        document.getElementById('previewImage').style.display = 'none';
+        document.getElementById('previewContainer').style.display = 'block';
+      }
 
       function selectElement(element) {
         if (selectedElement === null) {
@@ -242,35 +263,35 @@ document.getElementById('previewContainer').style.display = 'block';
           updateLinkOutput();
         }
       }
-      
-function updateLinkOutput() {
-var elements = document.getElementById('imageContainer').getElementsByTagName('*');
-var links = [];
-for (var i = 0; i < elements.length; i++) {
-if (elements[i].src && elements[i].src !== link_asset) {
-links.push("'" + elements[i].src + "',");
-} else if (elements[i].src || elements[i].tagName.toLowerCase().includes("br")) {
-} else if (elements[i].tagName.toLowerCase() === "span") {
-links.push(elements[i].innerText);
-} else if (elements[i].textContent.includes("[") || elements[i].textContent.includes("];")) {
-links.push("\n\n" + elements[i].textContent);
-} else if (elements[i].tagName.toLowerCase().includes("h")) {
-links.push("'<" + elements[i].tagName + ">" + elements[i].textContent + "</" + elements[i].tagName + ">',");
-} 
-}
-document.getElementById('linkOutput').value = links.join('\n');
-}
+
+      function updateLinkOutput() {
+        var elements = document.getElementById('imageContainer').getElementsByTagName('*');
+        var links = [];
+        for (var i = 0; i < elements.length; i++) {
+          if (elements[i].src && elements[i].src !== link_asset) {
+            links.push("'" + elements[i].src + "',");
+          } else if (elements[i].src || elements[i].tagName.toLowerCase().includes("br")) {} else if (elements[i].tagName.toLowerCase() === "span") {
+            links.push(elements[i].innerText);
+          } else if (elements[i].textContent.includes("[") || elements[i].textContent.includes("];")) {
+            links.push("\n\n" + elements[i].textContent);
+          } else if (elements[i].tagName.toLowerCase().includes("h")) {
+            links.push("'<" + elements[i].tagName + ">" + elements[i].textContent + "</" + elements[i].tagName + ">',");
+          }
+        }
+        document.getElementById('linkOutput').value = links.join('\n');
+      }
 
       document.addEventListener("keydown", function(event) {
         if (event.key === "Delete" && document.getElementById("deleteButton").style.display === "block") {
           document.getElementById("deleteButton").click();
         } else if (event.key === "F2" && document.getElementById("resetButton").style.display === "block") {
           document.getElementById("resetButton").click();
-        } else if ( event.key === "F3" ) {
+        } else if (event.key === "F3") {
           document.getElementById("okButton").click();
-        } 
+        }
       });
 
-</script>
-</body>
+    </script>
+  </body>
+
 </html>
