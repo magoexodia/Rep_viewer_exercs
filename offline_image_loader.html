@@ -352,7 +352,7 @@
           let img = document.createElement("img"),
             imgI = (i + j) % imgs.length;
           img.src = imgs[imgI];
-          img.loading ="lazy";
+          img.loading = "lazy";
           img.onmouseover = function() {
             let viewer = document.getElementById('viewer');
             viewer.src = img.src;
@@ -385,7 +385,7 @@
         let links = document.getElementById("links").value.split(",");
         links.forEach(link => {
           link = link.trim().replace(/^['"]/, "").replace(/['"]$/, "");
-          if (link) {
+          if (link && !link.includes("<") && !link.includes("const")) {
             link.endsWith(".mp4") ? vids.push(link) : imgs.push(link);
           }
         });
@@ -447,11 +447,10 @@
         else if (e.key === "t" || e.key === "T") document.getElementById("troca").click();
         else if (e.key === "5") {
           document.getElementById("viewer").style.height = "500%";
-          document.getElementById("viewer").style.width = "500%";          
-        }
-        else if (e.key === "z" || e.key === "Z") {
+          document.getElementById("viewer").style.width = "500%";
+        } else if (e.key === "z" || e.key === "Z") {
           document.getElementById("viewer").style.height = "250%";
-          document.getElementById("viewer").style.width = "250%";          
+          document.getElementById("viewer").style.width = "250%";
         } else if (e.key === "o" || e.key === "O") {
           document.getElementById("viewer").style.height = '';
           document.getElementById("viewer").style.width = '';
