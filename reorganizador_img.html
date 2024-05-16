@@ -21,13 +21,14 @@
 
       #buttonContainer {
         height: fit-content;
+        width: 5ch;
         display: block;
         position: fixed;
         top: 12px;
         right: 10px;
       }
 
-      button {
+      .butao {
         font-size: 4vmax;
         border: 2px solid black;
         border-radius: 1ch;
@@ -35,6 +36,14 @@
         transition: background 1s ease;
         height: fit-content;
         margin: 1ch;
+      }
+
+      input[type="checkbox"]:checked+label {
+        filter: grayscale(0%);
+      }
+
+      input[type="checkbox"]:not(checked)+label {
+        filter: grayscale(100%);
       }
 
       button:hover {
@@ -52,13 +61,24 @@
         padding: 3px;
       }
 
+      #previewVideo {
+        background: pink;
+      }
+
+      #div1 img,
+      #div1 video {
+        width: auto;
+        max-width: 90%;
+        max-height: calc(10vmax + 2vw + 1vh);
+      }
+
       #div1 {
         display: flex;
         flex-direction: row;
         overflow: auto;
         background: gray;
         height: fit-content;
-        max-height: calc(50vh - 3ch);
+        max-height: calc(70vh - 3ch);
       }
 
 
@@ -66,6 +86,7 @@
         min-height: 20vh;
         background: lightgreen;
         height: fit-content;
+        z-index: -99;
       }
 
       #div1,
@@ -76,7 +97,7 @@
       }
 
       #previewContainer {
-        height: calc(50vh - 3ch);
+        height: calc(30vh - 3ch);
         border: none;
       }
 
@@ -87,25 +108,25 @@
 
         #div1,
         #previewContainer {
-          width: calc(51% - 1ch);
-          height: 90vh;
+          height: calc(100vh - 2ch);
+        }
+
+        #div1,
+        #div2 {
+          width: calc(100% - 500px);
         }
 
         #previewContainer {
+          width: 500px;
           display: block;
           position: fixed;
-          top: 10vh;
-          bottom: 10vh;
+          top: 6px;
           right: 0;
-          left: 50%;
           margin: auto;
-          height: 90vh;
-          width: calc(51% - 1ch);
-          z-index: -99;
         }
 
         #buttonContainer {
-          left: 45%;
+          right: calc(4ch + 500px);
         }
       }
 
@@ -115,7 +136,7 @@
         height: 99%;
         width: 99%;
         object-fit: contain;
-        margin: 4px;
+        margin: auto;
         background: none;
       }
 
@@ -131,11 +152,15 @@
       }
 
       #label-linkInput {
-        writing-mode: vertical-lr;
-        transform: rotate(180deg);
-        text-align: center;
         background-color: darkgray;
-        text-overflow: none;
+        text-align: center;
+        /*writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        text-overflow: none;*/
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 50%;
       }
 
       #label-linkOutput {
@@ -156,9 +181,11 @@
 'link6.img',"></textarea>
       <div id="imageContainer"></div>
       <div id="buttonContainer">
-        <button id="okButton">✔️</button>
-        <button id="resetButton" style="display: none;">🔙</button>
-        <button id="deleteButton" style="display: none;">🗑️</button>
+        <button id="okButton" class="butao">✔️</button>
+        <button id="resetButton" class="butao" style="display: none;">🔙</button>
+        <button id="deleteButton" class="butao" style="display: none;">🗑️</button>
+        <input type="checkbox" id="viewer" style="display: none;">
+        <label id="label-viewer" class="butao" for="viewer">👀</label>
       </div>
     </div>
     <div id="previewContainer" style="display: none;">
@@ -220,20 +247,26 @@
         document.getElementById('previewContainer').style.display = 'none';
       });
 
+      document.getElementById('viewer').addEventListener('click', "hideUnHide()");
+
       function previewImg(src) {
         document.getElementById('previewImage').src = src;
         document.getElementById('previewImage').style.display = 'block';
         document.getElementById('previewVideo').pause();
         document.getElementById('previewVideo').src = '';
         document.getElementById('previewVideo').style.display = 'none';
-        document.getElementById('previewContainer').style.display = 'block';
+        hideUnHide();
       }
 
       function previewVd(src) {
         document.getElementById('previewVideo').src = src;
         document.getElementById('previewVideo').style.display = 'block';
         document.getElementById('previewImage').style.display = 'none';
-        document.getElementById('previewContainer').style.display = 'block';
+        hideUnHide();
+      }
+
+      function hideUnHide() {
+        document.getElementById('previewContainer').style.display = document.getElementById("viewer").checked ? 'block' : 'none';
       }
 
       function selectElement(element) {
@@ -290,7 +323,6 @@
           document.getElementById("okButton").click();
         }
       });
-
     </script>
   </body>
 
