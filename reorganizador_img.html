@@ -61,6 +61,15 @@
         padding: 3px;
       }
 
+      video:not(#previewVideo) {
+        border: 5px solid black;
+      }
+
+      video:not(#previewVideo):hover {
+        border-radius: 1ch;
+        border: 5px solid purple;
+      }
+
       #previewVideo {
         background: pink;
       }
@@ -106,27 +115,31 @@
           max-height: 100vh;
         }
 
-        #div1,
+        #div1 {
+          height: calc(100vh - 2ch);
+        }
+
         #previewContainer {
           height: calc(100vh - 2ch);
         }
 
         #div1,
         #div2 {
-          width: calc(100% - 500px);
+          width: calc(100% - 300px);
         }
 
-        #previewContainer {
-          width: 500px;
+        #previewContainer:not(.grande) {
+          width: 300px;
           display: block;
           position: fixed;
           top: 6px;
           right: 0;
           margin: auto;
+          background: #550000A5;
         }
 
         #buttonContainer {
-          right: calc(4ch + 500px);
+          right: calc(4ch + 300px);
         }
       }
 
@@ -147,8 +160,7 @@
 
       .selected {
         background: white;
-        text-shadow: 0 0 2px red, 0 0 6px red, 0 0 1ch pink;
-        transition: border 1s linear;
+        border-radius: 1ch;
       }
 
       #label-linkInput {
@@ -166,7 +178,18 @@
       #label-linkOutput {
         text-align: center;
       }
+/*######################################*/
+    .grande {
+      position: fixed;
+      bottom: 5px;
+      right: 5px;
+      width: 90%;
+      overflow: auto;
+      z-index: 9999;
+      background: #550000A5;
+    }
 
+/*##########################################*/
     </style>
   </head>
 
@@ -188,18 +211,21 @@
         <label id="label-viewer" class="butao" for="viewer">👀</label>
       </div>
     </div>
-    <div id="previewContainer" style="display: none;">
+    <div id="previewContainer" style="display: none;" onmouseover="this.classList.add('grande')" onmouseout="this.classList.remove('grande')">
       <img id="previewImage" src="">
       <video id="previewVideo" src="" style="display: none;" controls></video>
     </div>
     <div id="div2"><label for="linkOutput" id="label-linkOutput"> ☑️resultado final da reorganização aqui❗ </label>
       <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
     </div>
+
+
+
     <script>
       var selectedElement = null;
       var allLines = [];
       const link_asset = "https://assets.tumblr.com/images/media_violation/copyright_v1_1280.png";
-      const asset_img = '<img src="' + link_asset + '" onclick="selectElement(this);">';
+      const asset_img = '<img src="' + link_asset + '" onclick="selectElement(this);" onmouseover="previewImg(this.src);">';
 
       document.getElementById('okButton').addEventListener('click', function() {
         allLines = document.getElementById('linkInput').value.trim().split('\n');
@@ -209,7 +235,7 @@
           if (src === "" || src === null) { // || src.includes('*')) {
             //imageContainer.innerHTML += '<br />';
           } else if (src.includes('/H')) {
-            imageContainer.innerHTML += src + '<br />' + asset_img + asset_img + '<br />';
+            imageContainer.innerHTML += asset_img + '<br />' + src + '<br />' + asset_img;
           } else if (!src.includes('http')) {
             imageContainer.innerHTML += src;
           } else if (src.includes('mp4') || src.includes('webm')) {
@@ -323,6 +349,7 @@
           document.getElementById("okButton").click();
         }
       });
+
     </script>
   </body>
 
