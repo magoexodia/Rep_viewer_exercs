@@ -15,7 +15,7 @@
 
       textarea {
         width: 99%;
-        height: calc(50vh);
+        height: 98%;
         min-height: 50vh;
       }
 
@@ -52,50 +52,32 @@
         transition: background 2s ease
       }
 
-      img,
-      video {
-        object-fit: contain;
-        width: auto;
-        height: calc(10vmax + 2vw + 1vh);
-        margin: 3px;
-        padding: 3px;
-      }
 
       video:not(#previewVideo) {
-        border: 5px solid black;
+        border: 2px solid black;
       }
 
       video:not(#previewVideo):hover {
         border-radius: 1ch;
-        border: 5px solid purple;
+        border: 2px solid purple;
       }
 
       #previewVideo {
         background: pink;
       }
 
-      #div1 img,
-      #div1 video {
+      #imageContainer img,
+      #imageContainer video {
         width: auto;
         max-width: 90%;
         max-height: calc(10vmax + 2vw + 1vh);
+        margin: 3px;
+        padding: 3px;
       }
 
-      #div1 {
+      #div1:not(.some) {
         display: flex;
         flex-direction: row;
-        overflow: auto;
-        background: gray;
-        height: fit-content;
-        max-height: calc(70vh - 3ch);
-      }
-
-
-      #div2 {
-        min-height: 20vh;
-        background: lightgreen;
-        height: fit-content;
-        z-index: -99;
       }
 
       #div1,
@@ -105,41 +87,63 @@
         border: 1px solid black;
       }
 
-      #previewContainer {
-        height: calc(30vh - 3ch);
+      #div1 {
+        overflow: auto;
+        background: gray;
+        min-height: 20vh;
+        height: 80vh;
+      }
+
+      #previewContainer:not(.grande) {
+        height: calc(20vh - 3ch);
         border: none;
       }
 
+      #div2 {
+        background: lightgreen;
+        height: fit-content;
+        z-index: -99;
+      }
+
+    .grande {
+      position: fixed;
+      bottom: 5px;
+      right: 5px;
+      width: 90%;
+height: 96vh;
+      overflow: auto;
+      z-index: 9999;
+      background: #550000A5;
+border-radius: 1ch;
+    }
+
+
       @media screen and (orientation: landscape) {
         #div1 {
-          max-height: 100vh;
+          height: calc(100vh - 12ch);
         }
 
-        #div1 {
-          height: calc(100vh - 2ch);
-        }
-
-        #previewContainer {
+        #previewContainer:not(.grande) {
           height: calc(100vh - 2ch);
         }
 
         #div1,
         #div2 {
-          width: calc(100% - 300px);
+          width: calc(80%);
         }
 
         #previewContainer:not(.grande) {
-          width: 300px;
+          width: 20%;
           display: block;
           position: fixed;
           top: 6px;
           right: 0;
           margin: auto;
-          background: #550000A5;
+          background: #554f00A5;
         }
 
         #buttonContainer {
-          right: calc(4ch + 300px);
+          right: calc(4ch + 20%);
         }
       }
 
@@ -153,7 +157,7 @@
         background: none;
       }
 
-      #imageContainer {
+      #imageContainer, .some {
         display: none;
       }
 
@@ -178,18 +182,7 @@
       #label-linkOutput {
         text-align: center;
       }
-/*######################################*/
-    .grande {
-      position: fixed;
-      bottom: 5px;
-      right: 5px;
-      width: 90%;
-      overflow: auto;
-      z-index: 9999;
-      background: #550000A5;
-    }
 
-/*##########################################*/
     </style>
   </head>
 
@@ -216,7 +209,8 @@
       <video id="previewVideo" src="" style="display: none;" controls></video>
     </div>
     <div id="div2"><label for="linkOutput" id="label-linkOutput"> ☑️resultado final da reorganização aqui❗ </label>
-      <textarea id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
+        <button id="resultButton" class="butao" style="display: none; font-size: 1.5vmax;">🟰</button>
+      <textarea class="some" id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
     </div>
 
 
@@ -252,12 +246,19 @@
         document.getElementById('linkInput').style.display = 'none';
         document.getElementById('okButton').style.display = 'none';
         document.getElementById('resetButton').style.display = 'block';
+        document.getElementById('resultButton').style.display = 'block';
         imageContainer.style.display = 'block';
-        updateLinkOutput();
+        //updateLinkOutput();
       });
 
       document.getElementById('resetButton').addEventListener('click', function() {
         location.reload();
+      });
+
+      document.getElementById('resultButton').addEventListener('click', function() {
+        updateLinkOutput();
+        document.getElementById('div1').classList.toggle('some');
+        document.getElementById('linkOutput').classList.toggle('some');
       });
 
       document.getElementById('deleteButton').addEventListener('click', function() {
@@ -265,7 +266,7 @@
           selectedElement.classList.remove('selected');
           selectedElement.remove();
           selectedElement = null;
-          updateLinkOutput();
+          //updateLinkOutput();
           document.getElementById('deleteButton').style.display = 'none';
         }
         document.getElementById('previewImage').src = '';
@@ -273,7 +274,6 @@
         document.getElementById('previewContainer').style.display = 'none';
       });
 
-      document.getElementById('viewer').addEventListener('click', "hideUnHide()");
 
       function previewImg(src) {
         document.getElementById('previewImage').src = src;
@@ -319,7 +319,7 @@
           }
           selectedElement.classList.remove('selected');
           selectedElement = null;
-          updateLinkOutput();
+          //updateLinkOutput();
         }
       }
 
