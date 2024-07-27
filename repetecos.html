@@ -103,28 +103,15 @@
         font-size: 1.5ch;
         margin: 0.3ch;
         background: none;
-        transition: border 1s ease, filter 2s linear;
       }
 
-      .controle button:hover {
-        border: 3px solid gold;
-        border-radius: 1ch;
-        background: none;
-        filter: hue-rotate(180deg);
-      }
 
       #mais {
-        font-size: 8ch;
+        font-size: 10ch;
         border: none;
         border-radius: 2ch;
         filter: hue-rotate(60deg);
         background: none;
-      }
-
-      #mais:hover {
-        border-radius: 1ch;
-        filter: hue-rotate(180deg);
-        transition: filter 1s linear;
       }
 
       #counter {
@@ -150,16 +137,16 @@
           transform: rotate(90deg);
         }
 
-        #tela2 button:hover {
-          transform: rotate(90deg);
-        }
-
         .controle {
           transform: scale(-1);
         }
 
         #tela3 {
           transform: none;
+        text-align: center;
+        font-size: 4ch;
+        color: purple;
+        text-shadow: 0 0 3px white, 0 0 5px silver, 0 0 10px gray, 0 0 0.3ch black, 0 0 0.5ch pink, 0 0 0.7ch purple, 0 0 1ch red;
         }
       }
       .titulo, .titulo * {
@@ -189,13 +176,6 @@
         transition: background 2s ease, filter 2s linear;;
       }
 
-      #fotol:hover,
-      #arql:hover, #coml:hover, #seml:hover, #entrel:hover {
-        background: gray;
-        border-radius: 1ch;
-        filter: none;
-        transition: background 1s ease;
-      }
       #radio2 input[type="text"] {width: 14ch;}
     </style>
   </head>
@@ -212,9 +192,9 @@
         <div id="config" style="display:some;">
           <label class="titulo">📷</label><input type="checkbox" id="foto" onchange="none_some('linkImagem', this.checked)"><br>
           <label for="foto" id="fotol">🔗</label>
-          <input type="text" id="linkImagem" value="https://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv" style="display: none;">
-          <label for="file-input" id="arql">📂</label>
-          <input type="file" id="file-input" accept="image/*" onchange="start2()">
+          <input type="text" id="linkImagem" value="https://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv" style="display: none; width: 8ch;">
+          <!-- <label for="file-input" id="arql">📂</label>
+          <input type="file" id="file-input" accept="image/*" onchange="start2()"> -->
           <div id="radios2"><label class="titulo">⌛❓</label><br>
             <input type="radio" name="corda" id="entre" value=2>
             <label for="entre" id="entrel">🥪</label>
@@ -311,29 +291,21 @@
         }, descanso * 1000);
 
       }
-
-      function abrirTela3() {
-        //tela3teste();
-        carrega_tela3();
-        document.getElementById('tela3').style.display = 'flex';
-        var descanso = document.getElementById('valor2').value * document.querySelector('input[name="topt"]:checked').value;
-        setTimeout(abrirTela1, descanso * 1000);
-      }
-
-      function carrega_tela3() {
-        document.getElementById('tela2').style.display = 'none';
-        var linkImagem = document.getElementById('linkImagem').value;
-        if (document.getElementById("file-input").files[0] && document.getElementById('foto').checked) {
-          document.getElementById('imagem').src = URL.createObjectURL(document.getElementById("file-input").files[0]);
-          document.getElementById('imagem').style.display = 'block';
-        } else if (linkImagem.includes('//') && document.getElementById('foto').checked) {
-          document.getElementById('imagem').src = linkImagem;
-          document.getElementById('imagem').style.display = 'block';
-        } else {
-          //contagem();
-          abrir_emoticon();
-        }
-      }
+function carrega_tela3() {
+  document.getElementById('tela2').style.display = 'none';
+  var linkImagem = document.getElementById('linkImagem').value;
+  /*if (document.getElementById("file-input").files[0]) {
+    document.getElementById('imagem').src = URL.createObjectURL(document.getElementById("file-input").files[0]);
+    document.getElementById('imagem').style.display = 'block';
+    document.getElementById('emoticon').style.display = 'none';
+  } else*/ if (linkImagem.includes('//')) {
+    document.getElementById('imagem').src = linkImagem;
+    document.getElementById('imagem').style.display = 'block';
+    document.getElementById('emoticon').style.display = 'none';
+  } else {
+    abrir_emoticon();
+  }
+}
 
       function abrir_emoticon() {
         document.getElementById('emoticon').style.display = 'block';
