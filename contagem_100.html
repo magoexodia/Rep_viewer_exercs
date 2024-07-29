@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Interativa</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: calc(100vw/16);
+        /*1.5cm;*/
+        text-align: center;
+        margin: 20px;
+      }
+
+      table {
+        border-collapse: separate;
+        border-spacing: calc(100vw/50);
+        /*0.5cm;*/
+        margin: auto;
+      }
+
+      td {
+        width: 2.2ch;
+        /*1.5cm;*/
+        height: 2.2ch;
+        /*1.5cm;*/
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border: 1px solid black;
+        border-radius: 1ch;
+      }
+
+      #textinho {
+        position: fixed;
+        /* Fixa o elemento no topo */
+        top: 0;
+        /* Alinha ao topo da página */
+        left: 50%;
+        /* Centraliza horizontalmente */
+        transform: translateX(-50%);
+        /* Ajusta a posição para centralizar */
+        background-color: white;
+        /* Fundo branco para melhor visibilidade */
+        padding: 10px;
+        /* Espaçamento interno */
+        z-index: -1000;
+        /* Garante que fique acima de outros elementos */
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <input style="font-size: calc(100vw/32); width: 90vw; text-align: center;" type="text" id="titulo" placeholder="Título:" oninput="texta()">
+    <div id="textinho"> <span id="titulo-texto"></span>
+
+    </div>
+    <div id="tabelinho">
+      <table>
+        <script>
+          for (let i = 0; i < 10; i++) {
+            document.write('<tr>');
+            for (let j = 0; j < 10; j++) {
+              // Cores baseadas na posição da linha e coluna
+              let color = `rgba(${255 - (j * 25)}, ${255 - (i * 25)}, 200, 1)`;
+              document.write(`<td style="background-color: ${color};" onclick="marcar(this, ${i}, ${j})"> </td>`);
+            }
+            document.write('</tr>');
+          }
+
+          function marcar(celula, linha, coluna) {
+            // Troca a cor de fundo da célula e adiciona um indicativo
+            let corLinha = celula.style.backgroundColor;
+            celula.style.backgroundColor = corLinha;
+            //celula.innerHTML = 'X'; //`(${linha}, ${coluna})`;
+            celula.innerHTML = celula.innerHTML === 'X' ? '' : 'X';
+          }
+
+          function texta() {
+            document.getElementById('titulo-texto').innerText = document.getElementById('titulo').value;
+          }
+
+        </script>
+      </table>
+
+    </div>
+
+  </body>
+
+</html>
