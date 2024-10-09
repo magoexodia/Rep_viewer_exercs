@@ -1,6 +1,5 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
     <title>Reorganização de imagens🖼️</title>
     <style>
@@ -13,6 +12,10 @@
         text-shadow: 0 0 2px white;
       }
 
+      body {
+        font-size: 25px;
+      }
+
       textarea {
         width: 99%;
         height: 98%;
@@ -21,7 +24,7 @@
 
       #buttonContainer {
         height: fit-content;
-        width: 5ch;
+        width: 3vmax;
         display: block;
         position: fixed;
         top: 12px;
@@ -29,29 +32,32 @@
       }
 
       .butao {
-        font-size: 4vmax;
+        font-size: 3vmax;
         border: 2px solid black;
         border-radius: 1ch;
         background: gold;
         transition: background 1s ease;
-        height: fit-content;
-        margin: 1ch;
+        height: 5vmax;
+        margin-bottom: 0.5ch;
+        left: 1px;
       }
 
-      input[type="checkbox"]:checked+label {
+      input[type="checkbox"]:checked + label {
         filter: grayscale(0%);
       }
 
-      input[type="checkbox"]:not(checked)+label {
+      input[type="checkbox"]:not(checked) + label {
         filter: grayscale(100%);
       }
 
       button:hover {
         background: purple;
-        text-shadow: 0 0 1px white, 0 0 3px white, 0 0 1ch white;
-        transition: background 2s ease
+        text-shadow:
+          0 0 1px white,
+          0 0 3px white,
+          0 0 1ch white;
+        transition: background 2s ease;
       }
-
 
       video:not(#previewVideo) {
         border: 2px solid black;
@@ -66,11 +72,9 @@
         background: pink;
       }
 
-      #imageContainer img,
-      #imageContainer video {
-        width: auto;
-        max-width: 90%;
-        max-height: calc(10vmax + 2vw + 1vh);
+      .ivList {
+        height: 14ch;
+        min-height: 100px;
         margin: 3px;
         padding: 3px;
       }
@@ -103,50 +107,51 @@
         background: lightgreen;
         height: fit-content;
         z-index: -99;
+        text-align: center;
       }
 
-    .grande {
-      position: fixed;
-      bottom: 5px;
-      right: 5px;
-      width: 90%;
-height: 96vh;
-      overflow: auto;
-      z-index: 9999;
-      background: #550000A5;
-border-radius: 1ch;
-    }
-
+      .grande {
+        position: fixed;
+        bottom: 3px;
+        top: 3px;
+        left: 3px;
+        right: 3px;
+        width: 100%;
+        height: calc(100vh - 0.5ch);
+        overflow: auto;
+        z-index: 9999;
+        background: #550000a5;
+        border-radius: 1ch;
+      }
 
       @media screen and (orientation: landscape) {
         #div1 {
-          height: calc(100vh - 12ch);
+          height: calc(100svh - 8ch);
         }
 
         #previewContainer:not(.grande) {
-          height: calc(100vh - 2ch);
+          /*height: calc(100vh - 2ch);*/
+          height: calc(8ch);
         }
 
         #div1,
         #div2 {
-          width: calc(80%);
+          width: calc(98% - 6vmax);
         }
 
         #previewContainer:not(.grande) {
-          width: 20%;
+          width: 8ch;
           display: block;
           position: fixed;
-          top: 6px;
-          right: 0;
-          margin: auto;
-          background: #554f00A5;
+          bottom: 6px;
+          right: 6px;
+          background: #554f00a5;
         }
 
         #buttonContainer {
-          right: calc(4ch + 20%);
+          right: calc(4ch + 15px);
         }
       }
-
 
       #previewVideo,
       #previewImage {
@@ -157,10 +162,10 @@ border-radius: 1ch;
         background: none;
       }
 
-      #imageContainer, .some {
+      #imageContainer,
+      .some {
         display: none;
       }
-
 
       .selected {
         background: white;
@@ -182,175 +187,283 @@ border-radius: 1ch;
       #label-linkOutput {
         text-align: center;
       }
-
     </style>
   </head>
 
   <body>
     <div id="div1">
-      <label for="linkInput" id="label-linkInput">Escolhe 1ª🖼️ depois 2ª🖼️</label>
-      <textarea id="linkInput" rows="4" cols="50" placeholder="Cole aqui seus links.
+      <textarea
+        id="linkInput"
+        rows="4"
+        cols="50"
+        placeholder="Cole aqui seus links.
 'link1.jpg',
 'link2.png',
 'link3.img',
 'link5.png',
-'link6.img',"></textarea>
+'link6.img',"
+      ></textarea>
       <div id="imageContainer"></div>
       <div id="buttonContainer">
         <button id="okButton" class="butao">✔️</button>
-        <button id="resetButton" class="butao" style="display: none;">🔙</button>
-        <button id="deleteButton" class="butao" style="display: none;">🗑️</button>
-        <input type="checkbox" id="viewer" style="display: none;">
+        <button id="resetButton" class="butao" style="display: none">🔙</button>
+        <button id="deleteButton" class="butao" style="display: none">
+          🗑️
+        </button>
+        <button id="resultButton" class="butao" style="display: none">
+          🟰
+        </button>
+        <input type="checkbox" id="viewer" style="display: none" />
         <label id="label-viewer" class="butao" for="viewer">👀</label>
+        <button id="zoomin" class="butao" style="display: none">➕</button>
+        <button id="zoomout" class="butao" style="display: none">➖</button>
       </div>
     </div>
-    <div id="previewContainer" style="display: none;" onmouseover="this.classList.add('grande')" onmouseout="this.classList.remove('grande')">
-      <img id="previewImage" src="">
-      <video id="previewVideo" src="" style="display: none;" controls></video>
+    <div
+      id="previewContainer"
+      style="display: none"
+      onmouseover="this.classList.add('grande')"
+    >
+      <img id="previewImage" src="" />
+      <video id="previewVideo" src="" style="display: none" controls></video>
     </div>
-    <div id="div2"><label for="linkOutput" id="label-linkOutput"> ☑️resultado final da reorganização aqui❗ </label>
-        <button id="resultButton" class="butao" style="display: none; font-size: 1.5vmax;">🟰</button>
-      <textarea class="some" id="linkOutput" rows="4" cols="50" readonly onclick="this.select();"></textarea>
+    <div id="div2">
+      <div
+        id="label-linkOutput"
+        style="font-size: 2ch; height: 4ch; overflow-y: scroll"
+        onmouseover="this.classList.toggle('grande)"
+      >
+        INSTRUÇÕES: <br />Escolhe 1ª🖼️ <wbr />depois 2ª🖼️<br />🖱Duplo click
+        aumenta = zoom<br />🖱Mouse em cima da pre-visualização = zoom<br />⌨ESC
+        = sai do zoom<br />🔙 volta para entrada de lista <br />🗑️ apagar o item
+        selecionado<br />👀 alterna pre-visualização<br />🟰 Mostra o
+        resultado<br />
+      </div>
+      <textarea
+        class="some"
+        id="linkOutput"
+        rows="4"
+        cols="50"
+        readonly
+        onclick="this.select();"
+      ></textarea>
+      <button id="refazButton" class="butao some" style="font-size: 25px">
+        🔙 Retrabalhar sua lista
+      </button>
     </div>
-
-
 
     <script>
-      var selectedElement = null;
-      var allLines = [];
-      const link_asset = "https://assets.tumblr.com/images/media_violation/copyright_v1_1280.png";
-      const asset_img = '<img src="' + link_asset + '" onclick="selectElement(this);" onmouseover="previewImg(this.src);">';
+      var selectedElement = null
+      var allLines = []
+      const link_asset =
+        "https://assets.tumblr.com/images/media_violation/copyright_v1_1280.png"
 
-      document.getElementById('okButton').addEventListener('click', function() {
-        allLines = document.getElementById('linkInput').value.trim().split('\n');
-        var imageContainer = document.getElementById('imageContainer');
+      //Lista de elementos repetidos
+      var lista = document.getElementById("linkInput")
+      var bok = document.getElementById("okButton")
+      var bdel = document.getElementById("deleteButton")
+      var reseta = document.getElementById("resetButton")
+      var resposta = document.getElementById("resultButton")
+      var refaz = document.getElementById("refazButton")
+      var prImage = document.getElementById("previewImage")
+      var prVideo = document.getElementById("previewVideo")
+      var prCont = document.getElementById("previewContainer")
+      var zoomin = document.getElementById("zoomin")
+      var zoomout = document.getElementById("zoomout")
+
+      bok.addEventListener("click", function () {
+        allLines = lista.value.trim().split("\n")
+        const asset_img =
+          '<img class="ivList" src="' +
+          link_asset +
+          '" onclick="selectElement(this);" onmouseover="previewImg(this.src); ">'
+        const pv_img =
+          '" onclick="selectElement(this);" onmouseover="previewImg(this.src);" ondblclick="prCont.classList.toggle(\'grande\')" class="ivList">'
+        const pv_vd =
+          '" onclick="selectElement(this);" onmouseover="previewVd(this.src);"  ondblclick="prCont.classList.toggle(\'grande\')" class="ivList"></video>'
+        var imageContainer = document.getElementById("imageContainer")
         for (var i = 0; i < allLines.length; i++) {
-          var src = allLines[i];
-          if (src === "" || src === null) { // || src.includes('*')) {
+          var src = allLines[i]
+          if (src === "" || src === null) {
+            // || src.includes('*')) {
             //imageContainer.innerHTML += '<br />';
-          } else if (src.includes('/H')) {
-            imageContainer.innerHTML += asset_img + '<br />' + src + '<br />' + asset_img;
-          } else if (!src.includes('http')) {
-            imageContainer.innerHTML += src;
-          } else if (src.includes('mp4') || src.includes('webm')) {
-            imageContainer.innerHTML += '<video src="' + src.replace(/['",]/g, '') + '" onclick="selectElement(this);" onmouseover="previewVd(this.src);" ></video>';
+          } else if (src.includes("/H")) {
+            imageContainer.innerHTML +=
+              asset_img + "<br />" + src + "<br />" + asset_img
+          } else if (!src.includes("http")) {
+            imageContainer.innerHTML += src
+          } else if (src.includes("mp4") || src.includes("webm")) {
+            imageContainer.innerHTML +=
+              '<video src="' + src.replace(/['",]/g, "") + pv_vd
           } else {
-            imageContainer.innerHTML += '<img src="' + src.replace(/['",]/g, '') + '" onclick="selectElement(this);" onmouseover="previewImg(this.src);">';
+            imageContainer.innerHTML +=
+              '<img src="' + src.replace(/['",]/g, "") + pv_img
           }
           if (src.includes("[")) {
-            imageContainer.innerHTML += '<h1>' + src.replace(/['",]/g, '') + '</h1>';
+            imageContainer.innerHTML +=
+              "<h1>" + src.replace(/['",]/g, "") + "</h1>"
           } else if (src.includes("];")) {
-            imageContainer.innerHTML += '<h1>];</h1>';
+            imageContainer.innerHTML += "<h1>];</h1>"
           }
         }
-        document.getElementById('linkInput').style.display = 'none';
-        document.getElementById('okButton').style.display = 'none';
-        document.getElementById('resetButton').style.display = 'block';
-        document.getElementById('resultButton').style.display = 'block';
-        imageContainer.style.display = 'block';
+        lista.style.display = "none"
+        bok.style.display = "none"
+        zoomin.style.display = "block"
+        zoomout.style.display = "block"
+        reseta.style.display = "block"
+        resposta.style.display = "block"
+        imageContainer.style.display = "block"
         //updateLinkOutput();
-      });
+      })
 
-      document.getElementById('resetButton').addEventListener('click', function() {
-        location.reload();
-      });
+      reseta.addEventListener("click", function () {
+        location.reload()
+      })
 
-      document.getElementById('resultButton').addEventListener('click', function() {
-        updateLinkOutput();
-        document.getElementById('div1').classList.toggle('some');
-        document.getElementById('linkOutput').classList.toggle('some');
-      });
+      resposta.addEventListener("click", function () {
+        updateLinkOutput()
+        document.getElementById("div1").classList.toggle("some")
+        document.getElementById("linkOutput").classList.toggle("some")
+        refaz.classList.toggle("some")
+      })
 
-      document.getElementById('deleteButton').addEventListener('click', function() {
+      refaz.addEventListener("click", function () {
+        //updateLinkOutput()
+        document.getElementById("div1").classList.toggle("some")
+        document.getElementById("linkOutput").classList.toggle("some")
+      })
+
+      bdel.addEventListener("click", function () {
         if (selectedElement !== null) {
-          selectedElement.classList.remove('selected');
-          selectedElement.remove();
-          selectedElement = null;
+          selectedElement.classList.remove("selected")
+          selectedElement.remove()
+          selectedElement = null
           //updateLinkOutput();
-          document.getElementById('deleteButton').style.display = 'none';
+          bdel.style.display = "none"
         }
-        document.getElementById('previewImage').src = '';
-        document.getElementById('previewVideo').src = '';
-        document.getElementById('previewContainer').style.display = 'none';
-      });
-
+        prImage.src = ""
+        prVideo.src = ""
+        prCont.style.display = "none"
+      })
 
       function previewImg(src) {
-        document.getElementById('previewImage').src = src;
-        document.getElementById('previewImage').style.display = 'block';
-        document.getElementById('previewVideo').pause();
-        document.getElementById('previewVideo').src = '';
-        document.getElementById('previewVideo').style.display = 'none';
-        hideUnHide();
+        prImage.src = src
+        prImage.style.display = "block"
+        prVideo.pause()
+        prVideo.src = ""
+        prVideo.style.display = "none"
+        hideUnHide()
       }
 
       function previewVd(src) {
-        document.getElementById('previewVideo').src = src;
-        document.getElementById('previewVideo').style.display = 'block';
-        document.getElementById('previewImage').style.display = 'none';
-        hideUnHide();
+        prVideo.src = src
+        prVideo.style.display = "block"
+        prImage.style.display = "none"
+        hideUnHide()
       }
 
       function hideUnHide() {
-        document.getElementById('previewContainer').style.display = document.getElementById("viewer").checked ? 'block' : 'none';
+        prCont.style.display = document.getElementById("viewer").checked
+          ? "block"
+          : "none"
       }
 
       function selectElement(element) {
         if (selectedElement === null) {
-          selectedElement = element;
-          element.classList.add('selected');
-          document.getElementById('deleteButton').style.display = 'block';
+          selectedElement = element
+          element.classList.add("selected")
+          bdel.style.display = "block"
         } else {
           if (selectedElement.tagName === element.tagName) {
             // Se os elementos são do mesmo tipo, troque suas fontes
-            var tempSrc = selectedElement.src;
-            selectedElement.src = element.src;
-            element.src = tempSrc;
+            var tempSrc = selectedElement.src
+            selectedElement.src = element.src
+            element.src = tempSrc
           } else {
             // Se os elementos são de tipos diferentes, troque os próprios elementos
-            var parentElement = selectedElement.parentElement;
-            var nextSibling = selectedElement.nextElementSibling;
-            element.parentElement.insertBefore(selectedElement, element);
+            var parentElement = selectedElement.parentElement
+            var nextSibling = selectedElement.nextElementSibling
+            element.parentElement.insertBefore(selectedElement, element)
             if (nextSibling) {
-              parentElement.insertBefore(element, nextSibling);
+              parentElement.insertBefore(element, nextSibling)
             } else {
-              parentElement.appendChild(element);
+              parentElement.appendChild(element)
             }
           }
-          selectedElement.classList.remove('selected');
-          selectedElement = null;
+          selectedElement.classList.remove("selected")
+          selectedElement = null
           //updateLinkOutput();
         }
       }
 
       function updateLinkOutput() {
-        var elements = document.getElementById('imageContainer').getElementsByTagName('*');
-        var links = [];
+        var elements = document
+          .getElementById("imageContainer")
+          .getElementsByTagName("*")
+        var links = []
         for (var i = 0; i < elements.length; i++) {
           if (elements[i].src && elements[i].src !== link_asset) {
-            links.push("'" + elements[i].src + "',");
-          } else if (elements[i].src || elements[i].tagName.toLowerCase().includes("br")) {} else if (elements[i].tagName.toLowerCase() === "span") {
-            links.push(elements[i].innerText);
-          } else if (elements[i].textContent.includes("[") || elements[i].textContent.includes("];")) {
-            links.push("\n\n" + elements[i].textContent);
+            links.push("'" + elements[i].src + "',")
+          } else if (
+            elements[i].src ||
+            elements[i].tagName.toLowerCase().includes("br")
+          ) {
+          } else if (elements[i].tagName.toLowerCase() === "span") {
+            links.push(elements[i].innerText)
+          } else if (
+            elements[i].textContent.includes("[") ||
+            elements[i].textContent.includes("];")
+          ) {
+            links.push("\n\n" + elements[i].textContent)
           } else if (elements[i].tagName.toLowerCase().includes("h")) {
-            links.push("'<" + elements[i].tagName + ">" + elements[i].textContent + "</" + elements[i].tagName + ">',");
+            links.push(
+              "'<" +
+                elements[i].tagName +
+                ">" +
+                elements[i].textContent +
+                "</" +
+                elements[i].tagName +
+                ">',",
+            )
           }
         }
-        document.getElementById('linkOutput').value = links.join('\n');
+        document.getElementById("linkOutput").value = links.join("\n")
       }
 
-      document.addEventListener("keydown", function(event) {
-        if (event.key === "Delete" && document.getElementById("deleteButton").style.display === "block") {
-          document.getElementById("deleteButton").click();
-        } else if (event.key === "F2" && document.getElementById("resetButton").style.display === "block") {
-          document.getElementById("resetButton").click();
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Delete" && bdel.style.display === "block") {
+          bdel.click()
+        } else if (event.key === "F2" && reseta.style.display === "block") {
+          reseta.click()
         } else if (event.key === "F3") {
-          document.getElementById("okButton").click();
+          bok.click()
+        } else if (event.key === "Escape") {
+          prCont.classList.toggle("grande")
+        } else if (event.key === "+") {
+          zoomin.click()
+        } else if (event.key === "-") {
+          zoomout.click()
         }
-      });
+      })
 
+      function zoom(val) {
+        const images = document.querySelectorAll(".ivList")
+        images.forEach((image) => {
+          // Get the current height of the image
+          const currentHeight = window
+            .getComputedStyle(image, null)
+            .getPropertyValue("height")
+          // Update the image height
+          image.style.height = parseFloat(currentHeight) + val + "px"
+        })
+      }
+      zoomin.addEventListener("click", function () {
+        zoom(16)
+      })
+
+      zoomout.addEventListener("click", function () {
+        zoom(-16)
+      })
     </script>
   </body>
-
 </html>
