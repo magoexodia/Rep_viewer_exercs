@@ -14,6 +14,7 @@
 
       body {
         font-size: 25px;
+        --altura-larg-div1: calc(100svh - 8ch);
       }
 
       textarea {
@@ -23,22 +24,28 @@
       }
 
       #buttonContainer {
-        height: fit-content;
-        width: 3vmax;
         display: block;
         position: fixed;
         top: 12px;
-        right: 10px;
+        right: 0;
       }
 
       .butao {
-        font-size: 3vmax;
+        font-size: 3ch;
         border: 2px solid black;
         border-radius: 1ch;
         background: gold;
         transition: background 1s ease;
-        height: 5vmax;
-        margin-bottom: 0.5ch;
+      }
+
+      #buttonContainer {
+        height: 5ch;
+        width: fit-content;
+        overflow-y:crop;
+      }
+
+      .butao {
+        height: fit-content;
         left: 1px;
       }
 
@@ -59,11 +66,11 @@
         transition: background 2s ease;
       }
 
-      video:not(#previewVideo) {
+      video:is(.ivList) {
         border: 2px solid black;
       }
 
-      video:not(#previewVideo):hover {
+      video:is(.ivList):hover {
         border-radius: 1ch;
         border: 2px solid purple;
       }
@@ -72,9 +79,14 @@
         background: pink;
       }
 
+      .controls {
+        max-width: 80vw;
+      }
+
       .ivList {
         height: 14ch;
         min-height: 100px;
+        max-height: var(--altura-larg-div1);
         margin: 3px;
         padding: 3px;
       }
@@ -92,7 +104,8 @@
       }
 
       #div1 {
-        overflow: auto;
+        overflow-x: clip;
+        overflow-y: auto;
         background: gray;
         min-height: 20vh;
         height: 80vh;
@@ -110,36 +123,52 @@
         text-align: center;
       }
 
+      .manual {
+        height: 95vh;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 5px;
+        background: #ccc;
+        transition: background 1s linear;
+      }
+
+      .base:not(.manual) {
+        font-size: 2ch;
+        height: 4ch;
+        overflow-y: scroll;
+        transition: background 2s ease;
+      }
+
       .grande {
         position: fixed;
-        bottom: 3px;
-        top: 3px;
-        left: 3px;
-        right: 3px;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: 3px;
         width: 100%;
-        height: calc(100vh - 0.5ch);
+        height: auto;
         overflow: auto;
-        z-index: 9999;
+        z-index: 999;
         background: #550000a5;
         border-radius: 1ch;
       }
 
       @media screen and (orientation: landscape) {
         #div1 {
-          height: calc(100svh - 8ch);
-        }
-
-        #previewContainer:not(.grande) {
-          /*height: calc(100vh - 2ch);*/
-          height: calc(8ch);
+          height: var(--altura-larg-div1);
         }
 
         #div1,
         #div2 {
-          width: calc(98% - 6vmax);
+          width: calc(100% - 4ch);
         }
 
         #previewContainer:not(.grande) {
+          height: auto;
           width: 8ch;
           display: block;
           position: fixed;
@@ -149,7 +178,14 @@
         }
 
         #buttonContainer {
-          right: calc(4ch + 15px);
+          height: fit-content;
+          width: fit-content;
+        }
+
+        #butao {
+          position: fixed;
+          top:0;
+          margin-bottom:2.25ch;
         }
       }
 
@@ -187,6 +223,16 @@
       #label-linkOutput {
         text-align: center;
       }
+
+      .close { display:none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 3ch;
+        color: white;
+        cursor: pointer;
+        z-index: 9999;
+      }
     </style>
   </head>
 
@@ -201,7 +247,16 @@
 'link2.png',
 'link3.img',
 'link5.png',
-'link6.img',"
+'link6.img',
+'',
+'INSTRUÇÕES:',
+'Escolhe 1ª🖼️ depois 2ª🖼️',
+'🔙 volta para entrada de lista',
+'🗑️ apagar o item selecionado',
+'👀 alterna pre-visualização',
+'⌨ESC ou Control = alterna preview fullscreen',
+'🟰 Mostra o resultado',
+"
       ></textarea>
       <div id="imageContainer"></div>
       <div id="buttonContainer">
@@ -222,22 +277,19 @@
     <div
       id="previewContainer"
       style="display: none"
-      onmouseover="this.classList.add('grande')"
+      onclick="this.classList.toggle('grande')"
     >
+      <span class="close" onmouseover="document.getElementById('previewContainer').classList.remove('grande')">&times;</span>
       <img id="previewImage" src="" />
       <video id="previewVideo" src="" style="display: none" controls></video>
     </div>
     <div id="div2">
-      <div
-        id="label-linkOutput"
-        style="font-size: 2ch; height: 4ch; overflow-y: scroll"
-        onmouseover="this.classList.toggle('grande)"
-      >
-        INSTRUÇÕES: <br />Escolhe 1ª🖼️ <wbr />depois 2ª🖼️<br />🖱Duplo click
-        aumenta = zoom<br />🖱Mouse em cima da pre-visualização = zoom<br />⌨ESC
-        = sai do zoom<br />🔙 volta para entrada de lista <br />🗑️ apagar o item
-        selecionado<br />👀 alterna pre-visualização<br />🟰 Mostra o
-        resultado<br />
+      <div class="base" onclick="this.classList.toggle('manual')">
+        <!-- onmouseout="this.classList.remove('manual')" -->
+        INSTRUÇÕES: <br />Escolhe 1ª🖼️ <wbr />depois 2ª🖼️<br />⌨ESC ou Control
+        = Alterna preview fullscreen <br />
+        🗑️ apagar o item selecionado<br />👀 alterna pre-visualização<br />🟰
+        Mostra o resultado<br />
       </div>
       <textarea
         class="some"
@@ -278,9 +330,9 @@
           link_asset +
           '" onclick="selectElement(this);" onmouseover="previewImg(this.src); ">'
         const pv_img =
-          '" onclick="selectElement(this);" onmouseover="previewImg(this.src);" ondblclick="prCont.classList.toggle(\'grande\')" class="ivList">'
+          '" onclick="selectElement(this);" onmouseover="previewImg(this.src);" class="ivList">'
         const pv_vd =
-          '" onclick="selectElement(this);" onmouseover="previewVd(this.src);"  ondblclick="prCont.classList.toggle(\'grande\')" class="ivList"></video>'
+          '" onclick="selectElement(this);" onmouseover="previewVd(this.src);" class="ivList"></video>'
         var imageContainer = document.getElementById("imageContainer")
         for (var i = 0; i < allLines.length; i++) {
           var src = allLines[i]
@@ -437,7 +489,7 @@
           reseta.click()
         } else if (event.key === "F3") {
           bok.click()
-        } else if (event.key === "Escape") {
+        } else if (event.key === "Escape" || event.key === "Control") {
           prCont.classList.toggle("grande")
         } else if (event.key === "+") {
           zoomin.click()
@@ -458,12 +510,13 @@
         })
       }
       zoomin.addEventListener("click", function () {
-        zoom(16)
+        zoom(10)
       })
 
       zoomout.addEventListener("click", function () {
-        zoom(-16)
+        zoom(-10)
       })
+
     </script>
   </body>
 </html>
