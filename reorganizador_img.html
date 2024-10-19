@@ -23,10 +23,14 @@
         min-height: 50vh;
       }
 
+      .alinha {
+        display: inline-block;
+      }
+
       #buttonContainer {
         display: block;
         position: fixed;
-        top: 12px;
+        top: 1ch;
         right: 0;
       }
 
@@ -35,18 +39,7 @@
         border: 2px solid black;
         border-radius: 1ch;
         background: gold;
-        transition: background 1s ease;
-      }
-
-      #buttonContainer {
-        height: 5ch;
-        width: fit-content;
-        overflow-y:crop;
-      }
-
-      .butao {
-        height: fit-content;
-        left: 1px;
+        transition: background 1s ease, text-shadow 2s linear;
       }
 
       input[type="checkbox"]:checked + label {
@@ -57,38 +50,38 @@
         filter: grayscale(100%);
       }
 
-      button:hover {
+      .butao:not(disabled):hover {
         background: purple;
         text-shadow:
           0 0 1px white,
           0 0 3px white,
           0 0 1ch white;
-        transition: background 2s ease;
+        transition: background 2s ease, text-shadow 1s linear;
       }
 
       video:is(.ivList) {
-        border: 2px solid black;
+        filter: grayscale(100%);
+        transition: filter 3s ease;
       }
 
       video:is(.ivList):hover {
-        border-radius: 1ch;
-        border: 2px solid purple;
-      }
-
-      #previewVideo {
-        background: pink;
-      }
-
-      .controls {
-        max-width: 80vw;
+        filter: grayscale(0);
+        transition: filter 0.5s ease;
       }
 
       .ivList {
         height: 14ch;
         min-height: 100px;
         max-height: var(--altura-larg-div1);
+        max-width: 100%;
         margin: 3px;
         padding: 3px;
+        object-fit: contain;
+      }
+
+      .ivList:hover {
+        border-radius: 1ch;
+        border: 2px solid white;
       }
 
       #div1:not(.some) {
@@ -100,7 +93,8 @@
       #div2 {
         margin: 3px;
         padding: 3px;
-        border: 1px solid black;
+        border: 3px solid gray;
+        border-radius: 1ch;
       }
 
       #div1 {
@@ -148,13 +142,13 @@
         top: 0;
         left: 0;
         right: 0;
-        margin: 3px;
+        margin: 5px;
         width: 100%;
         height: auto;
         overflow: auto;
         z-index: 999;
-        background: #550000a5;
-        border-radius: 1ch;
+        background: #000c; /*#550000a5;*/
+        border-radius: 3ch;
       }
 
       @media screen and (orientation: landscape) {
@@ -167,30 +161,22 @@
           width: calc(100% - 4ch);
         }
 
+        .alinha {
+          display: block;
+        }
+
         #previewContainer:not(.grande) {
-          height: auto;
-          width: 8ch;
           display: block;
           position: fixed;
-          bottom: 6px;
-          right: 6px;
           background: #554f00a5;
-        }
-
-        #buttonContainer {
-          height: fit-content;
-          width: fit-content;
-        }
-
-        #butao {
-          position: fixed;
-          top:0;
-          margin-bottom:2.25ch;
+          height: 8ch;
+          width: 8ch;
+          right: 0;
+          object-fit: contain;
         }
       }
 
-      #previewVideo,
-      #previewImage {
+      .preview {
         height: 99%;
         width: 99%;
         object-fit: contain;
@@ -224,14 +210,18 @@
         text-align: center;
       }
 
-      .close { display:none;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 3ch;
-        color: white;
+      .close {
+        position: fixed;
+        top: 0.2ch;
+        right: 0.2ch;
+        font-size: 5ch;
+        color: red;
         cursor: pointer;
         z-index: 9999;
+        text-shadow:
+          0 0 2px white,
+          0 0 2px silver,
+          0 0 2px black;
       }
     </style>
   </head>
@@ -254,25 +244,19 @@
 '🔙 volta para entrada de lista',
 '🗑️ apagar o item selecionado',
 '👀 alterna pre-visualização',
-'⌨ESC = sai do preview fullscreen',
-'⌨Control = alterna preview fullscreen',
+'⌨ESC ou Control = alterna preview fullscreen',
 '🟰 Mostra o resultado',
 "
       ></textarea>
       <div id="imageContainer"></div>
       <div id="buttonContainer">
-        <button id="okButton" class="butao">✔️</button>
-        <button id="resetButton" class="butao" style="display: none">🔙</button>
-        <button id="deleteButton" class="butao" style="display: none">
-          🗑️
-        </button>
-        <button id="resultButton" class="butao" style="display: none">
-          🟰
-        </button>
+        <button id="okButton" class="butao alinha">✔️</button>
+        <button id="resetButton" class="butao alinha some">🔙</button>
+        <button id="deleteButton" class="butao alinha some">🗑️</button>
+        <button id="resultButton" class="butao alinha some">🟰</button>
         <input type="checkbox" id="viewer" style="display: none" />
-        <label id="label-viewer" class="butao" for="viewer">👀</label>
-        <button id="zoomin" class="butao" style="display: none">➕</button>
-        <button id="zoomout" class="butao" style="display: none">➖</button>
+        <label id="label-viewer" class="butao alinha" for="viewer">👀</label>
+        <button id="mais" class="butao alinha some">➕</button>
       </div>
     </div>
     <div
@@ -280,14 +264,20 @@
       style="display: none"
       onclick="this.classList.toggle('grande')"
     >
-      <span class="close" onmouseover="document.getElementById('previewContainer').classList.remove('grande')">&times;</span>
-      <img id="previewImage" src="" />
-      <video id="previewVideo" src="" style="display: none" controls></video>
+      <span class="close some" id="close">&times;</span>
+      <img id="previewImage" class="preview" src="" />
+      <video
+        id="previewVideo"
+        class="preview"
+        src=""
+        style="display: none"
+        controls
+      ></video>
     </div>
     <div id="div2">
       <div class="base" onclick="this.classList.toggle('manual')">
         <!-- onmouseout="this.classList.remove('manual')" -->
-        INSTRUÇÕES: <br />Escolhe 1ª🖼️ <wbr />depois 2ª🖼️<br />⌨ESC = Sair do preview fullscreen <br /><br />⌨Control
+        INSTRUÇÕES: <br />Escolhe 1ª🖼️ <wbr />depois 2ª🖼️<br />⌨ESC ou Control
         = Alterna preview fullscreen <br />
         🗑️ apagar o item selecionado<br />👀 alterna pre-visualização<br />🟰
         Mostra o resultado<br />
@@ -321,8 +311,10 @@
       var prImage = document.getElementById("previewImage")
       var prVideo = document.getElementById("previewVideo")
       var prCont = document.getElementById("previewContainer")
-      var zoomin = document.getElementById("zoomin")
-      var zoomout = document.getElementById("zoomout")
+      var mais = document.getElementById("mais")
+      const lbView = document.getElementById("label-viewer")
+      const view = document.getElementById("viewer")
+      const close = document.getElementById("close")
 
       bok.addEventListener("click", function () {
         allLines = lista.value.trim().split("\n")
@@ -359,14 +351,17 @@
             imageContainer.innerHTML += "<h1>];</h1>"
           }
         }
-        lista.style.display = "none"
-        bok.style.display = "none"
-        zoomin.style.display = "block"
-        zoomout.style.display = "block"
-        reseta.style.display = "block"
-        resposta.style.display = "block"
+        luzinap()
         imageContainer.style.display = "block"
         //updateLinkOutput();
+      })
+
+      close.addEventListener("hover", function () {
+        mais.click()
+      })
+
+      mais.addEventListener("click", function () {
+        prCont.classList.toggle("grande")
       })
 
       reseta.addEventListener("click", function () {
@@ -392,7 +387,7 @@
           selectedElement.remove()
           selectedElement = null
           //updateLinkOutput();
-          bdel.style.display = "none"
+          bdel.disabled = true
         }
         prImage.src = ""
         prVideo.src = ""
@@ -405,6 +400,7 @@
         prVideo.pause()
         prVideo.src = ""
         prVideo.style.display = "none"
+        close.classList.add("some")
         hideUnHide()
       }
 
@@ -412,26 +408,26 @@
         prVideo.src = src
         prVideo.style.display = "block"
         prImage.style.display = "none"
+        close.classList.remove("some")
         hideUnHide()
       }
 
       function hideUnHide() {
-        prCont.style.display = document.getElementById("viewer").checked
-          ? "block"
-          : "none"
+        prCont.style.display = viewer.checked ? "block" : "none"
       }
 
       function selectElement(element) {
         if (selectedElement === null) {
           selectedElement = element
           element.classList.add("selected")
-          bdel.style.display = "block"
+          bdel.disabled = false
         } else {
           if (selectedElement.tagName === element.tagName) {
             // Se os elementos são do mesmo tipo, troque suas fontes
             var tempSrc = selectedElement.src
             selectedElement.src = element.src
             element.src = tempSrc
+            bdel.disabled = true
           } else {
             // Se os elementos são de tipos diferentes, troque os próprios elementos
             var parentElement = selectedElement.parentElement
@@ -484,20 +480,18 @@
       }
 
       document.addEventListener("keydown", function (event) {
-        if (event.key === "Delete" && bdel.style.display === "block") {
+        if (event.key === "Delete" && bdel.disabled) {
           bdel.click()
         } else if (event.key === "F2" && reseta.style.display === "block") {
           reseta.click()
         } else if (event.key === "F3") {
           bok.click()
-        } else if (event.key === "Escape") {
-          prCont.classList.remove("grande")
-        } else if (event.key === "Control") {
+        } else if (event.key === "Escape" || event.key === "Control") {
           prCont.classList.toggle("grande")
         } else if (event.key === "+") {
-          zoomin.click()
+          zoom(10)
         } else if (event.key === "-") {
-          zoomout.click()
+          zoom(-10)
         }
       })
 
@@ -512,14 +506,25 @@
           image.style.height = parseFloat(currentHeight) + val + "px"
         })
       }
-      zoomin.addEventListener("click", function () {
-        zoom(10)
-      })
 
-      zoomout.addEventListener("click", function () {
-        zoom(-10)
-      })
+      function luzinap() {
+        bok.style.display = "none"
+        bdel.disabled = true
+        reseta.classList.toggle("some")
+        resposta.classList.toggle("some")
+        bdel.classList.toggle("some")
+        imageContainer.classList.toggle("some")
+        lista.classList.toggle("some")
+        mais.classList.toggle("some")
+      }
 
+      function alterna_en() {
+        view.checked = !view.checked
+        view.checked
+          ? (lbView.style.filter = "grayscale(100%)")
+          : (lbView.style.filter = "grayscale(0)")
+        hideUnHide()
+      }
     </script>
   </body>
 </html>
