@@ -1,8 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    charset="UTF-8"
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Timer</title>
     <style>
       :root {
@@ -11,49 +15,173 @@
         --bgipt: rgb(255, 255, 255, 0.25);
         --giro: 90deg;
       }
-      
-@keyframes colorChange {
-    0% { color: white; background: black; }
-    25% { color: lightgreen; background: darkgreen; }
-    50% { color: green; background: #00ff0088; }
-    75% { color: darkgreen; background: lightgreen; }
-    100% { color: black; background: white; }
-}
-     body, html {height: calc(100vh); width: 100vw; overflow: hidden; font-family: verdana;}
-     #screen1 {position: fixed; top:0; left:0; right:0; bottom:0; margin:auto; height: fit-content; width: fit-content;}
-     #screen1 input[type=number] {width: 6ch; text-align:right;}
-     #screen1 input[type=radio] {display: none;}
-     #screen1 input[type=radio]:checked+label {text-transform: uppercase; color: white; text-shadow: 0 0 2px black 0 0 5px black, 0 0 1ch white; animation: colorChange 3s infinite;} 
-     #screen1 input[type=text] {min-width: 6ch; width: 10ch;}
-     #screen1, #screen1 * {font-size: 40px; border-radius: 0.75ch;}
-     #horas-in, #rest-in, #imagel {border: 2px solid red; background-color: #ffffffff; background: var(--bgurl);}
-     .titulo {padding-left: 20%;}
-     #ok {background: none; border: none; text-shadow: 0 0 2px black, 0 0 5px black, 0 0 1ch black; position: fixed; left: 40%;}
-     #screen1 label { text-shadow: 0 0 2px black, 0 0 5px black, 0 0 1ch black; color: white; text-align: center; height: 40px;}
-     #screen3 {height: calc(95vh); width: calc(95vh);}
 
-#timer {position: fixed; top:0; left:0; right:0; bottom:0; margin:auto; height: fit-content; width: fit-content; font-size: 15vmax; transform: rotate(var(--giro));}
-#repeat, #cancel { position: fixed; bottom: 10px;}
-#repeat { left: 40%;}
-#cancel { left: 60%;}
-#timer-control button {font-size: 40px; border: none; background-color: #8050c080;  border-radius: 0.8ch; }
+      @keyframes colorChange {
+        0% {
+          color: white;
+          background: black;
+        }
+        25% {
+          color: lightgreen;
+          background: darkgreen;
+        }
+        50% {
+          color: green;
+          background: #00ff0088;
+        }
+        75% {
+          color: darkgreen;
+          background: lightgreen;
+        }
+        100% {
+          color: black;
+          background: white;
+        }
+      }
+      body,
+      html {
+        height: calc(100vh);
+        width: 100vw;
+        overflow: hidden;
+        font-family: verdana;
+      }
+      #screen1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        height: fit-content;
+        width: fit-content;
+      }
+      #screen1 input[type="number"] {
+        width: 6ch;
+        text-align: right;
+      }
+      #screen1 input[type="radio"] {
+        display: none;
+      }
+      #screen1 input[type="radio"]:checked + label {
+        text-transform: uppercase;
+        color: white;
+        text-shadow:
+          0 0 2px black 0 0 5px black,
+          0 0 1ch white;
+        animation: colorChange 3s infinite;
+      }
+      #screen1 input[type="text"] {
+        min-width: 6ch;
+        width: 10ch;
+      }
+      #screen1,
+      #screen1 * {
+        font-size: 40px;
+        border-radius: 0.75ch;
+      }
+      #horas-in,
+      #rest-in,
+      #imagel {
+        border: 2px solid red;
+        background-color: #ffffffff;
+        background: var(--bgurl);
+      }
+      .titulo {
+        padding-left: 20%;
+      }
+      #ok {
+        background: none;
+        border: none;
+        text-shadow:
+          0 0 2px black,
+          0 0 5px black,
+          0 0 1ch black;
+        position: fixed;
+        left: 40%;
+      }
+      #screen1 label {
+        text-shadow:
+          0 0 2px black,
+          0 0 5px black,
+          0 0 1ch black;
+        color: white;
+        text-align: center;
+        height: 40px;
+      }
+      #screen3 {
+        height: calc(95vh);
+        width: calc(95vh);
+      }
 
-img, video {height:100%; width:100%; object-fit: contain;} /*transform: rotate(var(--giro)); transform-origin: center;}*/
-#screen3 {height:calc(100vh - 2ch); width:calc(100vw - 2ch); position: fixed; top: 0; bottom: 0; left: 0; right: 0; margin: auto;}
+      #timer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        height: fit-content;
+        width: fit-content;
+        font-size: 15vmax;
+        transform: rotate(var(--giro));
+      }
+      #repeat,
+      #cancel {
+        position: fixed;
+        bottom: 10px;
+      }
+      #repeat {
+        left: 40%;
+      }
+      #cancel {
+        left: 60%;
+      }
+      #timer-control button {
+        font-size: 40px;
+        border: none;
+        background-color: #8050c080;
+        border-radius: 0.8ch;
+      }
 
-@media screen and (orientation: landscape){
-  #timer {transform: none;}
-  /*img, video {transform: none; width: 100%; height: 100%;}*/
-#repeat { left: 60%;}
-#cancel { left: 40%;}
-}
+      img,
+      video {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      } /*transform: rotate(var(--giro)); transform-origin: center;}*/
+      #screen3 {
+        height: calc(100vh - 2ch);
+        width: calc(100vw - 2ch);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
 
-#timer { color: gray; }
-body:has(#screen2[style*="display: flex"]),
-body:has(#screen2[style*="display: block"]),
-body:has(#screen3[style*="display: flex"]),
-body:has(#screen3[style*="display: block"]) {background-color: black;}
+      @media screen and (orientation: landscape) {
+        #timer {
+          transform: none;
+        }
+        /*img, video {transform: none; width: 100%; height: 100%;}*/
+        #repeat {
+          left: 60%;
+        }
+        #cancel {
+          left: 40%;
+        }
+      }
 
+      #timer {
+        color: gray;
+      }
+      body:has(#screen2[style*="display: flex"]),
+      body:has(#screen2[style*="display: block"]),
+      body:has(#screen3[style*="display: flex"]),
+      body:has(#screen3[style*="display: block"]) {
+        background-color: black;
+      }
     </style>
   </head>
 
@@ -65,34 +193,77 @@ body:has(#screen3[style*="display: block"]) {background-color: black;}
           <form>
             <div id="horas-in">
               <label for="tempo">⏱️</label>
-              <input type="number" id="tempo" min="1" max="86400" value="1" required>
+              <input
+                type="number"
+                id="tempo"
+                min="1"
+                max="86400"
+                value="1"
+                required
+              />
               <div id="ops">
                 <label class="titulo">
-                  <input type="radio" name="tipo" id="horh" value=3600><label for="horh">hh</label>
-                  <input type="radio" name="tipo" id="minh" value=60><label for="minh">mm</label>
-                  <input type="radio" name="tipo" id="sech" value=1 checked><label for="sech">ss</label>
+                  <input
+                    type="radio"
+                    name="tipo"
+                    id="horh"
+                    value="3600"
+                  /><label for="horh">hh</label>
+                  <input type="radio" name="tipo" id="minh" value="60" /><label
+                    for="minh"
+                    >mm</label
+                  >
+                  <input
+                    type="radio"
+                    name="tipo"
+                    id="sech"
+                    value="1"
+                    checked
+                  /><label for="sech">ss</label>
                 </label>
               </div>
-            </div><br class="paisagem">
+            </div>
+            <br class="paisagem" />
             <div id="rest-in">
               <label for="rest">⌛</label>
-              <input type="number" id="rest" min="0" max="3600" value="3" required>
+              <input
+                type="number"
+                id="rest"
+                min="0"
+                max="3600"
+                value="3"
+                required
+              />
               <div id="radios">
-                <label class="titulo"><input type="radio" name="topt" id="min" value=60><label for="min">mm</label>
-                  <input type="radio" name="topt" checked id="sec" value=1><label for="sec">ss</label></label></div>
+                <label class="titulo"
+                  ><input type="radio" name="topt" id="min" value="60" /><label
+                    for="min"
+                    >mm</label
+                  >
+                  <input
+                    type="radio"
+                    name="topt"
+                    checked
+                    id="sec"
+                    value="1"
+                  /><label for="sec">ss</label></label
+                >
+              </div>
             </div>
-            <br>
-            <label for="image" id="imagel">📷
-            <input type="text" id="image" placeholder="🔗"></label>
-            <br><br>
+            <br />
+            <label for="image" id="imagel"
+              >📷 <input type="text" id="image" placeholder="🔗"
+            /></label>
+            <br /><br />
             <button type="submit" id="ok">✅</button>
           </form>
         </div>
       </div>
 
       <!-- Screen 2: Timer -->
-      <div id="screen2" style="display:none; direction: column;">
-        <div id="timer"></div><br>
+      <div id="screen2" style="display: none; direction: column">
+        <div id="timer"></div>
+        <br />
         <div id="timer-control" style="width: 2ch">
           <button id="repeat">🔁</button>
           <button id="cancel">❌</button>
@@ -100,132 +271,140 @@ body:has(#screen3[style*="display: block"]) {background-color: black;}
       </div>
 
       <!-- Screen 3: Image -->
-      <div id="screen3" style="display:none;">
-        <img src="https://64.media.tumblr.com/9b2885adf39253cbde29c4f5d2c1d3b4/d724e84fd8df002e-bc/s400x600/4e898e734fc853b05883d4efdf3518117b6cb12c.gifv" alt="">
+      <div id="screen3" style="display: none">
+        <img
+          src="https://64.media.tumblr.com/9b2885adf39253cbde29c4f5d2c1d3b4/d724e84fd8df002e-bc/s400x600/4e898e734fc853b05883d4efdf3518117b6cb12c.gifv"
+          alt=""
+        />
       </div>
-
     </div>
 
     <script>
-    const alts = [
-    'https://64.media.tumblr.com/66d1e195b83e8afdbdcd17014d1d1e66/tumblr_owm69zzYPz1r187pho4_400.gifv',
-'https://64.media.tumblr.com/8e7a5430b2b48ff1b61fb9c2791a2fed/tumblr_o113cwF3eX1s191uxo3_400.gifv',
-'http://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv',
-'http://64.media.tumblr.com/f1332a4e807d9c7aaa77281f8a9acf9b/tumblr_inline_oy4svt4PcS1shrb8p_500.gifv',
-'https://64.media.tumblr.com/f48214432cbf53aaa578dc1b9bc914ce/6191877d3acdb087-67/s400x600/3a91b1319f75a4903abd5d446ff484685c1573b8.gifv',
-'https://64.media.tumblr.com/9b2885adf39253cbde29c4f5d2c1d3b4/d724e84fd8df002e-bc/s400x600/4e898e734fc853b05883d4efdf3518117b6cb12c.gifv',
-'https://64.media.tumblr.com/41af9d11f91615bf3019382a4b77d57d/tumblr_oczt5xJ3NH1v175wko4_250.gifv',
-'http://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv',
-'https://64.media.tumblr.com/686c259e45fbba0e1f603e9fc2050046/66f725e16465bbcc-21/s500x750/214cde78907ff2453160777f4d18f0f6fe62e208.gifv',
-'http://64.media.tumblr.com/84447cb1c3ea5c3a945554d9ae315f8d/tumblr_n5v9131rTd1qa9vqgo1_500.gifv',
-'http://64.media.tumblr.com/7df4956b8721b9125d60e986ac1fd95d/tumblr_owqm6ja0Bt1uwg439o1_540.gifv',
-'https://64.media.tumblr.com/2f7b9b3a30774bd3aa7827ea456a6bb6/tumblr_mkjhx57xoO1rgbul6o1_250sq.gifv',
-'https://64.media.tumblr.com/592227e39bfe0ea62d4f0f24331d5985/5d12812ac0025cc9-86/s400x600/19de16a1789140ef831f56c0eb09f5e6ba373f60.gifv',
-'https://64.media.tumblr.com/354b5963dc0c191c15d1b2eb271f229a/f1101a5e32862233-69/s1280x1920/dafb7c05a1bd5af07e62a3425c1fe7bda11b311f.gifv',
-'http://64.media.tumblr.com/b6cb73d22ff82ed93183ecdec0e4c709/tumblr_o9ihsfOlZO1rzoil5o5_540.gifv',
-'https://64.media.tumblr.com/21ecc67a85f8bc6f4caa0a1b2ecdd1d3/08b930cbfb4314e9-10/s1280x1920/06d3a290db45afd4f0ff4de2f7a31cc919f5d7e0.gifv',
-'https://64.media.tumblr.com/411b2cedb7de8adaddfff0bd6b325c14/tumblr_n31zm1gnbE1reo926o1_250sq.gifv',];
-    
-    
+      const alts = [
+        "https://64.media.tumblr.com/66d1e195b83e8afdbdcd17014d1d1e66/tumblr_owm69zzYPz1r187pho4_400.gifv",
+        "https://64.media.tumblr.com/8e7a5430b2b48ff1b61fb9c2791a2fed/tumblr_o113cwF3eX1s191uxo3_400.gifv",
+        "http://64.media.tumblr.com/5c44c6b85ff425c805561e9410171b53/tumblr_oqz2e8M2ct1suqfifo1_500.gifv",
+        "http://64.media.tumblr.com/f1332a4e807d9c7aaa77281f8a9acf9b/tumblr_inline_oy4svt4PcS1shrb8p_500.gifv",
+        "https://64.media.tumblr.com/f48214432cbf53aaa578dc1b9bc914ce/6191877d3acdb087-67/s400x600/3a91b1319f75a4903abd5d446ff484685c1573b8.gifv",
+        "https://64.media.tumblr.com/9b2885adf39253cbde29c4f5d2c1d3b4/d724e84fd8df002e-bc/s400x600/4e898e734fc853b05883d4efdf3518117b6cb12c.gifv",
+        "https://64.media.tumblr.com/41af9d11f91615bf3019382a4b77d57d/tumblr_oczt5xJ3NH1v175wko4_250.gifv",
+        "http://64.media.tumblr.com/88b5f32d2b8b0f9153fadf8fa6d394b0/be6588c1dff376b8-45/s640x960/28c284be0c0478bd09224fb27ae3f1f5ee0290fb.gifv",
+        "https://64.media.tumblr.com/686c259e45fbba0e1f603e9fc2050046/66f725e16465bbcc-21/s500x750/214cde78907ff2453160777f4d18f0f6fe62e208.gifv",
+        "http://64.media.tumblr.com/84447cb1c3ea5c3a945554d9ae315f8d/tumblr_n5v9131rTd1qa9vqgo1_500.gifv",
+        "http://64.media.tumblr.com/7df4956b8721b9125d60e986ac1fd95d/tumblr_owqm6ja0Bt1uwg439o1_540.gifv",
+        "https://64.media.tumblr.com/2f7b9b3a30774bd3aa7827ea456a6bb6/tumblr_mkjhx57xoO1rgbul6o1_250sq.gifv",
+        "https://64.media.tumblr.com/592227e39bfe0ea62d4f0f24331d5985/5d12812ac0025cc9-86/s400x600/19de16a1789140ef831f56c0eb09f5e6ba373f60.gifv",
+        "https://64.media.tumblr.com/354b5963dc0c191c15d1b2eb271f229a/f1101a5e32862233-69/s1280x1920/dafb7c05a1bd5af07e62a3425c1fe7bda11b311f.gifv",
+        "http://64.media.tumblr.com/b6cb73d22ff82ed93183ecdec0e4c709/tumblr_o9ihsfOlZO1rzoil5o5_540.gifv",
+        "https://64.media.tumblr.com/21ecc67a85f8bc6f4caa0a1b2ecdd1d3/08b930cbfb4314e9-10/s1280x1920/06d3a290db45afd4f0ff4de2f7a31cc919f5d7e0.gifv",
+        "https://64.media.tumblr.com/411b2cedb7de8adaddfff0bd6b325c14/tumblr_n31zm1gnbE1reo926o1_250sq.gifv",
+      ]
+
       // Get references to elements
-      const screen1 = document.getElementById("screen1");
-      const screen2 = document.getElementById("screen2");
-      const screen3 = document.getElementById("screen3");
-      const tempo = document.getElementById("tempo");
-      const restInput = document.getElementById("rest");
-      const imageInput = document.getElementById("image");
-      const timerDisplay = document.getElementById("timer");
-      const repeatButton = document.getElementById("repeat");
-      const cancelButton = document.getElementById("cancel");
-      const imageDisplay = screen3.querySelector("img");
+      const screen1 = document.getElementById("screen1")
+      const screen2 = document.getElementById("screen2")
+      const screen3 = document.getElementById("screen3")
+      const tempo = document.getElementById("tempo")
+      const restInput = document.getElementById("rest")
+      const imageInput = document.getElementById("image")
+      const timerDisplay = document.getElementById("timer")
+      const repeatButton = document.getElementById("repeat")
+      const cancelButton = document.getElementById("cancel")
+      const imageDisplay = screen3.querySelector("img")
 
       // Initialize variables
-      let duration = 0;
-      let rest = 0;
-      let image = "";
-      let timer = null;
+      let duration = 0
+      let rest = 0
+      let image = ""
+      let timer = null
 
       // Handle form submission
-      screen1.querySelector("form").addEventListener("submit", function(event) {
-        event.preventDefault();
-        duration = parseInt(tempo.value) * document.querySelector('input[name="tipo"]:checked').value;
-        rest = parseInt(restInput.value);
-        image = imageInput.value;
-        startTimer();
-      });
+      screen1
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault()
+          duration =
+            parseInt(tempo.value) *
+            document.querySelector('input[name="tipo"]:checked').value
+          rest = parseInt(restInput.value)
+          image = imageInput.value
+          startTimer()
+        })
 
       // Start timer
       function startTimer() {
-        tela2();
-        let timeRemaining = duration;
-        updateTimerDisplay(timeRemaining);
-        timer = setInterval(function() {
-          timeRemaining--;
-          updateTimerDisplay(timeRemaining);
+        tela2()
+        let timeRemaining = duration
+        updateTimerDisplay(timeRemaining)
+        timer = setInterval(function () {
+          timeRemaining--
+          updateTimerDisplay(timeRemaining)
           if (timeRemaining == 0) {
-            clearInterval(timer);
-            showImage();
-            repeatButton.disabled = false;
+            clearInterval(timer)
+            if (rest > 0) showImage()
+            repeatButton.disabled = false
           }
-        }, 1000);
+        }, 1000)
       }
 
       // Update timer display
       function updateTimerDisplay(timeRemaining) {
-        let hours = Math.floor(timeRemaining / 3600);
-        let minutes = Math.floor((timeRemaining % 3600) / 60);
-        let seconds = timeRemaining % 60;
-        let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-        timerDisplay.textContent = formattedTime;
+        let hours = Math.floor(timeRemaining / 3600)
+        let minutes = Math.floor((timeRemaining % 3600) / 60)
+        let seconds = timeRemaining % 60
+        let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+        timerDisplay.textContent = formattedTime
       }
 
       // Show image
       function showImage() {
-        tela3();
-        let delta = document.querySelector('input[name="topt"]:checked').value * rest * 1000;
-        imageDisplay.src = image || alts[Math.floor(Math.random() * alts.length)];
-        setTimeout(function() {
-          tela2();
-          repeatButton.disabled = false;
-        }, delta);
+        tela3()
+        let delta =
+          document.querySelector('input[name="topt"]:checked').value *
+          rest *
+          1000
+        imageDisplay.src =
+          image || alts[Math.floor(Math.random() * alts.length)]
+        setTimeout(function () {
+          tela2()
+          repeatButton.disabled = false
+        }, delta)
       }
 
       // Handle repeat button click
-      repeatButton.addEventListener("click", function() {
-        if (this.disabled) return;
-        startTimer();
-      });
+      repeatButton.addEventListener("click", function () {
+        if (this.disabled) return
+        startTimer()
+      })
 
       // Handle cancel button click
-      cancelButton.addEventListener("click", function() {
-        clearInterval(timer);
-        hideImage();
-      });
+      cancelButton.addEventListener("click", function () {
+        clearInterval(timer)
+        hideImage()
+      })
 
       // Hide image
       function hideImage() {
-        tela1();
+        tela1()
       }
 
       function tela1() {
-        screen1.style.display = "block";
-        screen2.style.display = "none";
-        screen3.style.display = "none";
+        screen1.style.display = "block"
+        screen2.style.display = "none"
+        screen3.style.display = "none"
       }
 
       function tela2() {
-        screen1.style.display = "none";
-        screen2.style.display = "flex";
-        screen3.style.display = "none";
+        screen1.style.display = "none"
+        screen2.style.display = "flex"
+        screen3.style.display = "none"
       }
 
       function tela3() {
-        screen1.style.display = "none";
-        screen2.style.display = "none";
-        screen3.style.display = "block";
+        screen1.style.display = "none"
+        screen2.style.display = "none"
+        screen3.style.display = "block"
       }
-
     </script>
   </body>
-
 </html>
