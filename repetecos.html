@@ -21,11 +21,21 @@ body {
     align-items: center;
 }
 
-.container {
-    transform: rotate(-90deg);
-    text-align: center;
+.arotar {
+    transform: rotate(90deg);
     width: 100%;
     padding: 0 10px;
+    }
+
+
+.rotar {
+    transform: rotate(180deg);
+    width: 100%;
+    padding: 0 10px;
+    }
+
+.container {
+    text-align: center;
     box-sizing: border-box;
     position: relative; /* Adicionado para posicionar o GIFV corretamente */
 }
@@ -48,13 +58,13 @@ body {
 
 .counter {
     font-size: 12vw;
-    margin: 0 5vw;
+    margin: 0 9vw;
     cursor: pointer;
     white-space: nowrap;
 }
 
 input[type="range"] {
-    width: 90%;
+    width: 95%;
     margin-bottom: 30px;
 }
 
@@ -96,20 +106,22 @@ button {
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="slider-container">
-            <button id="decreaseTimer">-</button>
-            <input type="range" id="timerSlider" min="5" max="180" step="5" value="30">
-            <button id="increaseTimer">+</button>
-        </div>
-        <div id="timer" class="timer">00:00</div>
-        <div class="counter-container">
-            <button id="decrementCounter">-</button>
-            <div id="counter" class="counter">0</div>
-            <button id="incrementCounter">+</button>
+    <div class="arotar">
+        <div class="container">
+            <div class="slider-container">
+                <button id="decreaseTimer">-</button>
+                <input type="range" id="timerSlider" min="5" max="180" step="5" value="30">
+                <button id="increaseTimer">+</button>
+            </div>
+            <div id="timer" class="timer">00:00</div>
+            <div class="counter-container">
+                <button id="decrementCounter">-</button>
+                <div id="counter" class="counter">0</div>
+                <button id="incrementCounter">+</button>
+            </div>
         </div>
     </div>
-    <img id="timerEndGif" src="https://64.media.tumblr.com/d806a398aae45f582592ab959db66402/tumblr_pxvxgrX3tE1wu3dnqo1_500.gifv" alt="Timer End GIF" class="hidden">
+    <img id="timerEndGif" class="rotar" src="https://64.media.tumblr.com/446184bea3ee31006cce2d62527cd6ee/tumblr_n42t94glJN1rqdof9o6_r1_250.gifv" alt="Timer End GIF" class="hidden">
     <script>
     const timerDisplay = document.getElementById('timer');
 const timerSlider = document.getElementById('timerSlider');
@@ -139,6 +151,7 @@ function startTimer(duration) {
             timerEndGif.style.display = 'block';
             setTimeout(() => {
                 timerEndGif.style.display = 'none';
+                incrementButton.click();
             }, 15000);
         }
     }, 1000);
