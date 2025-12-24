@@ -8,121 +8,200 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width", initial-scale=1">
     <style>
-    html, body {
-    height: 100%;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #f0f0f0;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  overflow: hidden; /* Evita scroll indesejado pelo botão */
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.arotar {
-    transform: rotate(90deg);
-    width: 100%;
-    padding: 0 10px;
-    }
+/* Classe de transição suave para a rotação */
+.container {
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  transition: transform 0.5s ease;
+}
 
+.desrotar {
+  transform: rotate(-90deg);
+}
+.arotar {
+  transform: rotate(90deg);
+}
 
 .rotar {
-    transform: rotate(180deg);
-    width: 100%;
-    padding: 0 10px;
-    }
-
-.container {
-    text-align: center;
-    box-sizing: border-box;
-    position: relative; /* Adicionado para posicionar o GIFV corretamente */
+  transform: rotate(180deg);
 }
 
 .timer {
-    font-size: 20vw;
-    margin-bottom: 30px;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
+  font-size: 35vw;
+  margin-bottom: 30px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .counter-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .counter {
-    font-size: 12vw;
-    margin: 0 9vw;
-    cursor: pointer;
-    white-space: nowrap;
+  font-size: 12vw;
+  margin: 0 9vw;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-input[type="range"] {
-    width: 95%;
-    margin-bottom: 30px;
+input[type='range'] {
+  width: 95%;
+  margin-bottom: 30px;
 }
 
 button {
-    font-size: 3vw;
-    padding: 3vw 6vw;
-    cursor: pointer;
-    border-radius: 1ch;
+  font-size: 4vw;
+  padding: 3vw 6vw;
+  cursor: pointer;
+  border-radius: 1ch;
 }
 
 #timerEndGif {
-    position: fixed; /* Posiciona o GIFV em tela cheia */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Garante que o GIFV cubra toda a tela */
-    z-index: 1000; /* Garante que o GIFV fique na frente de outros elementos */
-    display: none; /* Inicialmente oculto */
-    background-color:black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1000;
+  display: none;
+  background-color: black;
 }
 
 .slider-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 .slider-container button {
-    font-size: 2em;
-    padding: 10px 20px;
-    cursor: pointer;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
-.slider-container input[type="range"] {
-    width: 60%;
-    margin: 0 10px;
+.slider-container input[type='range'] {
+  width: 60%;
+  margin: 0 10px;
 }
+
+#btnInvisivel {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  width: 2vw;
+  height: 1vw;
+  background: red;
+  border: none;
+  outline: none;
+}
+
+#btnGirar90 {
+  position: fixed;
+  bottom: 2em;
+  left: 60%;
+  width: 50px;
+  height: 1em;
+  background: gray;
+  border: none;
+}
+#btnGirar-90 {
+  position: fixed;
+  bottom: 2em;
+  left: 40%;
+  width: 50px;
+  height: 1em;
+  background: purple;
+  border: none;
+}
+#btnResG {
+  position: fixed;
+  bottom: 4em;
+  left: 50%;
+  width: 1em;
+  height: 50px;
+  background: green;
+  border: none;
+}
+#btnAf {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 0.2em;
+  height: 2em;
+  border: none;
+  z-index: 102;
+}
+.atras {
+  z-index: -12;
+}
+.afrente {
+  z-index: 9999;
+}
+
     </style>
 </head>
-<body>
-    <div class="container arotar">
-        <div class="slider-container">
-            <button id="decreaseTimer">-</button>
-            <input type="range" id="timerSlider" min="5" max="180" step="5" value="30">
-            <button id="increaseTimer">+</button>
-        </div>
-        <div id="timer" class="timer">00:00</div>
-        <div class="counter-container">
-            <button id="decrementCounter">-</button>
-            <div id="counter" class="counter">0</div>
-            <button id="incrementCounter">+</button>
-        </div>
-    </div>
-    <img id="timerEndGif" class="rotar" src="https://64.media.tumblr.com/446184bea3ee31006cce2d62527cd6ee/tumblr_n42t94glJN1rqdof9o6_r1_250.gifv" alt="Timer End GIF" class="hidden">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
+
+<div class="container" id="mainContainer">
+  <div class="counter-container">
+    <button id="decrementCounter">v</button>
+    <div id="counter" class="counter timer">0</div>
+    <button id="incrementCounter">^</button>
+  </div>
+  <div id="timer" class="timer">00:00</div>
+  <div class="slider-container">
+    <button id="decreaseTimer">-</button>
+    <input
+      type="range"
+      id="timerSlider"
+      min="5"
+      max="180"
+      step="5"
+      value="30"
+    />
+    <button id="increaseTimer">+</button>
+  </div>
+</div>
+<img
+  id="timerEndGif"
+  src="https://64.media.tumblr.com/446184bea3ee31006cce2d62527cd6ee/tumblr_n42t94glJN1rqdof9o6_r1_250.gifv"
+  alt="Timer End GIF"
+/>
+<button id="btnInvisivel" class="atras">V</button>
+<button id="btnGirar90" class="atras">></button>
+<button id="btnGirar-90" class="atras"><</button>
+<button id="btnResG" class="atras">^</button>
+<button id="btnAf" class="atras">Menu</button>
+
     <script>
-    const timerDisplay = document.getElementById('timer');
+const timerDisplay = document.getElementById('timer');
 const timerSlider = document.getElementById('timerSlider');
 const counterDisplay = document.getElementById('counter');
 const decrementButton = document.getElementById('decrementCounter');
@@ -131,72 +210,106 @@ const timerEndGif = document.getElementById('timerEndGif');
 const decreaseTimerButton = document.getElementById('decreaseTimer');
 const increaseTimerButton = document.getElementById('increaseTimer');
 
+// Novos elementos
+const mainContainer = document.getElementById('mainContainer');
+const btnInvisivel = document.getElementById('btnInvisivel');
+const btnGirar90 = document.getElementById('btnGirar90');
+const btnGirardes = document.getElementById('btnGirar-90');
+
 let timerInterval;
 let timeLeft;
 let counterValue = 0;
 
+function gira(a) {
+  mainContainer.classList.remove('arotar', 'desrotar', 'rotar');
+  timerEndGif.classList.remove('arotar', 'desrotar', 'rotar');
+  if (a != '') {
+    mainContainer.classList.toggle(a);
+    timerEndGif.classList.toggle(a);
+  }
+}
+// Lógica para rotacionar ao clicar no botão invisível
+btnInvisivel.addEventListener('click', () => {
+  gira('rotar');
+});
+btnGirar90.addEventListener('click', () => {
+  gira('arotar');
+});
+btnGirardes.addEventListener('click', () => {
+  gira('desrotar');
+});
+btnResG.addEventListener('click', () => {
+  gira('');
+});
+btnAf.addEventListener('click', () => {
+  btnInvisivel.classList.toggle('afrente');
+  btnGirar90.classList.toggle('afrente');
+  btnGirardes.classList.toggle('afrente');
+  btnResG.classList.toggle('afrente');
+});
 function startTimer(duration) {
-    clearInterval(timerInterval);
-    timeLeft = duration;
+  clearInterval(timerInterval);
+  timeLeft = duration;
+  updateTimerDisplay();
+  timerEndGif.style.display = 'none';
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
     updateTimerDisplay();
-    timerEndGif.style.display = 'none';
 
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            timerEndGif.style.display = 'block';
-            setTimeout(() => {
-                timerEndGif.style.display = 'none';
-                incrementButton.click();
-            }, 15000);
-        }
-    }, 1000);
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerEndGif.style.display = 'block';
+      setTimeout(() => {
+        timerEndGif.style.display = 'none';
+        incrementButton.click();
+      }, 15000);
+    }
+  }, 1000);
 }
 
 function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
 timerSlider.addEventListener('input', () => {
-    const duration = parseInt(timerSlider.value);
-    startTimer(duration);
+  const duration = parseInt(timerSlider.value);
+  startTimer(duration);
 });
 
 timerDisplay.addEventListener('click', () => {
-    const duration = parseInt(timerSlider.value);
-    startTimer(duration);
+  const duration = parseInt(timerSlider.value);
+  startTimer(duration);
 });
 
 incrementButton.addEventListener('click', () => {
-    counterValue++;
-    counterDisplay.textContent = counterValue;
+  counterValue++;
+  counterDisplay.textContent = counterValue;
 });
 
 decrementButton.addEventListener('click', () => {
-    if (counterValue > 0) {
-        counterValue--;
-        counterDisplay.textContent = counterValue;
-    }
+  if (counterValue > 0) {
+    counterValue--;
+    counterDisplay.textContent = counterValue;
+  }
 });
 
 decreaseTimerButton.addEventListener('click', () => {
-    if (timerSlider.value > 5) {
-        timerSlider.value = parseInt(timerSlider.value) - 5;
-        startTimer(parseInt(timerSlider.value));
-    }
+  if (timerSlider.value > 5) {
+    timerSlider.value = parseInt(timerSlider.value) - 5;
+    startTimer(parseInt(timerSlider.value));
+  }
 });
 
 increaseTimerButton.addEventListener('click', () => {
-    if (timerSlider.value < 120) {
-        timerSlider.value = parseInt(timerSlider.value) + 5;
-        startTimer(parseInt(timerSlider.value));
-    }
+  if (timerSlider.value < 120) {
+    timerSlider.value = parseInt(timerSlider.value) + 5;
+    startTimer(parseInt(timerSlider.value));
+  }
 });
+
     </script>
 </body>
 </html>
