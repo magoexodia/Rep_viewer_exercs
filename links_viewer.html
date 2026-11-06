@@ -1,262 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview GitHub</title>
+<style>
+:root{--bg:url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png") #000}
+*{box-sizing:border-box}
+body{margin:0;font-family:sans-serif;background:var(--bg) center/cover fixed;color:#fff;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+#entrada{padding:8px;background:rgba(0,0,0,0.8);display:flex;gap:5px;z-index:10}
+input{flex:1;padding:6px;font-size:1rem}
+button{padding:6px 12px;cursor:pointer;font-weight:bold}
 
-    <head>
-        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-        <title>Preview de Links do GitHub</title>
-    </head>
-    <style>
-        :root {
-            --bgimg: url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png");
-            --bgcolor: rgba(0, 0, 0, 0.164);
-            --bgprev: rgba(255, 255, 255, 0.35);
-        }
+/* Layout assimétrico: Frame 1 mais largo, Frame 2 mais comprido */
+#div-iframe{flex:1;display:flex;gap:10px;padding:10px;height:calc(100vh - 50px)}
+#preview1{flex:1.4;width:100%;height:100%;border:2px solid rgba(255,255,255,0.3);background:#fff;border-radius:4px}
+#preview2{flex:0.9;width:100%;height:100%;border:2px solid rgba(255,255,255,0.3);background:#fff;border-radius:4px}
 
-        body {
-            font-family: 'Lucida Sans', sans-serif;
-            font-size: calc(1vmin / 2vmax);
-            background: var(--bgcolor);
-            background-image: var(--bgimg);
-            background-size: contain;
-            cursor: crosshair;
-            overflow-y: hidden;
-        }
+#botoes{position:fixed;top:50px;right:10px;width:220px;max-height:calc(100vh - 60px);overflow-y:auto;background:rgba(0,0,0,0.9);padding:5px;border-radius:5px;z-index:100}
+#botoes button{width:100%;margin-bottom:4px;background:#222;color:#fff;border:1px solid #555;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#botoes button:hover{background:#fff;color:#000}
+.esconde{display:none}
+#btnMenu{position:fixed;top:8px;right:10px;z-index:101;display:none}
 
-        #principal {
-            height: calc(100svh - (2ch));
-            width: calc(100svw - (1ch));
-            margin-top: 1ch;
-            margin-bottom: 0;
-            border: none;
-        }
+@media(max-aspect-ratio:1/1){#div-iframe{flex-direction:column}}
+</style>
+</head>
+<body>
 
-        input[type="text"],
-        button {
-            font-size: 1em;
-        }
+<div id="entrada">
+  <input type="text" id="links" onclick="this.select()" placeholder="Links separados por vírgula">
+  <button onclick="add()">➕</button>
+  <button onclick="document.getElementById('links').value=''">❌</button>
+</div>
 
-        #div-preview {
-            background: rgba(255, 255, 255, 0.05);
-            height: 100vh;
-            width: 100vw;
-            overflow: auto;
-            margin: 3px;
-        }
-        
-        #preview1, #preview2 {
-            background: var(--bgprev);
-        }
+<button id="btnMenu" onclick="document.getElementById('botoes').classList.toggle('esconde')">MENU</button>
 
+<div id="div-iframe">
+  <iframe id="preview1" allowfullscreen></iframe>
+  <iframe id="preview2" allowfullscreen></iframe>
+</div>
 
-@media (max-aspect-ratio: 1/1) {
+<div id="botoes" class="esconde"></div>
 
-            #preview1, #preview2 {
-                max-width: calc(100%);
-            }
+<script>
+document.getElementById("links").value = "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/z-teste-tabs.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_vds.html";
 
-            #preview2 {
-                height: 33vh;
-                width: calc((33vh - 1ch) * 3)
-            }
+let links = [], idx = 0;
 
-            #preview1 { 
-                height: calc(66vh - 1ch);
-                min-width: calc((66vh - 1ch) * 0.9);
-                margin: auto;
-            }
-        }
-        
-        @media (min-aspect-ratio: 1516/530) {/*, (orientation: landscape) {*/
-
-            #preview1, #preview2 {
-                height: calc(99vh - 1ch);
-            }
-
-            #preview1 {
-                min-width: calc((99vh - 1ch) * 1.05);
-                width: 66%;
-            }
-
-            #preview2 {
-                max-width: calc((99vh - 1ch) * 0.95);
-                width: 33%;
-            }
-
-        }
-
-        @media (max-aspect-ratio: 1516/529) and (min-aspect-ratio: 1/1){
-
-            #preview1, #preview2 {
-                height: calc((60vw * 0.8) - 2ch);
-            }
-
-            #preview1 {
-                max-height: calc(60vw * 3);
-                width: 60%;
-            }
-
-            #preview2 {
-                max-height: calc(33vw * 3);
-                width: 33vw;
-            }
-        }
-
-        #botoes {
-            position: fixed;
-            top: 2ch;
-            right: -2ch;
-            width: calc(20ch * 1.1);
-            height: calc(100vh - (2ch + 3px));
-            overflow-y: auto;
-        }
-
-        #botoes button {
-            width: calc(20ch - 3px);
-            background: black;
-            color: silver;
-            overflow: hidden;
-            height: fit-content;
-            max-height: calc(99dvh - 2ch);
-            text-shadow: 0px 0px 1px white, 0px 0px 3px black;
-            padding: 3px;
-        }
-
-        #botoes button:hover {
-            color: black;
-            cursor: pointer;
-            background: white;
-            text-shadow: 0px 0px 5px green, 0px 0px 12px black;
-            transform: scale(1.1);
-            transform-origin: 0 0;
-        }
-
-        .esconde {
-            display: none;
-        }
-
-        #destaque {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-    </style>
-
-
-    <body>
-        <br>
-        <div id="principal">
-            <div id="destaque">
-                <div id="entrada">
-                    &nbsp;
-                    <input type="text" placeholder="Insira os links separados por vírgulas" id="links" onclick="this.select()">
-                    <button onclick="adicionarLinks()" title="põe botões dos links colados no espaço ao lado">➕</button>
-                    <button onclick="limparInput()" title="limpeza. Ctrl + a, del">❌</button>
-                </div>
-                <span id="extra">
-                    <div id="botoes" class="esconde"></div>
-            </div>
-            <div id="div-iframe">
-                <iframe id="preview1" allowfullscreen></iframe>
-                <iframe id="preview2" allowfullscreen></iframe>
-            </div>
-        </div>
-        </div>
-
-        <script>
-            document.getElementById("links").value = "https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/z-teste-tabs.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/limpador_de_arquivo.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/texto_2_links.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reps2counter.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/repetecos.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/contar_exec_linkOuFile.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/timer_exerc_gif.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/offline_image_loader.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_img.html, https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/reorganizador_vds.html";
-            let links = []; //pré-adição de links aqui. Não visível na entrada de links
-            let indice = 0;
-
-            function esconde(quem = "botoes") {
-                document.getElementById(quem).classList.toggle("esconde");
-            }
-
-            function limparInput() {
-                document.getElementById("links").value = "";
-            }
-
-            function btExtra() {
-                document.getElementById("extra").innerHTML += "<button onclick='esconde()' title='troca entre ocultar e mostrar' style='position: fixed; right: 0; top: 0; width: 20ch'>MENU</button>";
-            }
-
-            function exibirPreview() {
-                if (links.length > 0) {
-                    document.getElementById("preview1").src = links[indice];
-                    document.getElementById("preview2").src = links[indice];
-                }
-            }
-
-            function adicionarLinks() {
-                btExtra();
-
-                let inputLinks = document.getElementById("links").value;
-                inputLinks = inputLinks.split(",");
-                for (let i = 0; i < inputLinks.length; i++) {
-                    let link = inputLinks[i].trim();
-                    link = link.replace(/^['"]/, "").replace(/['"]$/, "");
-                    links.push(link);
-                }
-                exibirPreview();
-                criarBotoes();
-                esconde("entrada");
-                window.removeEventListener('resize', atualizarDimensoes);
-                window.removeEventListener('load', atualizarDimensoes);
-            }
-
-            function criarBotoes() {
-                let divBotoes = document.getElementById("botoes");
-                divBotoes.innerHTML = "";
-                for (let i = 0; i < links.length; i++) {
-                    let botao = document.createElement("button");
-                    botao.textContent = links[i].substring(links[i].lastIndexOf("/") + 1, links[i].lastIndexOf(".")).substring(0, 25);
-                    botao.addEventListener("click", function() {
-                        indice = i;
-                        exibirPreview();
-                        esconde();
-                    });
-                    divBotoes.appendChild(botao);
-                }
-            }
-
-            document.addEventListener("keyup", function(event) {
-                if (event.key === "ArrowLeft") { // exibir preview anterior
-                    indice--;
-                    if (indice < 0) indice = links.length - 1;
-                } else if (event.key === "ArrowRight") { // exibir próximo preview
-                    indice++;
-                    if (indice >= links.length) indice = 0;
-                }
-                exibirPreview();
-            });
-            /*isto link: https://htmlpreview.github.io/?https://github.com/magoexodia/Rep_viewer_exercs/blob/main/links_viewer.html,*/
-// Função para exibir as dimensões de um iframe dentro dele mesmo
-function exibirDimensoes(iframe) {
-    var largura = iframe.offsetWidth;
-    var altura = iframe.offsetHeight;
-
-    // Acessa o documento dentro do iframe
-    var doc = iframe.contentDocument || iframe.contentWindow.document;
-
-    // Substitui o conteúdo do corpo do documento do iframe
-    doc.body.innerHTML = '<br><br>Largura: ' + largura + '<br> Altura: ' + altura + (largura > altura ? "<br>🖼️ " : "<br>🛤️ ") + (largura/altura);
+function show() {
+  if(links.length) {
+    document.getElementById("preview1").src = links[idx];
+    document.getElementById("preview2").src = links[idx];
+  }
 }
 
-// Função para exibir as dimensões de ambos os iframes
-function atualizarDimensoes() {
-    var iframe1 = document.getElementById('preview1');
-    var iframe2 = document.getElementById('preview2');
-    exibirDimensoes(iframe1);
-    exibirDimensoes(iframe2);
+function add() {
+  let val = document.getElementById("links").value;
+  if(!val) return;
+  links = val.split(",").map(l => l.trim().replace(/^['"]|['"]$/g, ""));
+  idx = 0;
+  show();
+  let b = document.getElementById("botoes");
+  b.innerHTML = "";
+  links.forEach((l, i) => {
+    let btn = document.createElement("button");
+    btn.textContent = l.substring(l.lastIndexOf("/") + 1, l.lastIndexOf(".")).substring(0, 22) || l;
+    btn.onclick = () => { idx = i; show(); b.classList.add("esconde"); };
+    b.appendChild(btn);
+  });
+  document.getElementById("entrada").style.display = "none";
+  document.getElementById("btnMenu").style.display = "block";
+  b.classList.remove("esconde");
 }
 
-// Adiciona o event listener para o evento de redimensionamento da janela
-window.addEventListener('resize', atualizarDimensoes);
-
-// Chama a função quando a página é carregada
-window.addEventListener('load', atualizarDimensoes);
-
-        </script>
-    </body>
-
+document.addEventListener("keyup", e => {
+  if(!links.length) return;
+  if(e.key === "ArrowLeft") idx = (idx - 1 + links.length) % links.length;
+  if(e.key === "ArrowRight") idx = (idx + 1) % links.length;
+  show();
+});
+</script>
+</body>
 </html>
