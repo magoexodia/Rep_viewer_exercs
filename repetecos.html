@@ -1,315 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Cronômetro e Contador</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width", initial-scale=1">
-    <style>
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f0f0;
-  overflow: hidden; /* Evita scroll indesejado pelo botão */
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Classe de transição suave para a rotação */
-.container {
-  text-align: center;
-  box-sizing: border-box;
-  position: relative;
-  transition: transform 0.5s ease;
-}
-
-.desrotar {
-  transform: rotate(-90deg);
-}
-.arotar {
-  transform: rotate(90deg);
-}
-
-.rotar {
-  transform: rotate(180deg);
-}
-
-.timer {
-  font-size: 35vw;
-  margin-bottom: 30px;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.counter-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.counter {
-  font-size: 12vw;
-  margin: 0 9vw;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-input[type='range'] {
-  width: 95%;
-  margin-bottom: 30px;
-}
-
-button {
-  font-size: 4vw;
-  padding: 3vw 6vw;
-  cursor: pointer;
-  border-radius: 1ch;
-}
-
-#timerEndGif {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 1000;
-  display: none;
-  background-color: black;
-}
-
-.slider-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.slider-container button {
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.slider-container input[type='range'] {
-  width: 60%;
-  margin: 0 10px;
-}
-
-#btnInvisivel {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  width: 2vw;
-  height: 1vw;
-  background: red;
-  border: none;
-  outline: none;
-}
-
-#btnGirar90 {
-  position: fixed;
-  bottom: 2em;
-  left: 60%;
-  width: 50px;
-  height: 1em;
-  background: gray;
-  border: none;
-}
-#btnGirar-90 {
-  position: fixed;
-  bottom: 2em;
-  left: 40%;
-  width: 50px;
-  height: 1em;
-  background: purple;
-  border: none;
-}
-#btnResG {
-  position: fixed;
-  bottom: 4em;
-  left: 50%;
-  width: 1em;
-  height: 50px;
-  background: green;
-  border: none;
-}
-#btnAf {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 0.2em;
-  height: 2em;
-  border: none;
-  z-index: 102;
-}
-.atras {
-  z-index: -12;
-}
-.afrente {
-  z-index: 9999;
-}
-
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Cronômetro de Treino</title>
+<style>
+:root { --bg: #000; --fg: #fff; --ts: 22vw; }
+[data-theme="light"] { --bg: #fff; --fg: #000; }
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none}
+html,body{height:100vh;height:100svh;margin:0;font-family:sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:background .3s,color .3s}
+.c{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;height:100svh;padding:1rem;transition:transform .4s ease}
+.arotar{transform:rotate(90deg)}.desrotar{transform:rotate(-90deg)}.rotar{transform:rotate(180deg)}
+.cc{display:flex;gap:2rem;align-items:center;margin-bottom:1vh}
+.cnt{font-size:clamp(3rem, 10vw, 8rem);font-weight:900}
+.timer{font-size:var(--ts);font-weight:900;cursor:pointer;white-space:nowrap;line-height:1;margin:1vh 0;text-align:center}
+.sc{display:flex;gap:1.5rem;width:90%;max-width:800px;align-items:center;justify-content:center;margin-top:1vh}
+input[type=range]{flex:1;height:16px;accent-color:var(--fg);cursor:pointer}
+button{font-size:1.5rem;font-weight:700;padding:.8rem 1.5rem;border:3px solid var(--fg);border-radius:1rem;background:var(--bg);color:var(--fg);cursor:pointer}
+button:active{background:var(--fg);color:var(--bg)}
+.m{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;background:var(--bg);padding:.4rem 1rem;border:2px solid var(--fg);border-radius:3rem;z-index:100;opacity:1;transition:opacity .4s;box-shadow:0 4px 12px rgba(0,0,0,0.5)}
+.m.hidden{opacity:0;pointer-events:none}
+.m button{padding:.5rem .7rem;font-size:0.9rem;border-radius:2rem;border:1px solid var(--fg)}
+#e{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;justify-content:center;align-items:center}
+#e.active{display:flex}
+#med{width:100%;height:100%;object-fit:contain;display:none}
+#fb{display:none;width:100%;height:100%;background:var(--fg);color:var(--bg);justify-content:center;align-items:center;font-size:clamp(3rem,12vw,10rem);font-weight:900;animation:bl .25s infinite alternate}
+@keyframes bl{from{background:var(--fg);color:var(--bg)}to{background:var(--bg);color:var(--fg)}}
+#fileIn{display:none}
+</style>
 </head>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-  rel="stylesheet"
-/>
+<body onclick="showMenu()">
+<main class="c" id="mc">
+  <div class="cc"><button id="dc">-</button><div id="ctr" class="cnt">0</div><button id="ic">+</button></div>
+  <div id="tm" class="timer">30</div>
+  <div class="sc"><button id="ds">-5s</button><input type="range" id="ts" min="5" max="180" step="5" value="30"><button id="ins">+5s</button></div>
+</main>
+<div id="e"><img id="med"><div id="fb">🪫<br />💪<br />👆<br />💀</div></div>
+<nav class="m" id="menu" onclick="event.stopPropagation()">
+  <button onclick="g('desrotar')" title="Girar -90°">↺</button>
+  <button onclick="g('')" title="Normal">0°</button>
+  <button onclick="g('arotar')" title="Girar 90°">↻</button>
+  <button onclick="g('rotar')" title="Girar 180°">180°</button>
+  <button onclick="fs(2)" title="Aumentar Fonte">A+</button>
+  <button onclick="fs(-2)" title="Diminuir Fonte">A-</button>
+  <button onclick="toggleTheme()" title="Mudar Tema">☀️</button>
+  <button onclick="$('fileIn').click()" title="Arquivo Local">📁</button>
+  <button onclick="setOnlineMedia()" title="Link Web">🌐</button>
+</nav>
+<input type="file" id="fileIn" accept="image/*,video/*">
+<script>
+const $=id=>document.getElementById(id),tm=$('tm'),ts=$('ts'),ctr=$('ctr'),mc=$('mc'),e=$('e'),med=$('med'),fb=$('fb'),menu=$('menu');
+let iv=null,tl=+ts.value,cv=0,mUrl=null,isBlob=false,run=false,menuTimeout,fSize=22;
 
-<div class="container" id="mainContainer">
-  <div class="counter-container">
-    <button id="decrementCounter">v</button>
-    <div id="counter" class="counter timer">0</div>
-    <button id="incrementCounter">^</button>
-  </div>
-  <div id="timer" class="timer">00:00</div>
-  <div class="slider-container">
-    <button id="decreaseTimer">-</button>
-    <input
-      type="range"
-      id="timerSlider"
-      min="5"
-      max="180"
-      step="5"
-      value="30"
-    />
-    <button id="increaseTimer">+</button>
-  </div>
-</div>
-<img
-  id="timerEndGif"
-  src="https://64.media.tumblr.com/446184bea3ee31006cce2d62527cd6ee/tumblr_n42t94glJN1rqdof9o6_r1_250.gifv"
-  alt="Timer End GIF"
-/>
-<button id="btnInvisivel" class="atras">V</button>
-<button id="btnGirar90" class="atras">></button>
-<button id="btnGirar-90" class="atras"><</button>
-<button id="btnResG" class="atras">^</button>
-<button id="btnAf" class="atras">Menu</button>
-
-    <script>
-const timerDisplay = document.getElementById('timer');
-const timerSlider = document.getElementById('timerSlider');
-const counterDisplay = document.getElementById('counter');
-const decrementButton = document.getElementById('decrementCounter');
-const incrementButton = document.getElementById('incrementCounter');
-const timerEndGif = document.getElementById('timerEndGif');
-const decreaseTimerButton = document.getElementById('decreaseTimer');
-const increaseTimerButton = document.getElementById('increaseTimer');
-
-// Novos elementos
-const mainContainer = document.getElementById('mainContainer');
-const btnInvisivel = document.getElementById('btnInvisivel');
-const btnGirar90 = document.getElementById('btnGirar90');
-const btnGirardes = document.getElementById('btnGirar-90');
-
-let timerInterval;
-let timeLeft;
-let counterValue = 0;
-
-function gira(a) {
-  mainContainer.classList.remove('arotar', 'desrotar', 'rotar');
-  timerEndGif.classList.remove('arotar', 'desrotar', 'rotar');
-  if (a != '') {
-    mainContainer.classList.toggle(a);
-    timerEndGif.classList.toggle(a);
-  }
+function showMenu(){
+  menu.classList.remove('hidden');
+  clearTimeout(menuTimeout);
+  menuTimeout=setTimeout(()=>{if(run)menu.classList.add('hidden')},3000);
 }
-// Lógica para rotacionar ao clicar no botão invisível
-btnInvisivel.addEventListener('click', () => {
-  gira('rotar');
-});
-btnGirar90.addEventListener('click', () => {
-  gira('arotar');
-});
-btnGirardes.addEventListener('click', () => {
-  gira('desrotar');
-});
-btnResG.addEventListener('click', () => {
-  gira('');
-});
-btnAf.addEventListener('click', () => {
-  btnInvisivel.classList.toggle('afrente');
-  btnGirar90.classList.toggle('afrente');
-  btnGirardes.classList.toggle('afrente');
-  btnResG.classList.toggle('afrente');
-});
-function startTimer(duration) {
-  clearInterval(timerInterval);
-  timeLeft = duration;
-  updateTimerDisplay();
-  timerEndGif.style.display = 'none';
 
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerDisplay();
+async function toggleWakeLock(en){
+  try{if(en&&'wakeLock' in navigator)window.wl=await navigator.wakeLock.request('screen');else if(window.wl)await window.wl.release();}catch(err){}
+}
 
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      timerEndGif.style.display = 'block';
-      setTimeout(() => {
-        timerEndGif.style.display = 'none';
-        incrementButton.click();
-      }, 15000);
+function bp(){try{let c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='square';o.frequency.value=880;g.gain.value=0.2;o.start();o.stop(c.currentTime+.6)}catch(err){}}
+
+function g(c){mc.className='c '+c}
+function toggleTheme(){
+  let isLight=document.body.getAttribute('data-theme')==='light';
+  document.body.setAttribute('data-theme',isLight?'':'light');
+}
+
+function fs(val){
+  fSize=Math.max(10,Math.min(45,fSize+val));
+  document.documentElement.style.setProperty('--ts',fSize+'vw');
+}
+
+function ut(){tm.textContent=tl}
+
+function resetTimer(){
+  clearInterval(iv);
+  run=false;
+  toggleWakeLock(false);
+  e.classList.remove('active');
+  med.style.display='none';
+  fb.style.display='none';
+  med.src='';
+  tl=+ts.value;
+  ut();
+}
+
+function st(){
+  if(run)return;
+  run=true;
+  toggleWakeLock(true);
+  menu.classList.add('hidden');
+  clearInterval(iv);
+  e.classList.remove('active');med.style.display='none';fb.style.display='none';
+  
+  iv=setInterval(()=>{
+    if(tl>0){tl--;ut()}
+    if(tl<=0){
+      clearInterval(iv);
+      run=false;
+      toggleWakeLock(false);
+      bp();
+      e.classList.add('active');
+      if(mUrl){med.src=mUrl;med.style.display='block'}else{fb.style.display='flex'}
+      setTimeout(()=>{
+        e.classList.remove('active');med.style.display='none';fb.style.display='none';
+        med.src='';
+        cv++;ctr.textContent=cv;
+        resetTimer();
+      },20000);
     }
-  }, 1000);
+  },1000);
 }
 
-function updateTimerDisplay() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+ts.onchange=resetTimer;
+tm.onclick=st;
+$('ic').onclick=()=>ctr.textContent=++cv;
+$('dc').onclick=()=>{if(cv>0)ctr.textContent=--cv};
+$('ds').onclick=()=>{ts.value=Math.max(5,+ts.value-5);resetTimer();ut();};
+$('ins').onclick=()=>{ts.value=Math.min(180,+ts.value+5);resetTimer();ut();};
+
+// Gerenciamento de Arquivo Local
+$('fileIn').onchange=ev=>{
+  let f=ev.target.files[0];
+  if(f){
+    if(isBlob && mUrl) URL.revokeObjectURL(mUrl);
+    mUrl=URL.createObjectURL(f);
+    isBlob=true;
+  }
+};
+
+// Gerenciamento de Link Direto da Web com Sugestão
+function setOnlineMedia(){
+  let defLink = "https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv";
+  let url = prompt("Cole o link direto da imagem ou GIF da internet:", defLink);
+  if(url){
+    if(isBlob && mUrl) URL.revokeObjectURL(mUrl);
+    mUrl = url.trim();
+    isBlob = false;
+  }
 }
-
-timerSlider.addEventListener('input', () => {
-  const duration = parseInt(timerSlider.value);
-  startTimer(duration);
-});
-
-timerDisplay.addEventListener('click', () => {
-  const duration = parseInt(timerSlider.value);
-  startTimer(duration);
-});
-
-incrementButton.addEventListener('click', () => {
-  counterValue++;
-  counterDisplay.textContent = counterValue;
-});
-
-decrementButton.addEventListener('click', () => {
-  if (counterValue > 0) {
-    counterValue--;
-    counterDisplay.textContent = counterValue;
-  }
-});
-
-decreaseTimerButton.addEventListener('click', () => {
-  if (timerSlider.value > 5) {
-    timerSlider.value = parseInt(timerSlider.value) - 5;
-    startTimer(parseInt(timerSlider.value));
-  }
-});
-
-increaseTimerButton.addEventListener('click', () => {
-  if (timerSlider.value < 120) {
-    timerSlider.value = parseInt(timerSlider.value) + 5;
-    startTimer(parseInt(timerSlider.value));
-  }
-});
-
-    </script>
+</script>
 </body>
 </html>
