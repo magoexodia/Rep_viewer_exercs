@@ -1,389 +1,291 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contador de Repetições</title>
-        <style>
-            :root {
-                --bgurl: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%232c5928' fill-opacity='0.32' fill-rule='evenodd'/%3E%3C/svg%3E");
-                --bgbtn: rgb(0, 0, 0, 0.1);
-                --bgipt: rgb(255, 255, 255, 0.25);
-                --sombra1: 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white;
-                --bgcolor: #fefdff;
-            }
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Contador Pro de Treino</title>
+<style>
+:root{--bg:#000;--fg:#fff}
+[data-theme="light"]{--bg:#fff;--fg:#000}
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none}
+html,body{height:100vh;height:100svh;margin:0;font-family:sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center}
 
-            body {
-                --tam: calc(7vh);
-                font-family: Monospace, sans-serif;
-                font-size: var(--tam);
-                background-color: white;
-                background-image: var(--bgurl);
-                width: 100vw;
-                height: 100vh;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow-y: hidden;
-            }
+.screen{display:none;width:100vw;height:100vh;height:100svh;justify-content:center;align-items:center;flex-direction:column;padding:1rem}
 
-            .screen {
-                display: none;
-                width: 40ch;
-                height: fit-content;
-            }
+/* Força Modo Paisagem sempre usando a maior dimensão da tela */
+@media (orientation: portrait) {
+  .screen.active {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vh !important;
+    height: 100vw !important;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center;
+  }
+}
 
-            .screen.active {
-                display: block;
+@media (orientation: landscape) {
+  .screen.active {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    transform: none;
+  }
+}
 
-                margin: auto;
-                width: 100vw;
-                max-height: 100vh;
-                object-fit: contain;
-            }
+.cnt-box{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cnt{font-size:clamp(5rem,22vh,14vh);font-weight:900;line-height:1}
+.sub-cnt{font-size:clamp(1.5rem,6vh,3.5vh);font-weight:700;opacity:.8;margin-bottom:.5rem}
+.controls{display:flex;gap:1.5rem;margin-top:1rem}
+button,input,select{font-size:1.1rem;padding:.7rem 1rem;border:2px solid var(--fg);background:var(--bg);color:var(--fg);border-radius:.8rem;cursor:pointer}
+input[type=text],input[type=number],select{width:100%;max-width:350px;text-align:center}
+button:active{background:var(--fg);color:var(--bg)}
+.cfg-group{display:flex;flex-direction:column;gap:.8rem;align-items:center;width:100%;max-width:380px}
+.opt-row{display:flex;gap:.5rem;width:100%;justify-content:center}
+.opt-row label{flex:1;text-align:center;padding:.5rem;border:2px solid var(--fg);border-radius:.8rem;opacity:.5;cursor:pointer;font-size:.9rem}
+.opt-row input[type=radio]{display:none}
+.opt-row label:has(input:checked){opacity:1;background:var(--fg);color:var(--bg);font-weight:900}
+.menu-float{position:fixed;bottom:1rem;display:flex;gap:.5rem;background:var(--bg);padding:.4rem;border:2px solid var(--fg);border-radius:2rem;z-index:100}
+.menu-float button{padding:.4rem .8rem;font-size:.9rem;border-radius:1.5rem}
+#mediaScreen{position:fixed;inset:0;background:#000;z-index:1000;display:none;justify-content:center;align-items:center;flex-direction:column}
+#mediaScreen.active{display:flex}
+#mediaScreen img,#mediaScreen video{width:100%;height:85%;object-fit:contain}
+#mediaTimer{font-size:3rem;font-weight:900;margin-top:1rem}
+</style>
+</head>
+<body>
 
-            #screen1.active {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 99vh;
-            }
+<!-- Tela 1: Configuração -->
+<div class="screen active" id="s1">
+  <div class="cfg-group">
+    <label style="width:100%;text-align:center">Modo de Treino:
+      <select id="modoTreino" onchange="renderCfg()">
+        <option value="rep_serie">Repetições + Séries</option>
+        <option value="serie">Só Séries</option>
+        <option value="rep">Só Repetições Contínuas</option>
+      </select>
+    </label>
 
-            #screen2.centra.active {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 99vh;
-                flex-direction: column;
-            }
+    <div id="fReps" style="width:100%"><label>Reps por Série: <input type="number" id="cfgReps" value="12" min="1"></label></div>
+    <div id="fSeries" style="width:100%"><label>Meta de Séries: <input type="number" id="cfgSeries" value="3" min="1"></label></div>
 
-            input[type="number"],
-            input[type="text"],
-            label #imgFile {
-                font-size: 1ch;
-                padding: 5px;
-                margin: 5px;
-                text-align: left;
-                width: 30vw;
-                border: 1px solid gray;
-                border-radius: 1ch;
-            }
+    <div id="fDescansoOpt" class="opt-row">
+      <label><input type="radio" name="momentoDesc" id="descEntre" checked><span>Descanso / Série</span></label>
+      <label><input type="radio" name="momentoDesc" id="descFim"><span>Descanso no Fim</span></label>
+    </div>
 
-            input[type="radio"] {
-                display: none;
-            }
+    <label>Tempo de Descanso entre Séries (seg): <input type="number" id="tempoDesc" value="30" min="1"></label>
 
-            #radios {
-                margin-left: 35%;
-                font-size: 0.8ch;
-            }
+    <div class="opt-row">
+      <label><input type="radio" name="origem" id="optWeb" checked onchange="toggleOrigem()"><span>🌐 Web</span></label>
+      <label><input type="radio" name="origem" id="optFile" onchange="toggleOrigem()"><span>📂 Local</span></label>
+    </div>
 
-            input[type="radio"]:checked+label {
-                background: orange;
-                color: white;
-                text-shadow: 0 0 1px lightgreen, 0 0 2px lightgreen, 0 0 5px green, 0 0 1ch green, 0 0 1ch darkgreen;
-                border: 3px solid red;
-                border-radius: 1ch;
-            }
+    <div id="divWeb" style="width:100%"><input type="text" id="linkWeb" value="https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv" onclick="this.select()"></div>
+    <div id="divFile" style="width:100%;display:none"><input type="file" id="fileLocal" accept="image/*,video/*"></div>
 
-            input[type="radio"]:not(:checked)+label {
-                border: none;
-                border-radius: 0.6ch;
-                background: white;
-                color: gray;
-            }
+    <button onclick="startTreino()" style="font-weight:900;width:100%">✅ INICIAR TREINO</button>
+  </div>
+</div>
 
-            label, #ok { text-shadow: 0 0 1px white, 0 0 2px white, 0 0 5px white, 0 0 1ch gray, 0 0 1ch black;}
-            
-            #selcB {
-                background-color: #F95A37AF;
-                border: 2px solid red;
-                border-radius: 1ch;
-            }
+<!-- Tela 2: Execução do Treino -->
+<div class="screen" id="s2">
+  <div class="cnt-box" onclick="inc()">
+    <div id="subCnt" class="sub-cnt">Série: 1 / 3</div>
+    <div id="mainCnt" class="cnt">0</div>
+  </div>
+  <div class="controls">
+    <button onclick="dec()">➖</button>
+    <button onclick="resetCurrent()">🔁</button>
+    <button onclick="goScreen(1)">❌</button>
+  </div>
+</div>
 
-            button {
-                padding: 10px;
-                margin: 5px;
-            }
+<!-- Tela 3: Mídia / Descanso -->
+<div id="mediaScreen">
+  <div id="mediaContainer" style="width:100%;height:85%;display:flex;justify-content:center;align-items:center"></div>
+  <div id="mediaTimer">00</div>
+</div>
 
-            #counter {
-                font-family: verdana;
-                font-size: 2ch;
-                font-weight: bold;
-                margin: 10px;
-                width: 9ch;
-                text-align: center;
-            }
+<!-- Menu Flutuante -->
+<div class="menu-float">
+  <button onclick="toggleTheme()">☀️</button>
+  <button onclick="goScreen(1)">⚙️</button>
+</div>
 
-            .butao {
-                font-size: 3ch;
-                background: rgba(0, 0, 0, 0);
-                border: none;
-            }
+<script>
+const $=id=>document.getElementById(id), s1=$('s1'), s2=$('s2'), mainCnt=$('mainCnt'), subCnt=$('subCnt'), mc=$('mediaContainer'), msElem=$('mediaScreen'), mTimer=$('mediaTimer');
 
-            .megabutao {
-                font-size: 8ch;
-                background: rgba(0, 0, 0, 0);
-                border: none;
-            }
+let mode='rep_serie', curReps=0, curSeries=1, maxReps=12, maxSeries=3, mediaUrl=null, isBlob=false, intervalId=null;
 
-            .minibutao {
-                font-size: 1.5ch;
-                background: rgba(0, 0, 0, 0);
-                border: none;
-            }
+async function lockOrientation() {
+  try {
+    if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+    if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape');
+  } catch (e) {}
+}
 
-            .espaco {
-                font-size: 5ch;
-            }
+function renderCfg(){
+  mode = $('modoTreino').value;
+  $('fReps').style.display = (mode === 'serie') ? 'none' : 'block';
+  $('fSeries').style.display = (mode === 'rep') ? 'none' : 'block';
+  $('fDescansoOpt').style.display = (mode === 'rep_serie') ? 'flex' : 'none';
+}
 
-            @media screen and (orientation: portrait) {
+function toggleOrigem(){
+  let isWeb = $('optWeb').checked;
+  $('divWeb').style.display = isWeb ? 'block' : 'none';
+  $('divFile').style.display = isWeb ? 'none' : 'block';
+}
 
-                #screen3 {
-                    position: fixed;
-                    transform: rotate(-90deg);
-                    transform-origin: center;
-                }
+function goScreen(n){
+  s1.classList.remove('active'); s2.classList.remove('active');
+  if(n===1) s1.classList.add('active');
+  if(n===2) s2.classList.add('active');
+}
 
-                #screen3 img,
-                #screen3 video {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 100vh;
-                    max-height: 100vw;
-                    object-fit: contain;
-                }
+function startTreino(){
+  lockOrientation();
+  mode = $('modoTreino').value;
+  maxReps = parseInt($('cfgReps').value)||1;
+  maxSeries = parseInt($('cfgSeries').value)||1;
+  curReps = 0;
+  curSeries = 1;
+  updateDisplay();
+  goScreen(2);
+}
 
-            }
+function updateDisplay(){
+  if(mode==='rep_serie'){
+    subCnt.style.display='block';
+    subCnt.textContent = `Série: ${curSeries} / ${maxSeries}`;
+    mainCnt.textContent = curReps;
+  } else if(mode==='serie'){
+    subCnt.style.display='none';
+    mainCnt.textContent = `${curSeries} / ${maxSeries}`;
+  } else {
+    subCnt.style.display='none';
+    mainCnt.textContent = `${curReps} / ${maxReps}`;
+  }
+}
 
-            @media screen and (orientation: landscape) {
+function inc(){
+  if(mode==='rep_serie'){
+    curReps++;
+    if(curReps >= maxReps){
+      if($('descEntre').checked || curSeries >= maxSeries){
+        let isFinal = (curSeries >= maxSeries);
+        triggerMedia(isFinal ? 15 : (parseInt($('tempoDesc').value)||30), isFinal, ()=>{
+          nextSerieOrEnd();
+        });
+      } else {
+        nextSerieOrEnd();
+      }
+    } else {
+      updateDisplay();
+    }
+  } else if(mode==='serie'){
+    let isFinal = (curSeries >= maxSeries);
+    if($('descEntre').checked || isFinal){
+      triggerMedia(isFinal ? 15 : (parseInt($('tempoDesc').value)||30), isFinal, ()=>{
+        if(curSeries < maxSeries){ curSeries++; updateDisplay(); }
+        else { goScreen(1); }
+      });
+    } else {
+      if(curSeries < maxSeries){ curSeries++; updateDisplay(); }
+      else { goScreen(1); }
+    }
+  } else if(mode==='rep'){
+    curReps++;
+    if(curReps >= maxReps){
+      triggerMedia(15, true, ()=>goScreen(1));
+    } else {
+      updateDisplay();
+    }
+  }
+}
 
-                #screen3 {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100vw;
-                    height: 100vh;
-                }
+function nextSerieOrEnd(){
+  curReps = 0;
+  if(curSeries < maxSeries){
+    curSeries++;
+    updateDisplay();
+  } else {
+    goScreen(1);
+  }
+}
 
-                #screen3 img,
-                #screen3 video {
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    margin: auto;
-                    width: 100vw;
-                    max-height: 100vh;
-                    object-fit: contain;
-                }
+function dec(){
+  if(mode==='rep_serie' && curReps > 0) curReps--;
+  if(mode==='serie' && curSeries > 1) curSeries--;
+  if(mode==='rep' && curReps > 0) curReps--;
+  updateDisplay();
+}
 
-                .paisagem {
-                    display: block;
-                    font-size: 2ch;
-                }
+function resetCurrent(){
+  curReps = 0;
+  updateDisplay();
+}
 
-                .retrato {
-                    display: none;
-                }
+function triggerMedia(durationSec, isFinal, cb){
+  let useWeb = $('optWeb').checked;
 
-                #screen2.centra.active {
-                    transform: rotate(-90deg);
-                    width: 100vh;
-                }
+  if(isBlob && mediaUrl){ URL.revokeObjectURL(mediaUrl); isBlob=false; }
 
-                .controle {
-                    transform: scaleX(-1);
-                }
+  if(isFinal){
+    mc.innerHTML=`<div style="font-size:3.5rem;font-weight:900">TREINO CONCLUÍDO!</div>`;
+  } else {
+    if(useWeb){
+      let link = $('linkWeb').value.trim();
+      if(link){
+        mediaUrl = link;
+        if(link.includes('.mp4')||link.includes('.gifv')||link.includes('.webm'))
+          mc.innerHTML=`<video src="${mediaUrl}" autoplay muted loop playsinline></video>`;
+        else mc.innerHTML=`<img src="${mediaUrl}">`;
+      } else mc.innerHTML=`<div style="font-size:4rem;font-weight:900">DESCANSO</div>`;
+    } else {
+      let file = $('fileLocal').files[0];
+      if(file){
+        mediaUrl = URL.createObjectURL(file); isBlob = true;
+        if(file.type.includes('video')) mc.innerHTML=`<video src="${mediaUrl}" autoplay muted loop playsinline></video>`;
+        else mc.innerHTML=`<img src="${mediaUrl}">`;
+      } else mc.innerHTML=`<div style="font-size:4rem;font-weight:900">DESCANSO</div>`;
+    }
+  }
 
-                .minibutao,
-                #counter {
-                    transform: rotate(90deg);
-                }
-            }
+  msElem.classList.add('active');
+  let timeLeft = durationSec;
+  mTimer.textContent = timeLeft;
 
-            @media (max-width: 340px) {
-                .enfeite {
-                    display: none;
-                }
+  clearInterval(intervalId);
+  intervalId = setInterval(()=>{
+    timeLeft--;
+    mTimer.textContent = timeLeft;
+    if(timeLeft <= 0){
+      clearInterval(intervalId);
+      msElem.classList.remove('active');
+      mc.innerHTML='';
+      if(cb) cb();
+    }
+  }, 1000);
+}
 
-                .minibutao {
-                    width: 1.5ch;
-                }
+function toggleTheme(){
+  let isLight=document.body.getAttribute('data-theme')==='light';
+  document.body.setAttribute('data-theme', isLight?'':'light');
+}
 
-                .megabutao {
-                    transform: scale(0.8);
-                }
+$('fileLocal').onchange=ev=>{
+  let f=ev.target.files[0];
+  if(f){
+    if(isBlob && mediaUrl) URL.revokeObjectURL(mediaUrl);
+    mediaUrl=URL.createObjectURL(f);
+    isBlob=true;
+  }
+};
 
-                #screen2 {
-                    width: 100vw;
-                }
-            }
-
-        </style>
-    </head>
-
-    <body>
-        <!-- Tela 1 -->
-        <!-- Tela 1 -->
-        <div class="screen active" id="screen1">
-            <div>
-                <label for="repetitions">0️⃣ a </label>
-                <input type="number" id="repetitions" value="2" min="2" style="width: 4.5ch; text-align: right;"><br><label for="tempo"> ⏳ &nbsp;</label>
-                <input type="number" id="tempo" value="1" min="0" style="width: 4.5ch; text-align: right;">
-                <br class="enfeite">
-                <div id="radios">
-                    <input type="radio" name="topt" checked id="sec" value=1><label for="sec">Seg</label>
-                    <input type="radio" name="topt" id="min" value=60><label for="min"> Min</label></div>
-                <div id="selecao">
-                    <div class="lkOpt">
-                        <label id="selcB" for="inputB">🔗
-                            <input type="radio" name="opcao" checked id="inputB" disabled onchange="handleOptionChange()">
-                            <input type="text" id="imgLink" class="opB" value="" onclick="this.select()"></label>
-                        <label for="imageLink" class="enfeite">🖼️</label>
-                    </div>
-                    <div class="arqOpt" style="display:none;">
-                        <label id="selcA" for="inputA">📂
-                            <input type="radio" name="opcao" id="inputA" onchange="handleOptionChange()">
-                            <input type="file" id="imgFile" accept="image/*,video/*" disabled class="opA"></label>
-                        <label for="imageFile" class="enfeite">🖼️</label>
-                    </div>
-                    <span class="espaco">&nbsp;</span><button onclick="changeScreen(2)" class="butao" id="ok">✅</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tela 2 -->
-        <div class="screen centra" id="screen2">
-            <div id="counter-view">
-                <div id="counter" onload="load()">0</div>
-                <div style="width: 1ch;">
-                    <button onclick="updateCounter(1)" class="megabutao">➕</button>
-                </div>
-            </div>
-            <div class="controle">
-                <button onclick="updateCounter(-1)" class="minibutao">➖</button>
-                <button onclick="updateCounter(-parseInt(counter.textContent))" class="minibutao">🔁</button>
-                <button onclick="changeScreen(1)" class="minibutao">❌</button>
-            </div>
-        </div>
-
-        <!-- Tela 3 -->
-        <div class="screen" id="screen3">
-            <img id="image" src="">
-        </div>
-
-
-        <script>
-            const imgPadrao = 'https://64.media.tumblr.com/d30a238f7944c9288e9c6220c1838b16/ee25d2eee81b3d44-78/s400x600/6aa56f5b2468903bb2b2730af8a5c5e3775fd85d.gifv';
-            let repetitions = document.getElementById("repetitions");
-            let counter = document.getElementById("counter");
-            let image = document.getElementById("image");
-
-            function changeScreen(screen) {
-                Array.from(document.getElementsByClassName("screen")).forEach(s => s.classList.remove("active"));
-                document.getElementById("screen" + screen).classList.add("active");
-                if (screen === 1) {
-                    updateCounter(-parseInt(counter.textContent));
-                }
-                if (screen === 3) {
-                    displayImage();
-                }
-            }
-
-            function displayImage() { //dá um tempo e volta pra screen1
-                setTimeout(() => changeScreen(1), document.getElementById('tempo').value * document.querySelector('input[name="topt"]:checked').value * 1000);
-            }
-
-            function updateCounter(delta) {
-                let value = parseInt(counter.textContent) + delta;
-                counter.textContent = Math.max(value, 0);
-                if (value == parseInt(repetitions.value)) {
-                    load();
-                }
-            }
-
-            function handleOptionChange() {
-                let C = document.getElementById('selcA');
-                let D = document.getElementById('selcB');
-
-                C.classList.toggle("selc");
-                D.classList.toggle("selc");
-                document.getElementById('imgLink').disabled = document.getElementById('inputA').checked;
-                document.getElementById('imgFile').disabled = document.getElementById('inputB').checked;
-            }
-
-            document.getElementById("goToScreen1").addEventListener("click", () => changeScreen(1));
-            document.getElementById("goToScreen2").addEventListener("click", () => {
-                changeScreen(2);
-                updateCounter(-parseInt(counter.textContent));
-            });
-            document.getElementById("increment").addEventListener("click", () => updateCounter(1));
-            document.getElementById("decrement").addEventListener("click", () => updateCounter(-1));
-
-
-
-            function loadImagens() { //capado para imagens
-                const imageLink = document.getElementById("imgLink").value;
-                //const imageFile = document.getElementById("imageFile").files[0];
-                const screen3 = document.getElementById('screen3');
-
-                const fileSrc = imageLink; //inputBChecked ? imageLink : URL.createObjectURL(imageFile);
-
-                if (!fileSrc) {
-                    changeScreen(1);
-                    return;
-                }
-                screen3.innerHTML = `<img src="${fileSrc}" alt="Image">`;
-
-                changeScreen(3);
-            }
-
-
-            function createVideo(fileSrc, type) {
-                return `<video controls><source src="${fileSrc}" type="${type}">Seu navegador não suporta a tag de vídeo.</video>`;
-            }
-
-            function createImage(fileSrc) {
-                return `<img src="${fileSrc}" alt="Imagem">`;
-            }
-
-            function load() {
-                const imageLink = document.getElementById("imgLink").value;
-                const imageFile = document.getElementById("imgFile").files[0];
-                const inputBChecked = document.getElementById('inputB').checked;
-                const inputAChecked = document.getElementById('inputA').checked;
-                const screen3 = document.getElementById('screen3');
-                let fileSrc = "";
-
-                if (inputBChecked && imageLink) {
-                    fileSrc = imageLink;
-                    if (fileSrc.includes(".mp4")) {
-                        screen3.innerHTML = createVideo(fileSrc, "video/mp4");
-                    } else {
-                        screen3.innerHTML = createImage(fileSrc);
-                    }
-                } else if (inputAChecked && imageFile) {
-                    fileSrc = URL.createObjectURL(imageFile);
-                    if (imageFile.type.includes("video")) {
-                        screen3.innerHTML = createVideo(fileSrc, imageFile.type);
-                    } else {
-                        screen3.innerHTML = createImage(fileSrc);
-                    }
-                } else {
-                        screen3.innerHTML = createImage(imgPadrao);
-                }
-
-                changeScreen(3);
-            }
-
-        </script>
-
-    </body>
-
+renderCfg();
+</script>
+</body>
 </html>
