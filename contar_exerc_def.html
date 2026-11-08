@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Dual Timer Pro</title>
+<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"Dual Timer Pro","short_name":"TimerPro","start_url":".","display":"standalone","background_color":"#000000","theme_color":"#000000"}'>
 <style>
 :root{--bg:#000;--fg:#fff}
 [data-theme="light"]{--bg:#fff;--fg:#000}
@@ -17,9 +18,10 @@ html,body{width:100vw;height:100vh;height:100svh;background:var(--bg);color:var(
 .menu.hidden{opacity:0;pointer-events:none}
 button,input,select{font-size:1rem;padding:.4rem .8rem;border:2px solid var(--fg);background:var(--bg);color:var(--fg);border-radius:.5rem;cursor:pointer;font-family:monospace}
 input[type=number],input[type=text]{text-align:center;width:100px}
+input[type=file]{font-size:.8rem;width:100%;max-width:220px}
 #modal{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;flex-direction:column;justify-content:center;align-items:center;padding:1rem;gap:1rem}
 #modal.active{display:flex}
-.cfg-row{display:flex;gap:.5rem;align-items:center;justify-content:space-between;width:100%;max-width:400px}
+.cfg-row{display:flex;gap:.5rem;align-items:center;justify-content:space-between;width:100%;max-width:420px}
 #ms{position:fixed;inset:0;background:#000;z-index:2000;display:none;justify-content:center;align-items:center;flex-direction:column}
 #ms.active{display:flex}
 #mc{width:100%;height:100%;display:flex;justify-content:center;align-items:center;overflow:hidden}
@@ -49,8 +51,9 @@ input[type=number],input[type=text]{text-align:center;width:100px}
   <div class="cfg-row"><span>Gatilho Mídia:</span>
     <select id="sTrigger"><option value="none">Nenhum</option><option value="c1" selected>Ao zerar C1</option><option value="c2">Ao zerar C2</option><option value="both">Ambos</option></select>
   </div>
-  <div class="cfg-row"><span>Tempo Apresentação (s, 0-60):</span><input type="number" id="iDur" value="15" min="0" max="60"></div>
-  <div class="cfg-row"><span>Texto/Mídia:</span><input type="text" id="iMedia" value="https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv" onchange="app.preload()"></div>
+  <div class="cfg-row"><span>Tempo Apresentação (s):</span><input type="number" id="iDur" value="15" min="0" max="60"></div>
+  <div class="cfg-row"><span>Arquivo Local (Offline):</span><input type="file" id="iFile" accept="image/*,video/*,audio/*" onchange="app.handleFile(this)"></div>
+  <div class="cfg-row"><span>Fallback Link/Texto:</span><input type="text" id="iMedia" value="https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv" onchange="app.preload()"></div>
   <button onclick="app.toggleModal(false)">❌ Fechar</button>
 </div>
 
@@ -63,6 +66,7 @@ class App{
     this.t1=60; this.t2=30; this.rem1=60; this.rem2=30;
     this.loops=0; this.run1=false; this.run2=false; 
     this.iv1=null; this.iv2=null; this.mTO=null; this.cache=null; this.mTimer=null;
+    this.localFileUrl=null; this.localFileType=null;
     this.preload(); this.upd(); this.showMenu();
   }
   fmt(s){
@@ -100,6 +104,17 @@ class App{
     this.loops = 0;
     this.upd();
     this.showMenu();
+  }
+
+  handleFile(input){
+    if(input.files && input.files[0]){
+      let file = input.files[0];
+      this.localFileType = file.type;
+      this.localFileUrl = URL.createObjectURL(file);
+    } else {
+      this.localFileUrl = null;
+      this.localFileType = null;
+    }
   }
 
   start1(){
@@ -170,14 +185,28 @@ class App{
     }
 
     this.stopAll();
-    let mc=$('mc'), val=$('iMedia').value.trim();
+    let mc=$('mc');
     
-    if(this.cache instanceof HTMLVideoElement){
-      mc.innerHTML=`<video src="${this.cache.src}" autoplay muted loop playsinline></video>`;
-    } else if(this.cache instanceof HTMLImageElement){
-      mc.innerHTML=`<img src="${this.cache.src}">`;
-    } else {
-      mc.innerHTML=`<div style="font-size:4rem;font-weight:900;text-align:center;padding:1rem">${val||'TEMPO ESGOTADO'}</div>`;
+    // 1. Prioridade para Arquivo Local Offline
+    if(this.localFileUrl){
+      if(this.localFileType.startsWith('video')){
+        mc.innerHTML=`<video src="${this.localFileUrl}" autoplay muted loop playsinline></video>`;
+      } else if(this.localFileType.startsWith('audio')){
+        mc.innerHTML=`<div style="font-size:2rem;font-weight:900;text-align:center">🎵 ÁUDIO TOCANDO</div><audio src="${this.localFileUrl}" autoplay loop></audio>`;
+      } else {
+        mc.innerHTML=`<img src="${this.localFileUrl}">`;
+      }
+    } 
+    // 2. Fallback para Link ou Texto
+    else {
+      let val=$('iMedia').value.trim();
+      if(this.cache instanceof HTMLVideoElement){
+        mc.innerHTML=`<video src="${this.cache.src}" autoplay muted loop playsinline></video>`;
+      } else if(this.cache instanceof HTMLImageElement){
+        mc.innerHTML=`<img src="${this.cache.src}">`;
+      } else {
+        mc.innerHTML=`<div style="font-size:4rem;font-weight:900;text-align:center;padding:1rem">${val||'TEMPO ESGOTADO'}</div>`;
+      }
     }
     
     $('ms').classList.add('active');
