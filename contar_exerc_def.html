@@ -1,291 +1,209 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Contador Pro de Treino</title>
+<title>Dual Timer Pro</title>
 <style>
 :root{--bg:#000;--fg:#fff}
 [data-theme="light"]{--bg:#fff;--fg:#000}
-*{box-sizing:border-box;user-select:none;-webkit-user-select:none}
-html,body{height:100vh;height:100svh;margin:0;font-family:sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center}
-
-.screen{display:none;width:100vw;height:100vh;height:100svh;justify-content:center;align-items:center;flex-direction:column;padding:1rem}
-
-/* Força Modo Paisagem sempre usando a maior dimensão da tela */
-@media (orientation: portrait) {
-  .screen.active {
-    display: flex;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 100vh !important;
-    height: 100vw !important;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transform-origin: center;
-  }
-}
-
-@media (orientation: landscape) {
-  .screen.active {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    transform: none;
-  }
-}
-
-.cnt-box{display:flex;flex-direction:column;align-items:center;justify-content:center}
-.cnt{font-size:clamp(5rem,22vh,14vh);font-weight:900;line-height:1}
-.sub-cnt{font-size:clamp(1.5rem,6vh,3.5vh);font-weight:700;opacity:.8;margin-bottom:.5rem}
-.controls{display:flex;gap:1.5rem;margin-top:1rem}
-button,input,select{font-size:1.1rem;padding:.7rem 1rem;border:2px solid var(--fg);background:var(--bg);color:var(--fg);border-radius:.8rem;cursor:pointer}
-input[type=text],input[type=number],select{width:100%;max-width:350px;text-align:center}
-button:active{background:var(--fg);color:var(--bg)}
-.cfg-group{display:flex;flex-direction:column;gap:.8rem;align-items:center;width:100%;max-width:380px}
-.opt-row{display:flex;gap:.5rem;width:100%;justify-content:center}
-.opt-row label{flex:1;text-align:center;padding:.5rem;border:2px solid var(--fg);border-radius:.8rem;opacity:.5;cursor:pointer;font-size:.9rem}
-.opt-row input[type=radio]{display:none}
-.opt-row label:has(input:checked){opacity:1;background:var(--fg);color:var(--bg);font-weight:900}
-.menu-float{position:fixed;bottom:1rem;display:flex;gap:.5rem;background:var(--bg);padding:.4rem;border:2px solid var(--fg);border-radius:2rem;z-index:100}
-.menu-float button{padding:.4rem .8rem;font-size:.9rem;border-radius:1.5rem}
-#mediaScreen{position:fixed;inset:0;background:#000;z-index:1000;display:none;justify-content:center;align-items:center;flex-direction:column}
-#mediaScreen.active{display:flex}
-#mediaScreen img,#mediaScreen video{width:100%;height:85%;object-fit:contain}
-#mediaTimer{font-size:3rem;font-weight:900;margin-top:1rem}
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none;margin:0;padding:0}
+html,body{width:100vw;height:100vh;height:100svh;background:var(--bg);color:var(--fg);font-family:monospace;overflow:hidden;display:flex;flex-direction:column}
+.c-box{display:flex;justify-content:center;align-items:center;cursor:pointer;width:100%;overflow:hidden;white-space:nowrap}
+#c1-box{height:75%;font-size:38vh;font-weight:900;border-bottom:2px solid var(--fg)}
+.bottom-container{height:25%;display:flex;width:100%}
+#c2-box{width:70%;height:100%;font-size:13vh;font-weight:700;opacity:.8;border-right:2px solid var(--fg)}
+#counter-box{width:30%;height:100%;font-size:13vh;font-weight:700;opacity:.6;display:flex;justify-content:center;align-items:center;cursor:pointer;overflow:hidden;white-space:nowrap}
+.menu{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;background:var(--bg);padding:.4rem 1rem;border:2px solid var(--fg);border-radius:2rem;z-index:100;opacity:1;transition:opacity .4s}
+.menu.hidden{opacity:0;pointer-events:none}
+button,input,select{font-size:1rem;padding:.4rem .8rem;border:2px solid var(--fg);background:var(--bg);color:var(--fg);border-radius:.5rem;cursor:pointer;font-family:monospace}
+input[type=number],input[type=text]{text-align:center;width:100px}
+#modal{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;flex-direction:column;justify-content:center;align-items:center;padding:1rem;gap:1rem}
+#modal.active{display:flex}
+.cfg-row{display:flex;gap:.5rem;align-items:center;justify-content:space-between;width:100%;max-width:400px}
+#ms{position:fixed;inset:0;background:#000;z-index:2000;display:none;justify-content:center;align-items:center;flex-direction:column}
+#ms.active{display:flex}
+#mc{width:100%;height:100%;display:flex;justify-content:center;align-items:center;overflow:hidden}
+#ms img,#ms video{max-width:100%;max-height:100%;object-fit:contain}
 </style>
 </head>
-<body>
+<body onclick="app.handleTap(event)">
 
-<!-- Tela 1: Configuração -->
-<div class="screen active" id="s1">
-  <div class="cfg-group">
-    <label style="width:100%;text-align:center">Modo de Treino:
-      <select id="modoTreino" onchange="renderCfg()">
-        <option value="rep_serie">Repetições + Séries</option>
-        <option value="serie">Só Séries</option>
-        <option value="rep">Só Repetições Contínuas</option>
-      </select>
-    </label>
+<div class="c-box" id="c1-box"><span id="c1">01:00</span></div>
+<div class="bottom-container">
+  <div class="c-box" id="c2-box"><span id="c2">00:30</span></div>
+  <div id="counter-box" onclick="app.resetCounter(event)"><span id="loopCount">0</span></div>
+</div>
 
-    <div id="fReps" style="width:100%"><label>Reps por Série: <input type="number" id="cfgReps" value="12" min="1"></label></div>
-    <div id="fSeries" style="width:100%"><label>Meta de Séries: <input type="number" id="cfgSeries" value="3" min="1"></label></div>
+<nav class="menu hidden" id="mn" onclick="event.stopPropagation()">
+  <button onclick="app.toggleModal(true)">⚙️</button>
+  <button onclick="app.toggleTheme()">☀️/🌙</button>
+</nav>
 
-    <div id="fDescansoOpt" class="opt-row">
-      <label><input type="radio" name="momentoDesc" id="descEntre" checked><span>Descanso / Série</span></label>
-      <label><input type="radio" name="momentoDesc" id="descFim"><span>Descanso no Fim</span></label>
-    </div>
-
-    <label>Tempo de Descanso entre Séries (seg): <input type="number" id="tempoDesc" value="30" min="1"></label>
-
-    <div class="opt-row">
-      <label><input type="radio" name="origem" id="optWeb" checked onchange="toggleOrigem()"><span>🌐 Web</span></label>
-      <label><input type="radio" name="origem" id="optFile" onchange="toggleOrigem()"><span>📂 Local</span></label>
-    </div>
-
-    <div id="divWeb" style="width:100%"><input type="text" id="linkWeb" value="https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv" onclick="this.select()"></div>
-    <div id="divFile" style="width:100%;display:none"><input type="file" id="fileLocal" accept="image/*,video/*"></div>
-
-    <button onclick="startTreino()" style="font-weight:900;width:100%">✅ INICIAR TREINO</button>
+<div id="modal" onclick="event.stopPropagation()">
+  <h2>Configurações</h2>
+  <div class="cfg-row"><span>C1 (5s-5m):</span><input type="number" id="iC1" value="60" min="5" max="300" onchange="app.setInit(1)"></div>
+  <div class="cfg-row"><span>C2 (5s-3m):</span><input type="number" id="iC2" value="30" min="5" max="180" onchange="app.setInit(2)"></div>
+  <div class="cfg-row"><span>Formato de Tempo:</span>
+    <select id="sFormat" onchange="app.upd()"><option value="mmss">MM:SS</option><option value="sec">Segundos</option></select>
   </div>
-</div>
-
-<!-- Tela 2: Execução do Treino -->
-<div class="screen" id="s2">
-  <div class="cnt-box" onclick="inc()">
-    <div id="subCnt" class="sub-cnt">Série: 1 / 3</div>
-    <div id="mainCnt" class="cnt">0</div>
+  <div class="cfg-row"><span>Gatilho Mídia:</span>
+    <select id="sTrigger"><option value="none">Nenhum</option><option value="c1" selected>Ao zerar C1</option><option value="c2">Ao zerar C2</option><option value="both">Ambos</option></select>
   </div>
-  <div class="controls">
-    <button onclick="dec()">➖</button>
-    <button onclick="resetCurrent()">🔁</button>
-    <button onclick="goScreen(1)">❌</button>
-  </div>
+  <div class="cfg-row"><span>Tempo Apresentação (s, 0-60):</span><input type="number" id="iDur" value="15" min="0" max="60"></div>
+  <div class="cfg-row"><span>Texto/Mídia:</span><input type="text" id="iMedia" value="https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv" onchange="app.preload()"></div>
+  <button onclick="app.toggleModal(false)">❌ Fechar</button>
 </div>
 
-<!-- Tela 3: Mídia / Descanso -->
-<div id="mediaScreen">
-  <div id="mediaContainer" style="width:100%;height:85%;display:flex;justify-content:center;align-items:center"></div>
-  <div id="mediaTimer">00</div>
-</div>
-
-<!-- Menu Flutuante -->
-<div class="menu-float">
-  <button onclick="toggleTheme()">☀️</button>
-  <button onclick="goScreen(1)">⚙️</button>
-</div>
+<div id="ms"><div id="mc"></div></div>
 
 <script>
-const $=id=>document.getElementById(id), s1=$('s1'), s2=$('s2'), mainCnt=$('mainCnt'), subCnt=$('subCnt'), mc=$('mediaContainer'), msElem=$('mediaScreen'), mTimer=$('mediaTimer');
-
-let mode='rep_serie', curReps=0, curSeries=1, maxReps=12, maxSeries=3, mediaUrl=null, isBlob=false, intervalId=null;
-
-async function lockOrientation() {
-  try {
-    if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
-    if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape');
-  } catch (e) {}
-}
-
-function renderCfg(){
-  mode = $('modoTreino').value;
-  $('fReps').style.display = (mode === 'serie') ? 'none' : 'block';
-  $('fSeries').style.display = (mode === 'rep') ? 'none' : 'block';
-  $('fDescansoOpt').style.display = (mode === 'rep_serie') ? 'flex' : 'none';
-}
-
-function toggleOrigem(){
-  let isWeb = $('optWeb').checked;
-  $('divWeb').style.display = isWeb ? 'block' : 'none';
-  $('divFile').style.display = isWeb ? 'none' : 'block';
-}
-
-function goScreen(n){
-  s1.classList.remove('active'); s2.classList.remove('active');
-  if(n===1) s1.classList.add('active');
-  if(n===2) s2.classList.add('active');
-}
-
-function startTreino(){
-  lockOrientation();
-  mode = $('modoTreino').value;
-  maxReps = parseInt($('cfgReps').value)||1;
-  maxSeries = parseInt($('cfgSeries').value)||1;
-  curReps = 0;
-  curSeries = 1;
-  updateDisplay();
-  goScreen(2);
-}
-
-function updateDisplay(){
-  if(mode==='rep_serie'){
-    subCnt.style.display='block';
-    subCnt.textContent = `Série: ${curSeries} / ${maxSeries}`;
-    mainCnt.textContent = curReps;
-  } else if(mode==='serie'){
-    subCnt.style.display='none';
-    mainCnt.textContent = `${curSeries} / ${maxSeries}`;
-  } else {
-    subCnt.style.display='none';
-    mainCnt.textContent = `${curReps} / ${maxReps}`;
+const $=id=>document.getElementById(id);
+class App{
+  constructor(){
+    this.t1=60; this.t2=30; this.rem1=60; this.rem2=30;
+    this.loops=0; this.run1=false; this.run2=false; 
+    this.iv1=null; this.iv2=null; this.mTO=null; this.cache=null; this.mTimer=null;
+    this.preload(); this.upd(); this.showMenu();
   }
-}
+  fmt(s){
+    if($('sFormat').value==='sec') return String(s);
+    let m=String(Math.floor(s/60)).padStart(2,'0'), sec=String(s%60).padStart(2,'0');
+    return `${m}:${sec}`;
+  }
+  upd(){ 
+    $('c1').textContent=this.fmt(this.rem1); 
+    $('c2').textContent=this.fmt(this.rem2); 
+    $('loopCount').textContent=this.loops;
+  }
+  showMenu(){ $('mn').classList.remove('hidden'); clearTimeout(this.mTO); if(this.run1||this.run2) this.mTO=setTimeout(()=>$('mn').classList.add('hidden'),3000); }
+  
+  handleTap(e){
+    let isC1 = e.target.closest('#c1-box');
+    let isC2 = e.target.closest('#c2-box');
+    this.showMenu();
 
-function inc(){
-  if(mode==='rep_serie'){
-    curReps++;
-    if(curReps >= maxReps){
-      if($('descEntre').checked || curSeries >= maxSeries){
-        let isFinal = (curSeries >= maxSeries);
-        triggerMedia(isFinal ? 15 : (parseInt($('tempoDesc').value)||30), isFinal, ()=>{
-          nextSerieOrEnd();
-        });
+    if(isC1){
+      if(!this.run1){ this.start1(); } else { this.rem1=this.t1; this.upd(); }
+    } else if(isC2){
+      if(!this.run2){ this.start2(); } else { this.rem2=this.t2; this.upd(); }
+    } else {
+      if(!this.run1 && !this.run2){
+        this.start1(); this.start2();
       } else {
-        nextSerieOrEnd();
+        this.rem1=this.t1; this.rem2=this.t2; this.upd();
       }
-    } else {
-      updateDisplay();
-    }
-  } else if(mode==='serie'){
-    let isFinal = (curSeries >= maxSeries);
-    if($('descEntre').checked || isFinal){
-      triggerMedia(isFinal ? 15 : (parseInt($('tempoDesc').value)||30), isFinal, ()=>{
-        if(curSeries < maxSeries){ curSeries++; updateDisplay(); }
-        else { goScreen(1); }
-      });
-    } else {
-      if(curSeries < maxSeries){ curSeries++; updateDisplay(); }
-      else { goScreen(1); }
-    }
-  } else if(mode==='rep'){
-    curReps++;
-    if(curReps >= maxReps){
-      triggerMedia(15, true, ()=>goScreen(1));
-    } else {
-      updateDisplay();
-    }
-  }
-}
-
-function nextSerieOrEnd(){
-  curReps = 0;
-  if(curSeries < maxSeries){
-    curSeries++;
-    updateDisplay();
-  } else {
-    goScreen(1);
-  }
-}
-
-function dec(){
-  if(mode==='rep_serie' && curReps > 0) curReps--;
-  if(mode==='serie' && curSeries > 1) curSeries--;
-  if(mode==='rep' && curReps > 0) curReps--;
-  updateDisplay();
-}
-
-function resetCurrent(){
-  curReps = 0;
-  updateDisplay();
-}
-
-function triggerMedia(durationSec, isFinal, cb){
-  let useWeb = $('optWeb').checked;
-
-  if(isBlob && mediaUrl){ URL.revokeObjectURL(mediaUrl); isBlob=false; }
-
-  if(isFinal){
-    mc.innerHTML=`<div style="font-size:3.5rem;font-weight:900">TREINO CONCLUÍDO!</div>`;
-  } else {
-    if(useWeb){
-      let link = $('linkWeb').value.trim();
-      if(link){
-        mediaUrl = link;
-        if(link.includes('.mp4')||link.includes('.gifv')||link.includes('.webm'))
-          mc.innerHTML=`<video src="${mediaUrl}" autoplay muted loop playsinline></video>`;
-        else mc.innerHTML=`<img src="${mediaUrl}">`;
-      } else mc.innerHTML=`<div style="font-size:4rem;font-weight:900">DESCANSO</div>`;
-    } else {
-      let file = $('fileLocal').files[0];
-      if(file){
-        mediaUrl = URL.createObjectURL(file); isBlob = true;
-        if(file.type.includes('video')) mc.innerHTML=`<video src="${mediaUrl}" autoplay muted loop playsinline></video>`;
-        else mc.innerHTML=`<img src="${mediaUrl}">`;
-      } else mc.innerHTML=`<div style="font-size:4rem;font-weight:900">DESCANSO</div>`;
     }
   }
 
-  msElem.classList.add('active');
-  let timeLeft = durationSec;
-  mTimer.textContent = timeLeft;
-
-  clearInterval(intervalId);
-  intervalId = setInterval(()=>{
-    timeLeft--;
-    mTimer.textContent = timeLeft;
-    if(timeLeft <= 0){
-      clearInterval(intervalId);
-      msElem.classList.remove('active');
-      mc.innerHTML='';
-      if(cb) cb();
-    }
-  }, 1000);
-}
-
-function toggleTheme(){
-  let isLight=document.body.getAttribute('data-theme')==='light';
-  document.body.setAttribute('data-theme', isLight?'':'light');
-}
-
-$('fileLocal').onchange=ev=>{
-  let f=ev.target.files[0];
-  if(f){
-    if(isBlob && mediaUrl) URL.revokeObjectURL(mediaUrl);
-    mediaUrl=URL.createObjectURL(f);
-    isBlob=true;
+  resetCounter(e){
+    e.stopPropagation();
+    this.loops = 0;
+    this.upd();
+    this.showMenu();
   }
-};
 
-renderCfg();
+  start1(){
+    if(!this.run1 && this.rem1>0){
+      this.run1=true;
+      clearInterval(this.iv1);
+      this.iv1=setInterval(()=>{
+        if(this.rem1>0) this.rem1--;
+        this.upd();
+        let trig=$('sTrigger').value;
+        if(this.rem1===0 && (trig==='c1'||trig==='both')){
+          this.loops++;
+          this.stop1();
+          this.showMedia();
+        }
+      },1000);
+    }
+  }
+
+  start2(){
+    if(!this.run2 && this.rem2>0){
+      this.run2=true;
+      clearInterval(this.iv2);
+      this.iv2=setInterval(()=>{
+        if(this.rem2>0) this.rem2--;
+        this.upd();
+        let trig=$('sTrigger').value;
+        if(this.rem2===0 && (trig==='c2'||trig==='both')){
+          this.stop2();
+          this.showMedia();
+        }
+      },1000);
+    }
+  }
+
+  stop1(){ clearInterval(this.iv1); this.run1=false; }
+  stop2(){ clearInterval(this.iv2); this.run2=false; }
+  stopAll(){ this.stop1(); this.stop2(); clearInterval(this.mTimer); }
+
+  setInit(id){
+    if(id===1){
+      this.t1=Math.min(300,Math.max(5,parseInt($('iC1').value)||60));
+      this.rem1=this.t1;
+    } else{
+      this.t2=Math.min(180,Math.max(5,parseInt($('iC2').value)||30));
+      this.rem2=this.t2;
+    }
+    this.upd();
+  }
+
+  preload(){
+    let val=$('iMedia').value.trim();
+    if(!val) return;
+    if(val.match(/\.(mp4|gifv|webm)$/i)){
+      let v=document.createElement('video'); v.src=val; v.preload='auto'; this.cache=v;
+    } else if(val.startsWith('http')){
+      let img=new Image(); img.src=val; this.cache=img;
+    } else {
+      this.cache=val;
+    }
+  }
+
+  showMedia(){
+    let dur = parseInt($('iDur').value);
+    if(isNaN(dur) || dur <= 0){
+      this.rem1=this.t1; this.rem2=this.t2; this.upd();
+      return;
+    }
+
+    this.stopAll();
+    let mc=$('mc'), val=$('iMedia').value.trim();
+    
+    if(this.cache instanceof HTMLVideoElement){
+      mc.innerHTML=`<video src="${this.cache.src}" autoplay muted loop playsinline></video>`;
+    } else if(this.cache instanceof HTMLImageElement){
+      mc.innerHTML=`<img src="${this.cache.src}">`;
+    } else {
+      mc.innerHTML=`<div style="font-size:4rem;font-weight:900;text-align:center;padding:1rem">${val||'TEMPO ESGOTADO'}</div>`;
+    }
+    
+    $('ms').classList.add('active');
+    
+    clearInterval(this.mTimer);
+    this.mTimer = setTimeout(()=>{ 
+      $('ms').classList.remove('active'); 
+      mc.innerHTML=''; 
+      this.rem1=this.t1; 
+      this.rem2=this.t2; 
+      this.upd(); 
+    }, dur * 1000);
+  }
+
+  toggleModal(st){
+    $('modal').classList.toggle('active',st);
+    if(st) this.stopAll();
+    else { this.rem1=this.t1; this.rem2=this.t2; this.upd(); }
+  }
+
+  toggleTheme(){
+    let th=document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', th==='dark'?'light':'dark');
+  }
+}
+const app=new App();
 </script>
 </body>
 </html>
