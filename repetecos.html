@@ -2,24 +2,44 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#000000">
 <title>Cronômetro de Treino</title>
+<link id="manifest" rel="manifest">
 <style>
-:root { --bg: #000; --fg: #fff; --ts: 22vw; }
-[data-theme="light"] { --bg: #fff; --fg: #000; }
+:root { --bg: #000; --fg: #fff; --acc: #111; --brd: #333; --ts: 26vw; }
+[data-theme="light"] { --bg: #fff; --fg: #000; --acc: #f4f4f5; --brd: #d4d4d8; }
 *{box-sizing:border-box;user-select:none;-webkit-user-select:none}
-html,body{height:100vh;height:100svh;margin:0;font-family:sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:background .3s,color .3s}
+html,body{height:100vh;height:100svh;margin:0;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--fg);overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:background .3s,color .3s}
 .c{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh;height:100svh;padding:1rem;transition:transform .4s ease}
 .arotar{transform:rotate(90deg)}.desrotar{transform:rotate(-90deg)}.rotar{transform:rotate(180deg)}
-.cc{display:flex;gap:2rem;align-items:center;margin-bottom:1vh}
-.cnt{font-size:clamp(3rem, 10vw, 8rem);font-weight:900}
-.timer{font-size:var(--ts);font-weight:900;cursor:pointer;white-space:nowrap;line-height:1;margin:1vh 0;text-align:center}
-.sc{display:flex;gap:1.5rem;width:90%;max-width:800px;align-items:center;justify-content:center;margin-top:1vh}
-input[type=range]{flex:1;height:16px;accent-color:var(--fg);cursor:pointer}
-button{font-size:1.5rem;font-weight:700;padding:.8rem 1.5rem;border:3px solid var(--fg);border-radius:1rem;background:var(--bg);color:var(--fg);cursor:pointer}
-button:active{background:var(--fg);color:var(--bg)}
-.m{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;background:var(--bg);padding:.4rem 1rem;border:2px solid var(--fg);border-radius:3rem;z-index:100;opacity:1;transition:opacity .4s;box-shadow:0 4px 12px rgba(0,0,0,0.5)}
-.m.hidden{opacity:0;pointer-events:none}
-.m button{padding:.5rem .7rem;font-size:0.9rem;border-radius:2rem;border:1px solid var(--fg)}
+
+.cc{display:flex;gap:1.5rem;align-items:center;margin-bottom:1vh;opacity:.85}
+.cnt{font-size:clamp(2rem, 8vw, 5rem);font-weight:900}
+.cc button{background:transparent;border:none;color:var(--fg);font-size:1.8rem;padding:.2rem .6rem;cursor:pointer}
+
+.timer{font-size:var(--ts);font-weight:900;cursor:pointer;white-space:nowrap;line-height:1;margin:1vh 0;text-align:center;letter-spacing:-2px}
+
+.sc{display:flex;gap:1rem;width:80%;max-width:400px;align-items:center;justify-content:center;margin-top:1vh;opacity:.8}
+input[type=range]{flex:1;height:6px;accent-color:var(--fg);cursor:pointer}
+.sc button{background:transparent;color:var(--fg);border:1px solid var(--brd);font-size:.9rem;padding:.3rem .6rem;border-radius:.5rem;cursor:pointer}
+
+/* Botão de Menu fixo no Topo Direito */
+.top-menu-btn{position:fixed;top:1rem;right:1rem;background:var(--acc);color:var(--fg);border:1px solid var(--brd);padding:.5rem .9rem;font-size:1.1rem;border-radius:.8rem;cursor:pointer;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.3);font-weight:700}
+
+/* Submenu Organizado em Categorias */
+#subModal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;display:none;flex-direction:column;justify-content:center;align-items:center;padding:1.5rem}
+#subModal.active{display:flex}
+.modal-card{width:100%;max-width:340px;background:var(--acc);border:2px solid var(--brd);border-radius:1.2rem;padding:1.5rem;display:flex;flex-direction:column;gap:1.2rem;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.modal-card h3{margin:0;text-align:center;font-size:1.3rem;border-bottom:1px solid var(--brd);padding-bottom:.6rem}
+
+.sec-title{font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;opacity:0.6;margin-bottom:-0.4rem;font-weight:bold}
+.grid-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.grid-btns.cols-2{grid-template-columns:repeat(2,1fr)}
+.modal-card button{background:var(--bg);color:var(--fg);border:1px solid var(--brd);padding:.7rem .4rem;border-radius:.6rem;font-weight:600;cursor:pointer;font-size:0.85rem;text-align:center}
+.modal-card button:hover{background:var(--brd)}
+.modal-card button.close-btn{grid-column:span 3;background:var(--fg);color:var(--bg);border:none;margin-top:.4rem;padding:.8rem;font-size:1rem}
+.modal-card button.install-btn{grid-column:span 3;background:#2563eb;color:#fff;border:none;font-weight:bold}
+
 #e{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;justify-content:center;align-items:center}
 #e.active{display:flex}
 #med{width:100%;height:100%;object-fit:contain;display:none}
@@ -28,33 +48,92 @@ button:active{background:var(--fg);color:var(--bg)}
 #fileIn{display:none}
 </style>
 </head>
-<body onclick="showMenu()">
+<body>
+
+<!-- Botão no Topo Direito -->
+<button class="top-menu-btn" onclick="toggleSubmenu(true)" title="Menu de Opções">⚙️ Menu</button>
+
 <main class="c" id="mc">
-  <div class="cc"><button id="dc">-</button><div id="ctr" class="cnt">0</div><button id="ic">+</button></div>
-  <div id="tm" class="timer">30</div>
-  <div class="sc"><button id="ds">-5s</button><input type="range" id="ts" min="5" max="180" step="5" value="30"><button id="ins">+5s</button></div>
+  <div class="cc">
+    <button id="dc" title="Diminuir">−</button>
+    <div id="ctr" class="cnt">0</div>
+    <button id="ic" title="Aumentar">+</button>
+  </div>
+  
+  <div id="tm" class="timer" title="Toque para Iniciar">30</div>
+  
+  <div class="sc">
+    <button id="ds">-5s</button>
+    <input type="range" id="ts" min="5" max="180" step="5" value="30">
+    <button id="ins">+5s</button>
+  </div>
 </main>
-<div id="e"><img id="med"><div id="fb">🪫<br />💪<br />👆<br />💀</div></div>
-<nav class="m" id="menu" onclick="event.stopPropagation()">
-  <button onclick="g('desrotar')" title="Girar -90°">↺</button>
-  <button onclick="g('')" title="Normal">0°</button>
-  <button onclick="g('arotar')" title="Girar 90°">↻</button>
-  <button onclick="g('rotar')" title="Girar 180°">180°</button>
-  <button onclick="fs(2)" title="Aumentar Fonte">A+</button>
-  <button onclick="fs(-2)" title="Diminuir Fonte">A-</button>
-  <button onclick="toggleTheme()" title="Mudar Tema">☀️</button>
-  <button onclick="$('fileIn').click()" title="Arquivo Local">📁</button>
-  <button onclick="setOnlineMedia()" title="Link Web">🌐</button>
-</nav>
+
+<div id="e"><img id="med"><div id="fb">💪<br>⚡<br>🔥</div></div>
+
+<!-- Submenu Organizado por Seções -->
+<div id="subModal" onclick="toggleSubmenu(false)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <h3>Menu de Ajustes</h3>
+    
+    <div class="sec-title">Orientação da Tela</div>
+    <div class="grid-btns">
+      <button onclick="g('desrotar')">↺ Esquerda</button>
+      <button onclick="g('')">Normal</button>
+      <button onclick="g('arotar')">Direita ↻</button>
+    </div>
+
+    <div class="sec-title">Exibição & Tema</div>
+    <div class="grid-btns">
+      <button onclick="fs(2)">Aumentar A+</button>
+      <button onclick="fs(-2)">Diminuir A-</button>
+      <button onclick="toggleTheme()">🌓 Tema</button>
+    </div>
+
+    <div class="sec-title">Mídia de Descanso</div>
+    <div class="grid-btns cols-2">
+      <button onclick="$('fileIn').click()">📁 Arquivo Local</button>
+      <button onclick="setOnlineMedia()">🌐 Link Web</button>
+    </div>
+
+    <div id="divInst" style="display:none">
+      <button class="install-btn" onclick="installApp()">📲 Instalar Aplicativo</button>
+    </div>
+
+    <button class="close-btn" onclick="toggleSubmenu(false)">Fechar</button>
+  </div>
+</div>
+
 <input type="file" id="fileIn" accept="image/*,video/*">
 <script>
-const $=id=>document.getElementById(id),tm=$('tm'),ts=$('ts'),ctr=$('ctr'),mc=$('mc'),e=$('e'),med=$('med'),fb=$('fb'),menu=$('menu');
-let iv=null,tl=+ts.value,cv=0,mUrl=null,isBlob=false,run=false,menuTimeout,fSize=22;
+const iconSvg="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23000'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'>30</text></svg>";
+const manifestData={name:"Cronômetro de Treino",short_name:"Treino",start_url:location.href,display:"standalone",background_color:"#000000",theme_color:"#000000",icons:[{src:iconSvg,sizes:"192x192",type:"image/svg+xml"},{src:iconSvg,sizes:"512x512",type:"image/svg+xml"}]};
+document.getElementById('manifest').href=URL.createObjectURL(new Blob([JSON.stringify(manifestData)],{type:'application/json'}));
 
-function showMenu(){
-  menu.classList.remove('hidden');
-  clearTimeout(menuTimeout);
-  menuTimeout=setTimeout(()=>{if(run)menu.classList.add('hidden')},3000);
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob(["self.addEventListener('fetch',e=>{})"],{type:'application/javascript'}))).catch(()=>{});
+}
+
+const $=id=>document.getElementById(id),tm=$('tm'),ts=$('ts'),ctr=$('ctr'),mc=$('mc'),e=$('e'),med=$('med'),fb=$('fb');
+let iv=null,tl=+ts.value,cv=0,mUrl=null,isBlob=false,run=false,fSize=26,deferredPrompt=null;
+
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredPrompt=e;
+  $('divInst').style.display='block';
+});
+
+async function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt=null;
+    $('divInst').style.display='none';
+  }
+}
+
+function toggleSubmenu(st){
+  $('subModal').classList.toggle('active', st);
 }
 
 async function toggleWakeLock(en){
@@ -63,14 +142,14 @@ async function toggleWakeLock(en){
 
 function bp(){try{let c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='square';o.frequency.value=880;g.gain.value=0.2;o.start();o.stop(c.currentTime+.6)}catch(err){}}
 
-function g(c){mc.className='c '+c}
+function g(c){mc.className='c '+c; toggleSubmenu(false);}
 function toggleTheme(){
   let isLight=document.body.getAttribute('data-theme')==='light';
   document.body.setAttribute('data-theme',isLight?'':'light');
 }
 
 function fs(val){
-  fSize=Math.max(10,Math.min(45,fSize+val));
+  fSize=Math.max(12,Math.min(45,fSize+val));
   document.documentElement.style.setProperty('--ts',fSize+'vw');
 }
 
@@ -92,7 +171,6 @@ function st(){
   if(run)return;
   run=true;
   toggleWakeLock(true);
-  menu.classList.add('hidden');
   clearInterval(iv);
   e.classList.remove('active');med.style.display='none';fb.style.display='none';
   
@@ -122,17 +200,16 @@ $('dc').onclick=()=>{if(cv>0)ctr.textContent=--cv};
 $('ds').onclick=()=>{ts.value=Math.max(5,+ts.value-5);resetTimer();ut();};
 $('ins').onclick=()=>{ts.value=Math.min(180,+ts.value+5);resetTimer();ut();};
 
-// Gerenciamento de Arquivo Local
 $('fileIn').onchange=ev=>{
   let f=ev.target.files[0];
   if(f){
     if(isBlob && mUrl) URL.revokeObjectURL(mUrl);
     mUrl=URL.createObjectURL(f);
     isBlob=true;
+    toggleSubmenu(false);
   }
 };
 
-// Gerenciamento de Link Direto da Web com Sugestão
 function setOnlineMedia(){
   let defLink = "https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv";
   let url = prompt("Cole o link direto da imagem ou GIF da internet:", defLink);
@@ -140,6 +217,7 @@ function setOnlineMedia(){
     if(isBlob && mUrl) URL.revokeObjectURL(mUrl);
     mUrl = url.trim();
     isBlob = false;
+    toggleSubmenu(false);
   }
 }
 </script>
