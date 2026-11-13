@@ -2,235 +2,196 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Dual Timer Pro</title>
-<link rel="manifest" href='data:application/manifest+json;charset=utf-8,{"name":"Dual Timer Pro","short_name":"TimerPro","start_url":".","display":"standalone","background_color":"#000000","theme_color":"#000000"}'>
+<meta name="theme-color" content="#000000">
+<title>Dual Timer</title>
+<link id="manifest" rel="manifest">
 <style>
-:root{--bg:#000;--fg:#fff}
-[data-theme="light"]{--bg:#fff;--fg:#000}
-*{box-sizing:border-box;user-select:none;-webkit-user-select:none;margin:0;padding:0}
-html,body{width:100vw;height:100vh;height:100svh;background:var(--bg);color:var(--fg);font-family:monospace;overflow:hidden;display:flex;flex-direction:column}
-.c-box{display:flex;justify-content:center;align-items:center;cursor:pointer;width:100%;overflow:hidden;white-space:nowrap}
-#c1-box{height:75%;font-size:38vh;font-weight:900;border-bottom:2px solid var(--fg)}
-.bottom-container{height:25%;display:flex;width:100%}
-#c2-box{width:70%;height:100%;font-size:13vh;font-weight:700;opacity:.8;border-right:2px solid var(--fg)}
-#counter-box{width:30%;height:100%;font-size:13vh;font-weight:700;opacity:.6;display:flex;justify-content:center;align-items:center;cursor:pointer;overflow:hidden;white-space:nowrap}
-.menu{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;background:var(--bg);padding:.4rem 1rem;border:2px solid var(--fg);border-radius:2rem;z-index:100;opacity:1;transition:opacity .4s}
-.menu.hidden{opacity:0;pointer-events:none}
-button,input,select{font-size:1rem;padding:.4rem .8rem;border:2px solid var(--fg);background:var(--bg);color:var(--fg);border-radius:.5rem;cursor:pointer;font-family:monospace}
-input[type=number],input[type=text]{text-align:center;width:100px}
-input[type=file]{font-size:.8rem;width:100%;max-width:220px}
-#modal{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;flex-direction:column;justify-content:center;align-items:center;padding:1rem;gap:1rem}
-#modal.active{display:flex}
-.cfg-row{display:flex;gap:.5rem;align-items:center;justify-content:space-between;width:100%;max-width:420px}
-#ms{position:fixed;inset:0;background:#000;z-index:2000;display:none;justify-content:center;align-items:center;flex-direction:column}
-#ms.active{display:flex}
-#mc{width:100%;height:100%;display:flex;justify-content:center;align-items:center;overflow:hidden}
+:root{--bg:#000;--fg:#fff;--acc:#222;--brd:#444}
+[data-theme="light"]{--bg:#fff;--fg:#000;--acc:#eee;--brd:#ccc}
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none;margin:0;padding:0;font-family:system-ui,-apple-system,monospace}
+html,body{width:100vw;height:100svh;background:var(--bg);color:var(--fg);overflow:hidden;display:flex;flex-direction:column}
+.box{display:flex;justify-content:center;align-items:center;cursor:pointer;overflow:hidden;line-height:1}
+#c1-box{height:75%;font-size:min(42vh,52vw);font-weight:900;border-bottom:2px solid var(--brd);width:100%}
+#c2-box{height:25%;font-size:min(16vh,24vw);font-weight:800;opacity:.9;width:100%}
+#cnt-box{position:fixed;top:1rem;right:1rem;font-size:min(10vh,14vw);font-weight:800;opacity:.75;padding:.3rem .8rem;border:2px solid var(--brd);border-radius:1rem;background:var(--bg);z-index:5;cursor:pointer;line-height:1}
+nav{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;background:var(--bg);padding:.5rem 1rem;border:2px solid var(--fg);border-radius:2rem;z-index:10;transition:opacity .3s}
+nav.hide{opacity:0;pointer-events:none}
+button,input,select{font-size:1rem;padding:.5rem .8rem;border:1px solid var(--brd);background:var(--acc);color:var(--fg);border-radius:.6rem;outline:none}
+button{cursor:pointer;font-weight:700}
+button.pri{background:var(--fg);color:var(--bg);border:none;width:100%;padding:.8rem;margin-top:.5rem}
+#modal{position:fixed;inset:0;background:var(--bg);z-index:20;display:none;flex-direction:column;justify-content:center;align-items:center;padding:1.5rem}
+#modal.act{display:flex}
+.card{width:100%;max-width:380px;display:flex;flex-direction:column;gap:.8rem}
+.row{display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:.95rem}
+.row input[type=number]{width:85px;text-align:center}
+.row input[type=text],.row input[type=file],.row select{width:180px}
+#ms{position:fixed;inset:0;background:#000;color:#fff;z-index:30;display:none;justify-content:center;align-items:center}
+#ms.act{display:flex}
+#mc{width:100%;height:100%;display:flex;justify-content:center;align-items:center;padding:1rem;text-align:center}
 #ms img,#ms video{max-width:100%;max-height:100%;object-fit:contain}
 </style>
 </head>
-<body onclick="app.handleTap(event)">
+<body onclick="app.tap(event)">
 
-<div class="c-box" id="c1-box"><span id="c1">01:00</span></div>
-<div class="bottom-container">
-  <div class="c-box" id="c2-box"><span id="c2">00:30</span></div>
-  <div id="counter-box" onclick="app.resetCounter(event)"><span id="loopCount">0</span></div>
-</div>
+<div id="cnt-box" onclick="app.rstCnt(event)"><span id="cnt">0</span></div>
+<div class="box" id="c1-box"><span id="c1">60</span></div>
+<div class="box" id="c2-box"><span id="c2">30</span></div>
 
-<nav class="menu hidden" id="mn" onclick="event.stopPropagation()">
-  <button onclick="app.toggleModal(true)">⚙️</button>
-  <button onclick="app.toggleTheme()">☀️/🌙</button>
+<nav id="mn" onclick="event.stopPropagation()">
+  <button onclick="app.modal(1)">⚙️ Ajustes</button>
+  <button onclick="app.theme()">🌓</button>
+  <button id="btnInst" style="display:none" onclick="app.install()">📲 Instalar</button>
 </nav>
 
 <div id="modal" onclick="event.stopPropagation()">
-  <h2>Configurações</h2>
-  <div class="cfg-row"><span>C1 (5s-5m):</span><input type="number" id="iC1" value="60" min="5" max="300" onchange="app.setInit(1)"></div>
-  <div class="cfg-row"><span>C2 (5s-3m):</span><input type="number" id="iC2" value="30" min="5" max="180" onchange="app.setInit(2)"></div>
-  <div class="cfg-row"><span>Formato de Tempo:</span>
-    <select id="sFormat" onchange="app.upd()"><option value="mmss">MM:SS</option><option value="sec">Segundos</option></select>
+  <div class="card">
+    <h2 style="text-align:center">Configurações</h2>
+    <div class="row"><span>C1 (5-300s):</span><input type="number" id="iC1" value="60" min="5" max="300" onchange="app.set(1)"></div>
+    <div class="row"><span>C2 (5-180s):</span><input type="number" id="iC2" value="30" min="5" max="180" onchange="app.set(2)"></div>
+    <div class="row"><span>Visualização:</span>
+      <select id="sView" onchange="app.setView()">
+        <option value="both">C1 e C2</option>
+        <option value="c1only">Apenas C1</option>
+      </select>
+    </div>
+    <div class="row"><span>Exibir Contador:</span>
+      <select id="sShowCnt" onchange="app.setView()">
+        <option value="yes">Sim</option>
+        <option value="no">Não</option>
+      </select>
+    </div>
+    <div class="row"><span>Gatilho Mídia:</span>
+      <select id="sTrig"><option value="none">Nenhum</option><option value="c1" selected>Ao zerar C1</option><option value="c2">Ao zerar C2</option><option value="both">Ambos</option></select>
+    </div>
+    <div class="row"><span>Duração (0-60s):</span><input type="number" id="iDur" value="15" min="0" max="60"></div>
+    <div class="row"><span>Mídia Offline:</span><input type="file" id="iFile" accept="image/*,video/*,audio/*" onchange="app.file(this)"></div>
+    <div class="row"><span>Link/Texto:</span><input type="text" id="iMed" placeholder="URL ou Texto" onchange="app.pre()"></div>
+    <button class="pri" onclick="app.modal(0)">Salvar e Fechar</button>
   </div>
-  <div class="cfg-row"><span>Gatilho Mídia:</span>
-    <select id="sTrigger"><option value="none">Nenhum</option><option value="c1" selected>Ao zerar C1</option><option value="c2">Ao zerar C2</option><option value="both">Ambos</option></select>
-  </div>
-  <div class="cfg-row"><span>Tempo Apresentação (s):</span><input type="number" id="iDur" value="15" min="0" max="60"></div>
-  <div class="cfg-row"><span>Arquivo Local (Offline):</span><input type="file" id="iFile" accept="image/*,video/*,audio/*" onchange="app.handleFile(this)"></div>
-  <div class="cfg-row"><span>Fallback Link/Texto:</span><input type="text" id="iMedia" value="https://64.media.tumblr.com/4104296cd5cff714f3b27c7bba1d241d/222b479f856fb2d6-ef/s400x600/004e681207bb1b80900411107dc7ef95157c6025.gifv" onchange="app.preload()"></div>
-  <button onclick="app.toggleModal(false)">❌ Fechar</button>
 </div>
 
-<div id="ms"><div id="mc"></div></div>
+<div id="ms" onclick="app.endMed()"><div id="mc"></div></div>
 
 <script>
+const icon="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23000'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='%23fff' font-family='monospace' font-weight='bold'>60</text></svg>";
+const mf={name:"Dual Timer",short_name:"Timer",start_url:location.href,display:"standalone",background_color:"#000000",theme_color:"#000000",icons:[{src:icon,sizes:"192x192",type:"image/svg+xml"},{src:icon,sizes:"512x512",type:"image/svg+xml"}]};
+document.getElementById('manifest').href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/json'}));
+if('serviceWorker'in navigator){navigator.serviceWorker.register(URL.createObjectURL(new Blob(["self.addEventListener('fetch',e=>{})"],{type:'application/javascript'}))).catch(()=>{});}
+
 const $=id=>document.getElementById(id);
 class App{
   constructor(){
-    this.t1=60; this.t2=30; this.rem1=60; this.rem2=30;
-    this.loops=0; this.run1=false; this.run2=false; 
-    this.iv1=null; this.iv2=null; this.mTO=null; this.cache=null; this.mTimer=null;
-    this.localFileUrl=null; this.localFileType=null;
-    this.preload(); this.upd(); this.showMenu();
+    this.t1=60;this.t2=30;this.r1=60;this.r2=30;this.loops=0;
+    this.run1=0;this.run2=0;this.iv1=null;this.iv2=null;
+    this.mTO=null;this.medTO=null;this.cache=null;this.fUrl=null;this.fType=null;this.defPrompt=null;
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();this.defPrompt=e;$('btnInst').style.display='inline-block';});
+    this.upd();this.setView();this.menu();
   }
-  fmt(s){
-    if($('sFormat').value==='sec') return String(s);
-    let m=String(Math.floor(s/60)).padStart(2,'0'), sec=String(s%60).padStart(2,'0');
-    return `${m}:${sec}`;
-  }
-  upd(){ 
-    $('c1').textContent=this.fmt(this.rem1); 
-    $('c2').textContent=this.fmt(this.rem2); 
-    $('loopCount').textContent=this.loops;
-  }
-  showMenu(){ $('mn').classList.remove('hidden'); clearTimeout(this.mTO); if(this.run1||this.run2) this.mTO=setTimeout(()=>$('mn').classList.add('hidden'),3000); }
+  upd(){$('c1').textContent=this.r1;$('c2').textContent=this.r2;$('cnt').textContent=this.loops;}
+  menu(){$('mn').classList.remove('hide');clearTimeout(this.mTO);if(this.run1||this.run2)this.mTO=setTimeout(()=>$('mn').classList.add('hide'),2500);}
   
-  handleTap(e){
-    let isC1 = e.target.closest('#c1-box');
-    let isC2 = e.target.closest('#c2-box');
-    this.showMenu();
+  tap(e){
+    this.menu();
+    const b1=e.target.closest('#c1-box'),b2=e.target.closest('#c2-box');
+    const view=$('sView').value;
+    if(b1)this.run1?(this.r1=this.t1,this.upd()):this.go(1);
+    else if(b2 && view==='both')this.run2?(this.r2=this.t2,this.upd()):this.go(2);
+    else(!this.run1&&!this.run2)?(this.go(1),view==='both'&&this.go(2)):(this.r1=this.t1,this.r2=this.t2,this.upd());
+  }
+  rstCnt(e){e.stopPropagation();this.loops=0;this.upd();this.menu();}
+  
+  setView(){
+    const view=$('sView').value;
+    const showCnt=$('sShowCnt').value==='yes';
+    const c1Box=$('c1-box');
+    const c2Box=$('c2-box');
+    const cntBox=$('cnt-box');
 
-    if(isC1){
-      if(!this.run1){ this.start1(); } else { this.rem1=this.t1; this.upd(); }
-    } else if(isC2){
-      if(!this.run2){ this.start2(); } else { this.rem2=this.t2; this.upd(); }
-    } else {
-      if(!this.run1 && !this.run2){
-        this.start1(); this.start2();
-      } else {
-        this.rem1=this.t1; this.rem2=this.t2; this.upd();
-      }
+    cntBox.style.display=showCnt?'block':'none';
+
+    if(view==='c1only'){
+      c2Box.style.display='none';
+      c1Box.style.height='100svh';
+      c1Box.style.borderBottom='none';
+      c1Box.style.fontSize='min(58vh,78vw)';
+    }else{
+      c2Box.style.display='flex';
+      c1Box.style.height='75%';
+      c1Box.style.borderBottom='2px solid var(--brd)';
+      c1Box.style.fontSize='min(42vh,52vw)';
     }
   }
 
-  resetCounter(e){
-    e.stopPropagation();
-    this.loops = 0;
-    this.upd();
-    this.showMenu();
-  }
-
-  handleFile(input){
-    if(input.files && input.files[0]){
-      let file = input.files[0];
-      this.localFileType = file.type;
-      this.localFileUrl = URL.createObjectURL(file);
-    } else {
-      this.localFileUrl = null;
-      this.localFileType = null;
-    }
-  }
-
-  start1(){
-    if(!this.run1 && this.rem1>0){
-      this.run1=true;
-      clearInterval(this.iv1);
+  go(n){
+    if(n===1&&!this.run1&&this.r1>0){
+      this.run1=1;
       this.iv1=setInterval(()=>{
-        if(this.rem1>0) this.rem1--;
-        this.upd();
-        let trig=$('sTrigger').value;
-        if(this.rem1===0 && (trig==='c1'||trig==='both')){
-          this.loops++;
-          this.stop1();
-          this.showMedia();
-        }
+        if(--this.r1<=0){this.stop(1);this.loops++;this.upd();this.chk('c1');}
+        else this.upd();
       },1000);
     }
-  }
-
-  start2(){
-    if(!this.run2 && this.rem2>0){
-      this.run2=true;
-      clearInterval(this.iv2);
+    const view=$('sView').value;
+    if(n===2&&!this.run2&&this.r2>0&&view==='both'){
+      this.run2=1;
       this.iv2=setInterval(()=>{
-        if(this.rem2>0) this.rem2--;
-        this.upd();
-        let trig=$('sTrigger').value;
-        if(this.rem2===0 && (trig==='c2'||trig==='both')){
-          this.stop2();
-          this.showMedia();
-        }
+        if(--this.r2<=0){this.stop(2);this.upd();this.chk('c2');}
+        else this.upd();
       },1000);
     }
+    this.menu();
   }
-
-  stop1(){ clearInterval(this.iv1); this.run1=false; }
-  stop2(){ clearInterval(this.iv2); this.run2=false; }
-  stopAll(){ this.stop1(); this.stop2(); clearInterval(this.mTimer); }
-
-  setInit(id){
-    if(id===1){
-      this.t1=Math.min(300,Math.max(5,parseInt($('iC1').value)||60));
-      this.rem1=this.t1;
-    } else{
-      this.t2=Math.min(180,Math.max(5,parseInt($('iC2').value)||30));
-      this.rem2=this.t2;
-    }
+  stop(n){if(n===1){clearInterval(this.iv1);this.run1=0;}else{clearInterval(this.iv2);this.run2=0;}}
+  stopAll(){this.stop(1);this.stop(2);clearTimeout(this.medTO);}
+  
+  set(n){
+    if(n===1){this.t1=Math.min(300,Math.max(5,+$('iC1').value||60));$('iC1').value=this.t1;this.r1=this.t1;}
+    else{this.t2=Math.min(180,Math.max(5,+$('iC2').value||30));$('iC2').value=this.t2;this.r2=this.t2;}
     this.upd();
   }
-
-  preload(){
-    let val=$('iMedia').value.trim();
-    if(!val) return;
-    if(val.match(/\.(mp4|gifv|webm)$/i)){
-      let v=document.createElement('video'); v.src=val; v.preload='auto'; this.cache=v;
-    } else if(val.startsWith('http')){
-      let img=new Image(); img.src=val; this.cache=img;
-    } else {
-      this.cache=val;
-    }
+  file(inp){
+    if(this.fUrl)URL.revokeObjectURL(this.fUrl);
+    const f=inp.files?.[0];
+    this.fUrl=f?URL.createObjectURL(f):null;
+    this.fType=f?f.type:null;
   }
-
-  showMedia(){
-    let dur = parseInt($('iDur').value);
-    if(isNaN(dur) || dur <= 0){
-      this.rem1=this.t1; this.rem2=this.t2; this.upd();
-      return;
-    }
-
+  pre(){
+    const v=$('iMed').value.trim();
+    if(!v){this.cache=null;return;}
+    if(/\.(mp4|webm|ogg)$/i.test(v)){const el=document.createElement('video');el.src=v;el.preload='auto';this.cache=el;}
+    else if(/^https?:\/\//i.test(v)){const el=new Image();el.src=v;this.cache=el;}
+    else this.cache=v;
+  }
+  chk(src){
+    const tr=$('sTrig').value;
+    if(tr===src||tr==='both')this.showMed();
+    else{if(src==='c1')this.r1=this.t1;else this.r2=this.t2;this.upd();}
+  }
+  showMed(){
+    const dur=Math.min(60,Math.max(0,+$('iDur').value||0));
+    if(!dur){this.r1=this.t1;this.r2=this.t2;this.upd();return;}
     this.stopAll();
-    let mc=$('mc');
+    const mc=$('mc');
+    if(this.fUrl){
+      if(this.fType.startsWith('video'))mc.innerHTML=`<video src="${this.fUrl}" autoplay loop playsinline></video>`;
+      else if(this.fType.startsWith('audio'))mc.innerHTML=`<div style="font-size:2.5rem;font-weight:900">🔊 ÁUDIO</div><audio src="${this.fUrl}" autoplay loop></audio>`;
+      else mc.innerHTML=`<img src="${this.fUrl}">`;
+    }else if(this.cache instanceof HTMLVideoElement)mc.innerHTML=`<video src="${this.cache.src}" autoplay muted loop playsinline></video>`;
+    else if(this.cache instanceof HTMLImageElement)mc.innerHTML=`<img src="${this.cache.src}">`;
+    else mc.innerHTML=`<div style="font-size:min(12vw,4rem);font-weight:900;word-break:break-word">${this.cache||'DESCANSO'}</div>`;
     
-    // 1. Prioridade para Arquivo Local Offline
-    if(this.localFileUrl){
-      if(this.localFileType.startsWith('video')){
-        mc.innerHTML=`<video src="${this.localFileUrl}" autoplay muted loop playsinline></video>`;
-      } else if(this.localFileType.startsWith('audio')){
-        mc.innerHTML=`<div style="font-size:2rem;font-weight:900;text-align:center">🎵 ÁUDIO TOCANDO</div><audio src="${this.localFileUrl}" autoplay loop></audio>`;
-      } else {
-        mc.innerHTML=`<img src="${this.localFileUrl}">`;
-      }
-    } 
-    // 2. Fallback para Link ou Texto
-    else {
-      let val=$('iMedia').value.trim();
-      if(this.cache instanceof HTMLVideoElement){
-        mc.innerHTML=`<video src="${this.cache.src}" autoplay muted loop playsinline></video>`;
-      } else if(this.cache instanceof HTMLImageElement){
-        mc.innerHTML=`<img src="${this.cache.src}">`;
-      } else {
-        mc.innerHTML=`<div style="font-size:4rem;font-weight:900;text-align:center;padding:1rem">${val||'TEMPO ESGOTADO'}</div>`;
-      }
-    }
-    
-    $('ms').classList.add('active');
-    
-    clearInterval(this.mTimer);
-    this.mTimer = setTimeout(()=>{ 
-      $('ms').classList.remove('active'); 
-      mc.innerHTML=''; 
-      this.rem1=this.t1; 
-      this.rem2=this.t2; 
-      this.upd(); 
-    }, dur * 1000);
+    $('ms').classList.add('act');
+    this.medTO=setTimeout(()=>this.endMed(),dur*1000);
   }
-
-  toggleModal(st){
-    $('modal').classList.toggle('active',st);
-    if(st) this.stopAll();
-    else { this.rem1=this.t1; this.rem2=this.t2; this.upd(); }
+  endMed(){
+    clearTimeout(this.medTO);
+    $('ms').classList.remove('act');
+    $('mc').innerHTML='';
+    this.r1=this.t1;this.r2=this.t2;
+    this.upd();this.menu();
   }
-
-  toggleTheme(){
-    let th=document.documentElement.getAttribute('data-theme');
-    document.documentElement.setAttribute('data-theme', th==='dark'?'light':'dark');
-  }
+  modal(s){$('modal').classList.toggle('act',!!s);if(s)this.stopAll();else{this.r1=this.t1;this.r2=this.t2;this.upd();this.menu();}}
+  theme(){const d=document.documentElement;d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';}
+  async install(){if(this.defPrompt){this.defPrompt.prompt();await this.defPrompt.userChoice;this.defPrompt=null;$('btnInst').style.display='none';}}
 }
 const app=new App();
 </script>
