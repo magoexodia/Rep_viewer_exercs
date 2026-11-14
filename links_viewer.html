@@ -1,85 +1,107 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Preview GitHub</title>
-<style>
-:root{--bg:url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png") #000}
-*{box-sizing:border-box}
-body{margin:0;font-family:sans-serif;background:var(--bg) center/cover fixed;color:#fff;height:100vh;overflow:hidden;display:flex;flex-direction:column}
-#entrada{padding:8px;background:rgba(0,0,0,0.8);display:flex;gap:5px;z-index:10}
-input{flex:1;padding:6px;font-size:1rem}
-button{padding:6px 12px;cursor:pointer;font-weight:bold}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Preview GitHub</title>
+    <style>
+      :root{--bg:url("https://cdn.wallpapersafari.com/76/11/dEFLmg.png") #000}
+      *{box-sizing:border-box}
+      body{margin:0;font-family:sans-serif;background:var(--bg) center/cover fixed;color:#fff;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+      #entrada{padding:8px;background:rgba(0,0,0,0.8);display:flex;gap:5px;z-index:10}
+      input{flex:1;padding:6px;font-size:1rem}
+      button{padding:6px 12px;cursor:pointer;font-weight:bold}
 
-/* Layout assimétrico: Frame 1 mais largo, Frame 2 mais comprido */
-#div-iframe{flex:1;display:flex;gap:10px;padding:10px;height:calc(100vh - 50px)}
-#preview1{flex:1.4;width:100%;height:100%;border:2px solid rgba(255,255,255,0.3);background:#fff;border-radius:4px}
-#preview2{flex:0.9;width:100%;height:100%;border:2px solid rgba(255,255,255,0.3);background:#fff;border-radius:4px}
+      /* Layout assimétrico: Frame 1 mais largo, Frame 2 mais comprido */
+      #div-iframe{flex:1;display:flex;gap:10px;padding:10px;height:calc(100vh - 50px)}
+      #preview1{flex:1.4;width:100%;height:100%;border:2px solid rgba(255,255,255,0.3);background:#fff;border-radius:4px}
+      #preview2{flex:0.9;width:100%;height:100%;border:2px solid rgba(255,255,255,0.3);background:#fff;border-radius:4px}
 
-#botoes{position:fixed;top:50px;right:10px;width:220px;max-height:calc(100vh - 60px);overflow-y:auto;background:rgba(0,0,0,0.9);padding:5px;border-radius:5px;z-index:100}
-#botoes button{width:100%;margin-bottom:4px;background:#222;color:#fff;border:1px solid #555;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#botoes button:hover{background:#fff;color:#000}
-.esconde{display:none}
-#btnMenu{position:fixed;top:8px;right:10px;z-index:101;display:none}
+      #botoes{position:fixed;top:50px;right:10px;width:220px;max-height:calc(100vh - 60px);overflow-y:auto;background:rgba(0,0,0,0.9);padding:5px;border-radius:5px;z-index:100}
+      #botoes button{width:100%;margin-bottom:4px;background:#222;color:#fff;border:1px solid #555;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      #botoes button:hover{background:#fff;color:#000}
+      .esconde{display:none}
+      #btnMenu{position:fixed;top:8px;right:10px;z-index:101;display:none}
 
-@media(max-aspect-ratio:1/1){#div-iframe{flex-direction:column}}
-</style>
-</head>
-<body>
+      @media(max-aspect-ratio:1/1){#div-iframe{flex-direction:column}}
+    </style>
+  </head>
+  <body>
+    <div id="entrada">
+      <input
+        type="text"
+        id="links"
+        onclick="this.select()"
+        placeholder="Links separados por vírgula"
+      />
+      <button onclick="add()">➕</button>
+      <button onclick="document.getElementById('links').value=''">❌</button>
+    </div>
 
-<div id="entrada">
-  <input type="text" id="links" onclick="this.select()" placeholder="Links separados por vírgula">
-  <button onclick="add()">➕</button>
-  <button onclick="document.getElementById('links').value=''">❌</button>
-</div>
+    <button
+      id="btnMenu"
+      onclick="document.getElementById('botoes').classList.toggle('esconde')"
+    >
+      MENU
+    </button>
 
-<button id="btnMenu" onclick="document.getElementById('botoes').classList.toggle('esconde')">MENU</button>
+    <div id="div-iframe">
+      <iframe id="preview1" allowfullscreen></iframe>
+      <iframe id="preview2" allowfullscreen></iframe>
+    </div>
 
-<div id="div-iframe">
-  <iframe id="preview1" allowfullscreen></iframe>
-  <iframe id="preview2" allowfullscreen></iframe>
-</div>
+    <div id="botoes" class="esconde"></div>
 
-<div id="botoes" class="esconde"></div>
+    <script>
+      document.getElementById("links").value = "https://magoexodia.github.io/Rep_viewer_exercs/readme.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/contar_exec_def.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/contar_exec_linkOuFile.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/gamepad_teste.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/limpador_de_arquivo.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/offline_image_loader.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/reorganizador_img.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/reorganizador_vds.html "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/repetecos.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/reps2counter.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/timer_exerc_gif.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/tela_dim.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/texto_2_links.html, "
+        + "https://magoexodia.github.io/Rep_viewer_exercs/z-teste-tabs.html";
 
-<script>
-document.getElementById("links").value = "https://magoexodia.github.io/Rep_viewer_exercs/links_viewer.html, https://github.com/magoexodia/Rep_viewer_exercs/blob/main/README.md, https://magoexodia.github.io/Rep_viewer_exercs/z-teste-tabs.html, https://magoexodia.github.io/Rep_viewer_exercs/limpador_de_arquivo.html, https://magoexodia.github.io/Rep_viewer_exercs/texto_2_links.html, https://magoexodia.github.io/Rep_viewer_exercs/reps2counter.html, https://magoexodia.github.io/Rep_viewer_exercs/repetecos.html, https://magoexodia.github.io/Rep_viewer_exercs/contar_exec_linkOuFile.html, https://magoexodia.github.io/Rep_viewer_exercs/timer_exerc_gif.html, https://magoexodia.github.io/Rep_viewer_exercs/offline_image_loader.html, https://magoexodia.github.io/Rep_viewer_exercs/reorganizador_img.html, https://magoexodia.github.io/Rep_viewer_exercs/reorganizador_vds.html";
+      let links = [], idx = 0;
 
-let links = [], idx = 0;
+      function show() {
+        if(links.length) {
+          document.getElementById("preview1").src = links[idx];
+          document.getElementById("preview2").src = links[idx];
+        }
+      }
 
-function show() {
-  if(links.length) {
-    document.getElementById("preview1").src = links[idx];
-    document.getElementById("preview2").src = links[idx];
-  }
-}
+      function add() {
+        let val = document.getElementById("links").value;
+        if(!val) return;
+        links = val.split(",").map(l => l.trim().replace(/^['"]|['"]$/g, ""));
+        idx = 0;
+        show();
+        let b = document.getElementById("botoes");
+        b.innerHTML = "";
+        links.forEach((l, i) => {
+          let btn = document.createElement("button");
+          btn.textContent = l.substring(l.lastIndexOf("/") + 1, l.lastIndexOf(".")).substring(0, 22) || l;
+          btn.onclick = () => { idx = i; show(); b.classList.add("esconde"); };
+          b.appendChild(btn);
+        });
+        document.getElementById("entrada").style.display = "none";
+        document.getElementById("btnMenu").style.display = "block";
+        b.classList.remove("esconde");
+      }
 
-function add() {
-  let val = document.getElementById("links").value;
-  if(!val) return;
-  links = val.split(",").map(l => l.trim().replace(/^['"]|['"]$/g, ""));
-  idx = 0;
-  show();
-  let b = document.getElementById("botoes");
-  b.innerHTML = "";
-  links.forEach((l, i) => {
-    let btn = document.createElement("button");
-    btn.textContent = l.substring(l.lastIndexOf("/") + 1, l.lastIndexOf(".")).substring(0, 22) || l;
-    btn.onclick = () => { idx = i; show(); b.classList.add("esconde"); };
-    b.appendChild(btn);
-  });
-  document.getElementById("entrada").style.display = "none";
-  document.getElementById("btnMenu").style.display = "block";
-  b.classList.remove("esconde");
-}
-
-document.addEventListener("keyup", e => {
-  if(!links.length) return;
-  if(e.key === "ArrowLeft") idx = (idx - 1 + links.length) % links.length;
-  if(e.key === "ArrowRight") idx = (idx + 1) % links.length;
-  show();
-});
-</script>
-</body>
+      document.addEventListener("keyup", e => {
+        if(!links.length) return;
+        if(e.key === "ArrowLeft") idx = (idx - 1 + links.length) % links.length;
+        if(e.key === "ArrowRight") idx = (idx + 1) % links.length;
+        show();
+      });
+    </script>
+  </body>
 </html>
