@@ -72,4 +72,4 @@
 <h3>Doações<br>Donations</h3>
 <li>pix 🔗<a href="https://nubank.com.br/pagar/tq1wa/9hDxPeWoNB">doar pix</a></li>
 
-<img src="https://github.com/magoexodia/Rep_viewer_exercs/raw/main/pix_pix_pix.png" style="width:100%;height:100%;object-fit:contain;display:block"></div>
+<img src="https://github.com/magoexodia/Rep_viewer_exercs/raw/main/pix_pix_pix.png" style="width:80vmin;height:80vmin;object-fit:contain;display:block"></div>
