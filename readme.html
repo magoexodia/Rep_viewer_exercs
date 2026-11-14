@@ -1,31 +1,24 @@
 <html>
   <style>
     body {
-      height: 97vh;
-      width: 97vw;
-      background: black;
-      text-shadow: 0 0 2px white, 0 0 5px white, 0 0px 6px white, 0 0 1ch white, 0 0 2ch white;
-			margin: 1.5vh;
     }
 
-    div {
-      height: 100%;
-      width: 100%;
-    }
-		iframe {
-      height: 100%;
-      min-height: 100%;
-      width: calc(100%);
-    }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+</style>
+</head>
+<body>
 
-  </style>
+    <!-- A "caixa" onde o texto bruto vai entrar -->
+    <pre id="conteudo"></pre>
 
-  <body>
-    <div>
-      <iframe src="https://magoexodia.github.io/Rep_viewer_exercs/README.md" style="background: #ffffff88; filter: hue-rotate(60deg)">
+<script>
+    // Puxa o README.md e joga o texto cru direto na tela dentro da tag <pre>
+    fetch('https://magoexodia.github.io/Rep_viewer_exercs/README.md')
+        .then(res => res.text())
+        .then(textoCru => {
+            document.getElementById('conteudo').innerHTML = textoCru;
+        });
+</script>
 
-      </iframe>
-    </div>
-  </body>
-
+</body>
 </html>
